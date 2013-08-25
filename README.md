@@ -8,6 +8,6 @@ Features
 
 The following features are provided:
 
-* QML file syntax highlight.
+* QML syntax highlighting.
 * Snippets for common actions.
 * Run the qmlscene via build system.
