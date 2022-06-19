@@ -9,6 +9,7 @@ scope: source.qml
 variables:
   identifier_continue: '[[:alnum:]_]'
   identifier: '\b[[:alpha:]_]{{identifier_continue}}*\b'
+  identifier_title: '\b[[:upper:]]{{identifier_continue}}*\b'
   path: '({{identifier}}[ ]*\.[ ]*)*{{identifier}}'
 
 contexts:
@@ -19,6 +20,7 @@ contexts:
     - include: comments
     - include: pragma
     - include: imports
+    - include: object-standalone
     - match: ;
       scope: punctuation.terminator.statement.qml
 
@@ -61,14 +63,14 @@ contexts:
 
   imports-as:
     - match: \bas\b
-      scope: keyword.control.import.as.qml
+      scope: keyword.operator.as.qml
       push: imports-as-body
 
   imports-as-body:
     - meta_scope: meta.import.alias.qml
     - include: line-continuation-or-pop
-    - match: (?={{identifier}})
-      set: name-content
+    - match: (?={{identifier_title}})
+      set: name-content-title
     - include: import-illegal-names
     - match: (?=\S)
       pop: true
@@ -84,7 +86,7 @@ contexts:
       scope: punctuation.accessor.dot.qml
 
   qualified-name-content:
-    - meta_scope: meta.qualified-name.qml
+    - meta_scope: meta.path.qml
     - include: name
     - match: ''
       pop: true
@@ -94,10 +96,74 @@ contexts:
       push: name-content
 
   name-content:
-    - include: generic-names
+    - include: generic-name
     - match: ''
       pop: true
 
-  generic-names:
+  generic-name:
     - match: '{{identifier}}'
-      scope: meta.generic-name.qml
+      scope: ''
+
+  name-title:
+    - match: (?={{identifier_title}})
+      push: name-content-title
+
+  name-content-title:
+    - include: generic-name-title
+    - match: ''
+      pop: true
+
+  generic-name-title:
+    - match: '{{identifier_title}}'
+      scope: entity.name.namespace.qml
+
+  object-standalone:
+    - include: object-standalone-content
+
+  # either Namespace.Object or just Object
+  object-standalone-content:
+    - include: comments
+    - match: (?={{identifier_title}})
+      branch_point: object-qualification
+      branch:
+        - object-without-namespace
+        - object-with-namespace
+
+  object-without-namespace:
+    - include: comments
+    - match: '{{identifier_title}}'
+      scope: support.type.qml
+      set:
+        - match: \.
+          fail: object-qualification
+        - include: object-block
+
+  object-with-namespace:
+    - include: comments
+    - match: '{{identifier_title}}'
+      scope: entity.name.namespace.qml
+      set:
+        - include: comments
+        - match: \.
+          scope: punctuation.accessor.dot.qml
+          set: object-name
+
+  object-name:
+    - include: comments
+    - match: '{{identifier_title}}'
+      scope: support.type.qml
+      set: object-block
+
+  object-block:
+    - include: comments
+    - match: \{
+      scope: punctuation.section.braces.begin.qml
+      push:
+        - meta_scope: meta.block.qml
+        - include: object-block-body
+        - match: \}
+          scope: punctuation.section.braces.end.qml
+          pop: 2
+
+  object-block-body:
+    - include: comments
