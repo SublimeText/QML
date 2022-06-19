@@ -42,6 +42,21 @@ Kirigami.TextField {/**/}
 //                  ^^^^ comment.block
 //                      ^ punctuation.section.braces.end
 
+Nested {
+// ^^^ support.type
+//     ^ meta.block
+    Inner {}
+//  ^^^^^ meta.block support.type
+//        ^^ meta.block meta.block
+    Foo.Bar {}
+//  ^^^ meta.block entity.name.namespace
+//      ^^^ meta.block support.type
+//          ^^ meta.block meta.block
+}
+// <- meta.block punctuation.section.braces.end
+
+// <- - meta.block
+
 one.two {}
 // <-   - entity.name.namespace - support.type
 //  ^^^ - entity.name.namespace - support.type

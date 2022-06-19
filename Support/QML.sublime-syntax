@@ -167,3 +167,4 @@ contexts:
 
   object-block-body:
     - include: comments
+    - include: object-standalone
