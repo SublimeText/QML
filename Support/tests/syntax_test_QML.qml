@@ -1,4 +1,10 @@
 // SYNTAX TEST "Packages/Sublime-QML/Support/QML.sublime-syntax"
+
+pragma Singleton
+// <- meta.pragma.qml keyword.control.pragma.qml
+// ^^^ meta.pragma.qml keyword.control.pragma.qml
+//     ^^^^^^^^^ meta.pragma.qml storage.modifier.singleton.qml
+
 import QtQml
 // <- source.qml meta.import.qml keyword.control.import.qml
 //     ^^^^^ meta.generic-name.qml

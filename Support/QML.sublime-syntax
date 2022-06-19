@@ -17,6 +17,7 @@ contexts:
 
   statements:
     - include: comments
+    - include: pragma
     - include: imports
     - match: ;
       scope: punctuation.terminator.statement.qml
@@ -27,6 +28,13 @@ contexts:
   line-continuation-or-pop:
     - match: (?=\s*($|;))
       pop: true
+
+  pragma:
+    - match: \b(pragma)\s+(Singleton)\b
+      scope: meta.pragma.qml
+      captures:
+        1: keyword.control.pragma.qml
+        2: storage.modifier.singleton.qml
 
   imports:
     - match: \bimport\b
