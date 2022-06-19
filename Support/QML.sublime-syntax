@@ -1,0 +1,95 @@
+%YAML 1.2
+---
+name: QML
+file_extensions:
+  - qml
+  - qmltypes
+scope: source.qml
+
+variables:
+  identifier_continue: '[[:alnum:]_]'
+  identifier: '\b[[:alpha:]_]{{identifier_continue}}*\b'
+  path: '({{identifier}}[ ]*\.[ ]*)*{{identifier}}'
+
+contexts:
+  main:
+    - include: statements
+
+  statements:
+    - include: comments
+    - include: imports
+    - match: ;
+      scope: punctuation.terminator.statement.qml
+
+  comments:
+    - include: scope:source.c#comments
+
+  line-continuation-or-pop:
+    - match: (?=\s*($|;))
+      pop: true
+
+  imports:
+    - match: \bimport\b
+      scope: keyword.control.import.qml
+      set:
+        - imports-import-body
+
+  imports-import-body:
+    - meta_scope: meta.import.qml
+    - include: line-continuation-or-pop
+    - include: imports-as
+    - include: imports-version
+    - include: qualified-name
+    - match: (?=['"])
+      push:
+      - include: scope:source.js#literal-string
+
+  imports-version:
+    - match: (\d+)(\.)(\d+)
+      captures:
+        1: constant.numeric.qml
+        2: punctuation.separator.decimal.qml
+        3: constant.numeric.qml
+
+  imports-as:
+    - match: \bas\b
+      scope: keyword.control.import.as.qml
+      push: imports-as-body
+
+  imports-as-body:
+    - meta_scope: meta.import.alias.qml
+    - include: line-continuation-or-pop
+    - match: (?={{identifier}})
+      set: name-content
+    - include: import-illegal-names
+    - match: (?=\S)
+      pop: true
+
+  import-illegal-names:
+    - match: '[^\s]+'
+      scope: invalid.illegal.name.import.qml
+
+  qualified-name:
+    - match: (?={{path}})
+      push: qualified-name-content
+    - match: \.
+      scope: punctuation.accessor.dot.qml
+
+  qualified-name-content:
+    - meta_scope: meta.qualified-name.qml
+    - include: name
+    - match: ''
+      pop: true
+
+  name:
+    - match: (?={{identifier}})
+      push: name-content
+
+  name-content:
+    - include: generic-names
+    - match: ''
+      pop: true
+
+  generic-names:
+    - match: '{{identifier}}'
+      scope: meta.generic-name.qml
