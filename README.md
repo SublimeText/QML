@@ -1,16 +1,26 @@
 Sublime-QML
 ===========
 
-Sublime-QML adds Qt's QML support to the Sublime Text 2 and Sublime Text 3.
+About
+-----
 
-Sublime-QML can be installed as a standalone package or as a part of the
-[Sublime PySide](https://github.com/DamnWidget/SublimePySide).
+Sublime-QML is a [Sublime Text](https://www.sublimetext.com/) & [Sublime Merge](https://www.sublimemerge.com/) package which adds support for the [Qt/QML](https://en.wikipedia.org/wiki/QML) ecosystem.
 
-Features
---------
+This package provides the following features:
 
-The following features are provided:
+ - Syntax highlighting for QML.
+ - Snippets for commonly used properties and types.
+ - [ ] Custom build system to run your scratches with either `qml` or `qmlscene`.
+ - [ ] Automatic checking with QML linter `qmllint` every time you save a file.
 
-* QML syntax highlighting.
-* Snippets for common actions.
-* Run the qmlscene via build system.
+Installation
+------------
+
+Currently the new remastered package is in alpha, and cannot be installed via
+Package Control yet. If you want to try it out, close this repository
+(or download and unzip it) into Sublime Text's Packages folder.
+
+License
+-------
+
+This package is licensed under the MIT License.
