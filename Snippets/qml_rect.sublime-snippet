@@ -8,5 +8,5 @@ Rectangle {
 ]]></content>
     <tabTrigger>rectangle</tabTrigger>
     <scope>source.qml</scope>
-    <description>Rectangle{}</description>
+    <description>Rectangle {}</description>
 </snippet>

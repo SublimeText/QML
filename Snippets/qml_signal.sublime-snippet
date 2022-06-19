@@ -1,6 +1,6 @@
 <snippet>
     <content><![CDATA[
-signal ${1:name}(${2})
+signal ${1:name}(${2:parameter}: ${3:type})
 ]]></content>
     <tabTrigger>signal</tabTrigger>
     <scope>source.qml</scope>

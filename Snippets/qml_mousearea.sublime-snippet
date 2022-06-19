@@ -12,5 +12,5 @@ MouseArea {
 ]]></content>
     <tabTrigger>mouse</tabTrigger>
     <scope>source.qml</scope>
-    <description>MouseArea{}</description>
+    <description>MouseArea {}</description>
 </snippet>

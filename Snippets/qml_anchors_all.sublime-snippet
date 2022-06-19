@@ -1,7 +1,7 @@
 <snippet>
     <content><![CDATA[
-anchors.left: ${1:parent}.left
 anchors.top: ${1:parent}.top
+anchors.left: ${1:parent}.left
 anchors.right: ${1:parent}.right
 anchors.bottom: ${1:parent}.bottom
 ]]></content>

@@ -4,5 +4,5 @@ Component.onCompleted: ${1}
 ]]></content>
     <tabTrigger>component</tabTrigger>
     <scope>source.qml</scope>
-    <description>Component.onCompleted{}</description>
+    <description>Component.onCompleted:</description>
 </snippet>

@@ -2,10 +2,12 @@
     <content><![CDATA[
 Connections {
     target: ${1}
-    on${2}: ${3}
+    function on${2:Signal}(${3:argument}) {
+        ${3:// body...}
+    }
 }
 ]]></content>
     <tabTrigger>connections</tabTrigger>
     <scope>source.qml</scope>
-    <description>Connections{}</description>
+    <description>Connections {}</description>
 </snippet>

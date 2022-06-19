@@ -6,5 +6,5 @@ QtObject {
 ]]></content>
     <tabTrigger>obj</tabTrigger>
     <scope>source.qml</scope>
-    <description>QtObject{}</description>
+    <description>QtObject {}</description>
 </snippet>

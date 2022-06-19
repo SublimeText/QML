@@ -4,5 +4,5 @@
 }]]></content>
     <tabTrigger>fun</tabTrigger>
     <scope>source.qml</scope>
-    <description>function{}</description>
+    <description>function/method</description>
 </snippet>
