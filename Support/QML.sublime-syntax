@@ -10,6 +10,7 @@ variables:
   identifier_continue: '[[:alnum:]_]'
   identifier: '\b[[:alpha:]_]{{identifier_continue}}*\b'
   identifier_title: '\b[[:upper:]]{{identifier_continue}}*\b'
+  identifier_untitle: '\b[[:lower:]]{{identifier_continue}}*\b'
   path: '({{identifier}}[ ]*\.[ ]*)*{{identifier}}'
 
 contexts:
@@ -168,3 +169,35 @@ contexts:
   object-block-body:
     - include: comments
     - include: object-standalone
+    - include: object-id
+    - match: ;
+      scope: punctuation.terminator.statement.qml
+
+  object-id:
+    - match: \bid\b
+      push: object-id-content
+
+  object-id-content:
+    - meta_scope: meta.mapping.qml
+    - include: comments
+    - match: ':'
+      scope: keyword.operator.assignment.qml
+      set: object-id-name
+    - match: '\S+'
+      scope: invalid.illegal.qml
+      pop: true
+
+  object-id-name:
+    - meta_scope: meta.mapping.qml
+    - include: comments
+    - match: '{{identifier_untitle}}'
+      scope: entity.name.label.qml
+      set:
+        - include: comments
+        - include: line-continuation-or-pop
+        - match: '\S+'
+          scope: invalid.illegal.identifier.qml
+          pop: true
+    - match: '\S+'
+      scope: invalid.illegal.identifier.qml
+      pop: true

@@ -62,3 +62,33 @@ one.two {}
 //  ^^^ - entity.name.namespace - support.type
 one.two.three {}
 //  ^^^ - entity.name.namespace - support.type
+
+WithId {
+    id: one two
+//  ^^^^^^^ meta.mapping
+//    ^ keyword.operator.assignment
+//      ^^^ entity.name.label
+//          ^^^ invalid.illegal
+    id : three
+//     ^ meta.mapping keyword.operator.assignment
+//       ^^^^^ entity.name.label
+    id: Four
+//      ^^^^ invalid.illegal.identifier
+    id: 5
+//      ^ invalid.illegal.identifier
+    id 6
+//  ^^ meta.mapping
+//     ^ invalid.illegal
+    id /*comment*/ : /**
+        */ seven/**/
+//         ^^^^^ entity.name.label
+//              ^^^^ comment.block
+    id: eight; id: nine/**/; id: ten
+//           ^ punctuation.terminator.statement
+//  ^^^^^^^^^  meta.mapping
+//           ^^ - meta.mapping
+//             ^^^^^^^^ meta.mapping
+//                     ^^^^ comment.block
+//                     ^^^^^^ - meta.mapping
+//                           ^^^^^^^ meta.mapping
+}
