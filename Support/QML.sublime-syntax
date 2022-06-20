@@ -1,11 +1,12 @@
 %YAML 1.2
 ---
+version: 2
 name: QML
 file_extensions:
   - qml
   - qmltypes
 scope: source.qml
-
+extends: Packages/JavaScript/JavaScript.sublime-syntax
 variables:
   identifier_continue: '[[:alnum:]_]'
   identifier: '\b[[:alpha:]_]{{identifier_continue}}*\b'
@@ -190,7 +191,7 @@ contexts:
   object-id-name:
     - meta_scope: meta.mapping.qml
     - include: comments
-    - match: '{{identifier_untitle}}'
+    - match: '(?={{non_reserved_identifier}}){{identifier_untitle}}'
       scope: entity.name.label.qml
       set:
         - include: comments

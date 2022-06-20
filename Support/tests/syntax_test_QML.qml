@@ -91,4 +91,6 @@ WithId {
 //                     ^^^^ comment.block
 //                     ^^^^^^ - meta.mapping
 //                           ^^^^^^^ meta.mapping
+    id: break
+//      ^^^^^ invalid.illegal.identifier
 }
