@@ -57,11 +57,17 @@ contexts:
       - include: scope:source.js#literal-string
 
   imports-version:
-    - match: (\d+)(\.)(\d+)
+    - match: (\d+)(?:\s*(\.)\s*(\d+))?
+      scope: meta.number.version.qml
       captures:
-        1: constant.numeric.qml
+        1: constant.numeric.value.qml
         2: punctuation.separator.decimal.qml
-        3: constant.numeric.qml
+        3: constant.numeric.value.qml
+    - match: (@)(?:{{identifier}})(@)
+      scope: variable.other.cmake
+      captures:
+        1: punctuation.definition.variable.begin.cmake
+        2: punctuation.definition.variable.end.cmake
 
   imports-as:
     - match: \bas\b

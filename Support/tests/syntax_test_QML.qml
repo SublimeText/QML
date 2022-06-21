@@ -5,10 +5,20 @@ pragma Singleton
 // ^^^ meta.pragma keyword.control.pragma
 //     ^^^^^^^^^ meta.pragma storage.modifier.singleton
 
+/* no version */
 import QtQml
 // <- source.qml meta.import keyword.control.import
 //     ^^^^^ meta.path
 
+/* major-only version */
+import QtQuick 2
+//             ^ meta.import constant.numeric
+
+import QtQuick 2 . 15
+//             ^^^^^^ meta.import meta.number.version
+//               ^ punctuation.separator.decimal
+
+/* major & minor version */
 import QtQuick.Layouts 2.15
 // <- meta.import keyword.control.import
 //     ^^^^^^^         meta.import meta.path
@@ -21,6 +31,12 @@ import QtQuick.Layouts 2.15
 import org.kde.kirigami 2.20 as Kirigami
 //                           ^^ keyword.operator.as
 //                              ^^^^^^^^ entity.name.namespace
+
+import QtQuick.Controls @QQC2_VERSION@ as Controls
+//                      ^^^^^^^^^^^^^^ variable.other.cmake
+//                      ^              punctuation.definition.variable.begin.cmake
+//                                   ^ punctuation.definition.variable.end.cmake
+//                                     ^^ meta.import keyword.operator.as
 
 import ":/components"
 //     ^^^^^^^^^^^^^^ meta.string string.quoted.double
