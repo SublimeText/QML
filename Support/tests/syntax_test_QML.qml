@@ -21,22 +21,26 @@ import QtQuick 2 . 15
 /* major & minor version */
 import QtQuick.Layouts 2.15
 // <- meta.import keyword.control.import
-//     ^^^^^^^         meta.import meta.path
-//            ^        meta.import punctuation.accessor.dot
-//             ^^^^^^^ meta.import meta.path
+//     ^^^^^^^^^^^^^^^ meta.path
+//            ^ punctuation.accessor
 //                     ^ constant.numeric
 //                      ^ punctuation.separator
 //                       ^^ constant.numeric
+// ^^^^^^^^^^^^^^^^^^^^^^^^ meta.import.qml
 
 import org.kde.kirigami 2.20 as Kirigami
 //                           ^^ keyword.operator.as
 //                              ^^^^^^^^ entity.name.namespace
 
-import QtQuick.Controls @QQC2_VERSION@ as Controls
+import QtQuick.Controls @QQC2_VERSION@ as Controls;
 //                      ^^^^^^^^^^^^^^ variable.other.cmake
 //                      ^              punctuation.definition.variable.begin.cmake
 //                                   ^ punctuation.definition.variable.end.cmake
 //                                     ^^ meta.import keyword.operator.as
+//                                                ^ punctuation.terminator.statement
+
+import Abc as abc
+//            ^^^ meta.import.alias invalid.illegal.name.import
 
 import ":/components"
 //     ^^^^^^^^^^^^^^ meta.string string.quoted.double
@@ -45,39 +49,44 @@ import ":/components"
 import "./logic.js" as Logic
 //                  ^^ meta.import meta.import.alias keyword.operator.as
 
+import One; import Two;
+//        ^             punctuation.terminator.statement.qml - punctuation.terminator.statement.empty
+//                    ^ punctuation.terminator.statement.qml - punctuation.terminator.statement.empty
+
+
 QtObject {}
-// <- support.type
-// ^^^^^ support.type
+// <- support.class
+// ^^^^^ support.class
 
 Kirigami.TextField {/**/}
-// ^^^^^ entity.name.namespace
-//      ^ punctuation.accessor.dot
-//       ^^^^^^^^^ support.type
+// ^^^^^ support.class
+//      ^ punctuation.accessor
+//       ^^^^^^^^^ support.class
 //                 ^^^^^^ meta.block.qml
-//                 ^ punctuation.section.braces.begin
+//                 ^ punctuation.section.block.begin
 //                  ^^^^ comment.block
-//                      ^ punctuation.section.braces.end
+//                      ^ punctuation.section.block.end
 
 Nested {
-// ^^^ support.type
+// ^^^ support.class
 //     ^ meta.block
     Inner {}
-//  ^^^^^ meta.block support.type
+//  ^^^^^ meta.block support.class
 //        ^^ meta.block meta.block
     Foo.Bar {}
-//  ^^^ meta.block entity.name.namespace
-//      ^^^ meta.block support.type
+//  ^^^ meta.block support.class
+//      ^^^ meta.block support.class
 //          ^^ meta.block meta.block
 }
-// <- meta.block punctuation.section.braces.end
+// <- meta.block punctuation.section.block.end
 
 // <- - meta.block
 
 one.two {}
-// <-   - entity.name.namespace - support.type
-//  ^^^ - entity.name.namespace - support.type
+// <-   - support.class
+//  ^^^ - support.class
 one.two.three {}
-//  ^^^ - entity.name.namespace - support.type
+//  ^^^ - support.class
 
 WithId {
     id: one two
@@ -102,10 +111,8 @@ WithId {
     id: eight; id: nine/**/; id: ten
 //           ^ punctuation.terminator.statement
 //  ^^^^^^^^^  meta.binding
-//           ^^ - meta.binding
 //             ^^^^^^^^ meta.binding
 //                     ^^^^ comment.block
-//                     ^^^^^^ - meta.binding
 //                           ^^^^^^^ meta.binding
     id: break
 //      ^^^^^ invalid.illegal.identifier

@@ -19,41 +19,71 @@ contexts:
     - include: statements
 
   statements:
-    - include: pragma
-    - include: imports
+    - match: '\)|\}|\]'
+      scope: invalid.illegal.stray-bracket-end.qml
+      pop: true
+
+    - match: (?=\S)
+      push: statement
+
+  statement:
+    - match: \;
+      scope: punctuation.terminator.statement.empty.qml
+      pop: true
+
+    - include: pragma-statement
+    - include: import-statement
     - include: object-standalone
-    - match: ;
+
+  expect-semicolon:
+    - match: \;
       scope: punctuation.terminator.statement.qml
+      pop: true
+    - include: else-pop
 
   line-continuation-or-pop:
     - match: (?=\s*($|;))
       pop: true
 
-  pragma:
+  semicolon-or-eol-pop:
+    - match: \;
+      scope: punctuation.terminator.statement.qml
+      pop: true
+    - match: (?=\s*$)
+      pop: true
+
+  pragma-statement:
     - match: \b(pragma)\s+(Singleton)\b
       scope: meta.pragma.qml
       captures:
         1: keyword.control.pragma.qml
         2: storage.modifier.singleton.qml
 
-  imports:
-    - match: \bimport\b
+  import-statement:
+    - match: import{{identifier_break}}
       scope: keyword.control.import.qml
-      set:
-        - imports-import-body
-
-  imports-import-body:
-    - meta_scope: meta.import.qml
-    - include: line-continuation-or-pop
-    - include: imports-as
-    - include: imports-version
-    - include: qualified-name
-    - match: (?=['"])
       push:
-      - include: scope:source.js#literal-string
+        - meta_scope: meta.import.qml
 
-  imports-version:
-    - match: (\d+)(?:\s*(\.)\s*(\d+))?
+        - include: import-string
+        - include: import-version
+        - include: import-alias
+        - include: qualified-name
+
+        - include: expect-semicolon
+        - include: line-continuation-or-pop
+
+  import-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.import.qml
+    - include: immediately-pop
+
+  import-string:
+    - match: (?=['"])
+      push: literal-string
+
+  import-version:
+    - match: '(\d+)(?:\s*(\.)\s*(\d+))?'
       scope: meta.number.version.qml
       captures:
         1: constant.numeric.value.qml
@@ -65,116 +95,87 @@ contexts:
         1: punctuation.definition.variable.begin.cmake
         2: punctuation.definition.variable.end.cmake
 
-  imports-as:
-    - match: \bas\b
+  import-alias:
+    - match: as{{identifier_break}}
       scope: keyword.operator.as.qml
-      push: imports-as-body
-
-  imports-as-body:
-    - meta_scope: meta.import.alias.qml
-    - include: line-continuation-or-pop
-    - match: (?={{identifier_title}})
-      set: name-content-title
-    - include: import-illegal-names
-    - match: (?=\S)
-      pop: true
+      set:
+        - meta_scope: meta.import.alias.qml
+        - match: '{{identifier_title}}'
+          scope: entity.name.namespace.qml
+          set: expect-semicolon
+        - include: import-illegal-names
+        - include: expect-semicolon
 
   import-illegal-names:
     - match: '[^\s]+'
       scope: invalid.illegal.name.import.qml
+      pop: true
 
   qualified-name:
-    - match: (?={{path}})
-      push: qualified-name-content
-    - match: \.
-      scope: punctuation.accessor.dot.qml
-
-  qualified-name-content:
-    - meta_scope: meta.path.qml
-    - include: name
-    - match: ''
-      pop: true
-
-  name:
     - match: (?={{identifier}})
-      push: name-content
+      push: qualified-name-extended
 
-  name-content:
-    - include: generic-name
-    - match: ''
-      pop: true
+  qualified-name-extended:
+    - meta_scope: meta.path.qml
 
-  generic-name:
     - match: '{{identifier}}'
-      scope: ''
-
-  name-title:
-    - match: (?={{identifier_title}})
-      push: name-content-title
-
-  name-content-title:
-    - include: generic-name-title
-    - match: ''
-      pop: true
-
-  generic-name-title:
-    - match: '{{identifier_title}}'
-      scope: entity.name.namespace.qml
+      scope: meta.generic-name.qml
+      set:
+        - match: \.
+          scope: punctuation.accessor.qml
+          set: qualified-name-extended
+        - include: line-continuation-or-pop
+        - include: else-pop
 
   object-standalone:
-    - include: object-standalone-content
+    - include: object-type-name
+    - include: object-block
 
-  # either Namespace.Object or just Object
-  object-standalone-content:
+  object-type-name:
+    # either Namespace.Object or just Object
     - match: (?={{identifier_title}})
-      branch_point: object-qualification
-      branch:
-        - object-without-namespace
-        - object-with-namespace
+      push: object-type-name-extended
 
-  object-without-namespace:
+  object-type-name-extended:
+    - match: '{{identifier_title}}(?!\s*\.)'
+      scope: support.class.qml
+      pop: true
     - match: '{{identifier_title}}'
-      scope: support.type.qml
+      scope: support.class.qml
       set:
         - match: \.
-          fail: object-qualification
-        - include: object-block
-
-  object-with-namespace:
-    - match: '{{identifier_title}}'
-      scope: entity.name.namespace.qml
-      set:
-        - match: \.
-          scope: punctuation.accessor.dot.qml
-          set: object-name
-
-  object-name:
-    - match: '{{identifier_title}}'
-      scope: support.type.qml
-      set: object-block
+          scope: punctuation.accessor.qml
+          set: object-type-name-extended
 
   object-block:
     - match: \{
-      scope: punctuation.section.braces.begin.qml
+      scope: punctuation.section.block.begin.qml
       push:
         - meta_scope: meta.block.qml
-        - include: object-block-body
         - match: \}
-          scope: punctuation.section.braces.end.qml
-          pop: 2
+          scope: punctuation.section.block.end.qml
+          pop: true
+        - include: object-block-statements
 
-  object-block-body:
+  object-block-statements:
+    - match: \;
+      scope: invalid.illegal.unexpected-terminator.qml
     - include: object-standalone
     - include: object-id
-    - match: ;
-      scope: punctuation.terminator.statement.qml
 
   object-id:
-    - match: \bid\b
-      push: object-id-content
+    - match: id{{identifier_break}}
+      scope: keyword.other.id.qml
+      push:
+        - object-id-meta
+        - object-id-extended
 
-  object-id-content:
+  object-id-meta:
+    - meta_include_prototype: false
     - meta_scope: meta.binding.qml
+    - include: immediately-pop
+
+  object-id-extended:
     - match: ':'
       scope: keyword.operator.assignment.qml
       set: object-id-name
@@ -187,7 +188,7 @@ contexts:
     - match: '(?={{non_reserved_identifier}}){{identifier_untitle}}'
       scope: entity.name.label.qml
       set:
-        - include: line-continuation-or-pop
+        - include: semicolon-or-eol-pop
         - match: '\S+'
           scope: invalid.illegal.identifier.qml
           pop: true
