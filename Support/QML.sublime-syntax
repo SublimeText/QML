@@ -19,7 +19,6 @@ contexts:
     - include: statements
 
   statements:
-    - include: comments
     - include: pragma
     - include: imports
     - include: object-standalone
@@ -127,7 +126,6 @@ contexts:
 
   # either Namespace.Object or just Object
   object-standalone-content:
-    - include: comments
     - match: (?={{identifier_title}})
       branch_point: object-qualification
       branch:
@@ -135,7 +133,6 @@ contexts:
         - object-with-namespace
 
   object-without-namespace:
-    - include: comments
     - match: '{{identifier_title}}'
       scope: support.type.qml
       set:
@@ -144,23 +141,19 @@ contexts:
         - include: object-block
 
   object-with-namespace:
-    - include: comments
     - match: '{{identifier_title}}'
       scope: entity.name.namespace.qml
       set:
-        - include: comments
         - match: \.
           scope: punctuation.accessor.dot.qml
           set: object-name
 
   object-name:
-    - include: comments
     - match: '{{identifier_title}}'
       scope: support.type.qml
       set: object-block
 
   object-block:
-    - include: comments
     - match: \{
       scope: punctuation.section.braces.begin.qml
       push:
@@ -171,7 +164,6 @@ contexts:
           pop: 2
 
   object-block-body:
-    - include: comments
     - include: object-standalone
     - include: object-id
     - match: ;
@@ -183,7 +175,6 @@ contexts:
 
   object-id-content:
     - meta_scope: meta.mapping.qml
-    - include: comments
     - match: ':'
       scope: keyword.operator.assignment.qml
       set: object-id-name
@@ -193,11 +184,9 @@ contexts:
 
   object-id-name:
     - meta_scope: meta.mapping.qml
-    - include: comments
     - match: '(?={{non_reserved_identifier}}){{identifier_untitle}}'
       scope: entity.name.label.qml
       set:
-        - include: comments
         - include: line-continuation-or-pop
         - match: '\S+'
           scope: invalid.illegal.identifier.qml
