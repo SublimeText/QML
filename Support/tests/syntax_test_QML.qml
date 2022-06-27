@@ -81,19 +81,19 @@ one.two.three {}
 
 WithId {
     id: one two
-//  ^^^^^^^ meta.mapping
+//  ^^^^^^^ meta.binding
 //    ^ keyword.operator.assignment
 //      ^^^ entity.name.label
 //          ^^^ invalid.illegal
     id : three
-//     ^ meta.mapping keyword.operator.assignment
+//     ^ meta.binding keyword.operator.assignment
 //       ^^^^^ entity.name.label
     id: Four
 //      ^^^^ invalid.illegal.identifier
     id: 5
 //      ^ invalid.illegal.identifier
     id 6
-//  ^^ meta.mapping
+//  ^^ meta.binding
 //     ^ invalid.illegal
     id /*comment*/ : /**
         */ seven/**/
@@ -101,12 +101,12 @@ WithId {
 //              ^^^^ comment.block
     id: eight; id: nine/**/; id: ten
 //           ^ punctuation.terminator.statement
-//  ^^^^^^^^^  meta.mapping
-//           ^^ - meta.mapping
-//             ^^^^^^^^ meta.mapping
+//  ^^^^^^^^^  meta.binding
+//           ^^ - meta.binding
+//             ^^^^^^^^ meta.binding
 //                     ^^^^ comment.block
-//                     ^^^^^^ - meta.mapping
-//                           ^^^^^^^ meta.mapping
+//                     ^^^^^^ - meta.binding
+//                           ^^^^^^^ meta.binding
     id: break
 //      ^^^^^ invalid.illegal.identifier
 }

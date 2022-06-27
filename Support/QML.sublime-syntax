@@ -174,7 +174,7 @@ contexts:
       push: object-id-content
 
   object-id-content:
-    - meta_scope: meta.mapping.qml
+    - meta_scope: meta.binding.qml
     - match: ':'
       scope: keyword.operator.assignment.qml
       set: object-id-name
@@ -183,7 +183,7 @@ contexts:
       pop: true
 
   object-id-name:
-    - meta_scope: meta.mapping.qml
+    - meta_scope: meta.binding.qml
     - match: '(?={{non_reserved_identifier}}){{identifier_untitle}}'
       scope: entity.name.label.qml
       set:
