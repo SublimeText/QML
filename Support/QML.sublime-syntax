@@ -26,9 +26,6 @@ contexts:
     - match: ;
       scope: punctuation.terminator.statement.qml
 
-  comments:
-    - include: scope:source.c#comments
-
   line-continuation-or-pop:
     - match: (?=\s*($|;))
       pop: true
