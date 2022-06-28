@@ -23,17 +23,17 @@ variables:
 
 contexts:
   main:
-    - include: statements
+    - include: statements-qml
 
-  statements:
+  statements-qml:
     - match: '\)|\}|\]'
       scope: invalid.illegal.stray-bracket-end.qml
       pop: true
 
     - match: (?=\S)
-      push: statement
+      push: statement-qml
 
-  statement:
+  statement-qml:
     - match: \;
       scope: punctuation.terminator.statement.empty.qml
       pop: true
@@ -42,7 +42,7 @@ contexts:
     - include: import-statement
     - include: object-standalone
 
-  expect-semicolon:
+  expect-semicolon-qml:
     - match: \;
       scope: punctuation.terminator.statement.qml
       pop: true
@@ -77,7 +77,7 @@ contexts:
         - include: import-alias
         - include: qualified-name
 
-        - include: expect-semicolon
+        - include: expect-semicolon-qml
         - include: line-continuation-or-pop
 
   import-meta:
@@ -109,9 +109,9 @@ contexts:
         - meta_scope: meta.import.alias.qml
         - match: '{{identifier_title}}'
           scope: entity.name.namespace.qml
-          set: expect-semicolon
+          set: expect-semicolon-qml
         - include: import-illegal-names
-        - include: expect-semicolon
+        - include: expect-semicolon-qml
 
   import-illegal-names:
     - match: '[^\s]+'
