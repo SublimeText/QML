@@ -117,3 +117,65 @@ WithId {
     id: break
 //      ^^^^^ invalid.illegal.identifier
 }
+
+RequiredProperties {
+    required name; required /**/ text
+//  ^^^^^^^^^^^^^ meta.binding
+//                 ^^^^^^^^^^^^^^^^^^ meta.binding
+//               ^^ - meta.binding
+//  ^^^^^^^^ storage.modifier.required
+//           ^^^^ meta.binding.name variable.other.member
+//               ^ punctuation.terminator.statement
+//                          ^^^^ comment.block
+//                               ^^^^ meta.binding.name variable.other.member
+    required Four
+//           ^^^^ meta.binding.name variable.other.member
+    required 5
+//           ^ invalid.illegal.expected-name
+    required break
+//           ^^^^^ invalid.illegal.expected-name
+    required prop: 42
+//  ^^^^^^^^^^^^^ meta.binding
+//               ^ invalid.illegal.binding
+    required foo bar
+//           ^^^ invalid.illegal.expected-property
+    required break;
+//           ^^^^^ invalid.illegal.expected-name
+/* Apparently, these are valid property names in QML */
+    required required
+//           ^^^^^^^^ meta.binding.name variable.other.member - invalid.illegal
+    required property
+//           ^^^^^^^^ meta.binding.name variable.other.member - invalid.illegal
+    required property int nine
+//  ^^^^^^^^ keyword.other storage.modifier.required
+//           ^^^^^^^^ keyword.declaration
+//                    ^^^ storage.type support.type
+//                        ^^^^ meta.binding.name variable.other.member
+    required property url ten: 10
+//                           ^ invalid.illegal.binding
+    required property list<url> eight
+//                    ^^^^ storage.type support.other
+//                        ^ punctuation.definition.generic.begin
+//                         ^^^ storage.type support.type
+//                            ^ punctuation.definition.generic.end
+//                              ^^^^^ meta.binding.name variable.other.member
+    required property list<Item> seven
+//                    ^^^^ storage.type support.other
+//                        ^ punctuation.definition.generic.begin
+//                         ^^^^ support.class.qml
+//                             ^ punctuation.definition.generic.end
+//                               ^^^^^ meta.binding.name variable.other.member
+    required property list<QtQuick.Item> seven
+//                    ^^^^ storage.type support.other
+//                        ^ punctuation.definition.generic.begin
+//                         ^^^^^^^ support.class.qml
+//                                ^ punctuation.accessor
+//                                 ^^^^ support.class.qml
+//                                     ^ punctuation.definition.generic.end
+//                                       ^^^^^ meta.binding.name variable.other.member
+    required property what isthis
+//                    ^^^^ storage.type.qml - support.type
+//                         ^^^^^^ meta.binding.name variable.other.member
+    required property what for
+//                         ^^^ invalid.illegal.expected-identifier.qml
+}

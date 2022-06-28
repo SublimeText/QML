@@ -13,6 +13,13 @@ variables:
   identifier_title: '\b[[:upper:]]{{identifier_continue}}*\b'
   identifier_untitle: '\b[[:lower:]]{{identifier_continue}}*\b'
   path: '({{identifier}}[ ]*\.[ ]*)*{{identifier}}'
+  qml_builtin_type: |-
+    (?x:
+      # Basic Types Provided By The QML Language
+      bool|double|enumeration|int|real|string|url|var|variant|
+      # Basic Types Provided By QML Modules
+      color|date|font|matrix4x4|point|quaternion|rect|size|vector2d|vector3d|vector4d
+    ){{identifier_break}}
 
 contexts:
   main:
@@ -128,13 +135,15 @@ contexts:
         - include: else-pop
 
   object-standalone:
-    - include: object-type-name
-    - include: object-block
+    - match: '(?=[[:upper:]])'
+      push:
+        - object-block
+        - object-type-name
 
   object-type-name:
     # either Namespace.Object or just Object
     - match: (?={{identifier_title}})
-      push: object-type-name-extended
+      set: object-type-name-extended
 
   object-type-name-extended:
     - match: '{{identifier_title}}(?!\s*\.)'
@@ -154,7 +163,7 @@ contexts:
         - meta_scope: meta.block.qml
         - match: \}
           scope: punctuation.section.block.end.qml
-          pop: true
+          pop: 2
         - include: object-block-statements
 
   object-block-statements:
@@ -162,6 +171,7 @@ contexts:
       scope: invalid.illegal.unexpected-terminator.qml
     - include: object-standalone
     - include: object-id
+    - include: property
 
   object-id:
     - match: id{{identifier_break}}
@@ -194,4 +204,118 @@ contexts:
           pop: true
     - match: '\S+'
       scope: invalid.illegal.identifier.qml
+      pop: true
+
+  property:
+    - include: required-property
+
+  required-property:
+    - match: required{{identifier_break}}
+      scope: keyword.other.qml storage.modifier.required.qml
+      push: required-property-branch
+
+  required-property-branch:
+    - meta_scope: meta.binding.qml
+    - match: '(?={{non_reserved_identifier}})'
+      branch_point: required-property-fail
+      branch:
+        - maybe-simple-required-property
+        - required-property-extended
+      pop: true
+    - include: illegal-property-name
+
+  maybe-simple-required-property:
+    - match: '{{non_reserved_identifier}}'
+      scope: meta.binding.name.qml variable.other.member.qml
+      set: maybe-inside-simple-required-property
+    - include: illegal-property-name
+
+  maybe-inside-simple-required-property:
+    - include: illegal-property-binding
+    - include: semicolon-or-eol-pop
+    - match: '\S'
+      fail: required-property-fail
+
+  required-property-extended:
+    - match: property{{identifier_break}}
+      scope: keyword.declaration.qml
+      push:
+        # - required-property-after-name
+        - required-property-name
+        - required-property-type
+
+    - include: semicolon-or-eol-pop
+    - match: '\S+'
+      scope: invalid.illegal.expected-property.qml
+      pop: true
+
+  required-property-type:
+    - include: property-type-member
+
+  property-type-member-or-alias:
+    - include: property-type-alias
+    - include: property-type-member
+
+  property-type-member:
+    - include: property-type-list
+    - include: property-type-simple
+
+  property-type-simple:
+    - include: property-type-basic
+    - include: object-type-name
+    # fallback
+    - match: '{{identifier}}'
+      scope: storage.type.qml
+      pop: 1
+    - match: '\S+'
+      scope: invalid.illegal.expected-type.qml
+      pop: 1
+
+  property-type-basic:
+    - match: '{{qml_builtin_type}}'
+      scope: storage.type.qml support.type.qml
+      pop: true
+
+  property-type-alias:
+    - match: alias{{identifier_break}}
+      scope: keyword.other.qml
+      pop: true
+
+  property-type-list:
+    - match: list{{identifier_break}}
+      scope: storage.type.qml support.other.qml
+      set: list-type-generics
+
+  list-type-generics:
+    - match: '<'
+      scope: punctuation.definition.generic.begin.qml
+      set:
+        - list-type-generics-end
+        - property-type-simple
+
+  list-type-generics-end:
+    - match: '>'
+      scope: punctuation.definition.generic.end.qml
+      pop: true
+
+  required-property-name:
+    - match: '(?={{non_reserved_identifier}}){{identifier}}'
+      scope: meta.binding.name.qml variable.other.member.qml
+      set:
+        - include: illegal-property-binding
+        - include: semicolon-or-eol-pop
+
+    - match: '\S+'
+      scope: invalid.illegal.expected-identifier.qml
+      pop: true
+
+  illegal-property-binding:
+    - match: ':'
+      scope: invalid.illegal.binding.qml
+      pop: true
+
+  illegal-property-name:
+    - include: semicolon-or-eol-pop
+    - match: '\S+'
+      scope: invalid.illegal.expected-name.qml
       pop: true
