@@ -164,31 +164,35 @@ contexts:
         - match: \}
           scope: punctuation.section.block.end.qml
           pop: 2
-        - include: object-block-statements
+        - match: (?=\S)
+          push: object-block-statement
 
-  object-block-statements:
+  object-block-statement:
     - match: \;
       scope: invalid.illegal.unexpected-terminator.qml
+      pop: 1
     - include: object-standalone
     - include: object-id
     - include: property
+    - include: else-pop
 
   object-id:
     - match: id{{identifier_break}}
       scope: keyword.other.id.qml
       push:
         - object-id-meta
-        - object-id-extended
+        - object-id-name
+        - property-binding-expect-colon
 
   object-id-meta:
     - meta_include_prototype: false
     - meta_scope: meta.binding.qml
     - include: immediately-pop
 
-  object-id-extended:
+  property-binding-expect-colon:
     - match: ':'
       scope: keyword.operator.assignment.qml
-      set: object-id-name
+      pop: true
     - match: '\S+'
       scope: invalid.illegal.qml
       pop: true
@@ -205,6 +209,7 @@ contexts:
     - match: '\S+'
       scope: invalid.illegal.identifier.qml
       pop: true
+    - include: semicolon-or-eol-pop
 
   property:
     - include: required-property
