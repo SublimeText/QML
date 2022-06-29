@@ -1,6 +1,9 @@
 Sublime-QML
 ===========
 
+[![Syntax Tests](https://github.com/ratijas/Sublime-QML/actions/workflows/syntax.yml/badge.svg?branch=work%2Fratijas%2Fremaster)](https://github.com/ratijas/Sublime-QML/actions/workflows/syntax.yml)
+![Package Control](https://img.shields.io/packagecontrol/dm/QML)
+
 About
 -----
 
