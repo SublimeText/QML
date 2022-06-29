@@ -179,3 +179,49 @@ RequiredProperties {
     required property what for
 //                         ^^^ invalid.illegal.expected-identifier.qml
 }
+
+WithMethods {
+    id: withMethods
+    function abc(arg1) {}
+//  ^^^^^^^^ meta.function keyword.declaration.function
+//           ^^^ meta.function entity.name.function
+//              ^ meta.function.parameters punctuation.section.group.begin
+//               ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                   ^ meta.function.parameters punctuation.section.group.end
+//                     ^^ meta.function meta.block
+//                       ^ meta.block.qml - meta.function
+// make sure statements still work
+    required property rect rect
+//  ^^^^^^^^ keyword.other storage.modifier.required
+//           ^^^^^^^^ keyword.declaration
+//                    ^^^^ storage.type support.type
+//                         ^^^^ meta.binding.name variable.other.member
+    function def(arg2, arg3) {
+        const i = 42;
+//      ^^^^^ meta.block.qml meta.function meta.block keyword.declaration
+//                ^^ meta.block.qml meta.function.js meta.block.js meta.number.integer.decimal.js constant.numeric.value.js
+        function () {};
+//      ^^^^^^^^ meta.block.qml meta.function meta.block.js meta.function keyword.declaration.function
+    }
+    function typed(arg4: string, arg5: Item, arg6: QtQuick.Item, { objectName }) {
+//                 ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                     ^ meta.function.parameters punctuation.separator.type
+//                       ^^^^^^ meta.function.parameters storage.type support.type
+//                               ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                                   ^ meta.function.parameters punctuation.separator.type
+//                                     ^^^^ meta.function.parameters support.class
+//                                           ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                                               ^ meta.function.parameters punctuation.separator.type
+//                                                 ^^^^^^^ meta.function.parameters support.class
+//                                                        ^ meta.function.parameters punctuation.accessor
+//                                                         ^^^^ meta.function.parameters support.class
+//                                                                 ^^^^^^^^^^ meta.function.parameters meta.binding.destructuring.mapping meta.mapping.key meta.binding.name variable.parameter.function
+        let j = 9001;
+//      ^^^ meta.block.qml meta.function.js meta.block.js keyword.declaration.js
+    }
+    function returns(): string {let i;}
+//                    ^ meta.function.js punctuation.separator.type.qml
+//                      ^^^^^^ meta.function.js storage.type support.type
+//                             ^^^^^^^^ meta.block.qml meta.function.js meta.block.js
+//                              ^^^ keyword.declaration.js
+}
