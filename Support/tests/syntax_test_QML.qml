@@ -181,7 +181,7 @@ RequiredProperties {
 //                          ^^^^ comment.block
 //                               ^^^^ meta.binding.name variable.other.member
     required Four
-//           ^^^^ meta.binding.name variable.other.member
+//           ^^^^ invalid.illegal.expected-name
     required 5
 //           ^ invalid.illegal.expected-name
     required break

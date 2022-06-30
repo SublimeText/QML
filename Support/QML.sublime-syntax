@@ -12,6 +12,7 @@ variables:
   identifier: '\b[[:alpha:]_]{{identifier_continue}}*\b'
   identifier_title: '\b[[:upper:]]{{identifier_continue}}*\b'
   identifier_untitle: '\b[[:lower:]]{{identifier_continue}}*\b'
+  property_name: (?:(?!{{reserved_word}})(?![[:upper:]])(?:{{identifier_start}}{{identifier_part}}*{{identifier_break}}))
   path: '({{identifier}}[ ]*\.[ ]*)*{{identifier}}'
   qml_builtin_type: |-
     (?x:
@@ -278,7 +279,7 @@ contexts:
     - include: illegal-property-name
 
   maybe-simple-required-property:
-    - match: '{{non_reserved_identifier}}'
+    - match: '{{property_name}}'
       scope: meta.binding.name.qml variable.other.member.qml
       set: maybe-inside-simple-required-property
     - include: illegal-property-name
@@ -335,10 +336,13 @@ contexts:
     - include: else-pop-at-eol
 
   expect-property-name:
-    - match: '{{non_reserved_identifier}}'
+    - include: property-name
+    - include: illegal-property-name
+
+  property-name:
+    - match: '{{property_name}}'
       scope: meta.binding.name.qml variable.other.member.qml
       pop: true
-    - include: illegal-property-name
 
   expect-property-binding:
     - match: ':'
@@ -437,7 +441,7 @@ contexts:
       pop: true
 
   required-property-name:
-    - match: '(?={{non_reserved_identifier}}){{identifier}}'
+    - match: '{{property_name}}'
       scope: meta.binding.name.qml variable.other.member.qml
       set:
         - include: illegal-property-binding
