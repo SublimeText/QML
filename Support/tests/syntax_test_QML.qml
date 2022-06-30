@@ -120,6 +120,20 @@ Nested {
 
 // <- - meta.block
 
+)
+// <- invalid.illegal.stray-bracket-end
+}
+// <- invalid.illegal.stray-bracket-end
+]
+// <- invalid.illegal.stray-bracket-end
+
+QtObject {
+    )
+    // <- invalid.illegal.stray-bracket-end
+    ]
+    // <- invalid.illegal.stray-bracket-end
+}
+
 one.two {}
 // <-   - support.class
 //  ^^^ - support.class

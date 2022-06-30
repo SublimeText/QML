@@ -26,14 +26,14 @@ contexts:
     - include: statements-qml
 
   statements-qml:
-    - match: '\)|\}|\]'
-      scope: invalid.illegal.stray-bracket-end.qml
-      pop: true
-
     - match: (?=\S)
       push: statement-qml
 
   statement-qml:
+    - match: '\)|\}|\]'
+      scope: invalid.illegal.stray-bracket-end.qml
+      pop: true
+
     - match: \;
       scope: punctuation.terminator.statement.empty.qml
       pop: true
@@ -162,47 +162,59 @@ contexts:
 
   object-standalone:
     - match: '(?=[[:upper:]])'
-      push:
+      set:
         - object-block
-        - object-type-name
+        - expect-object-type-name
 
-  object-type-name:
+  expect-object-type-name:
     # either Namespace.Object or just Object
     - match: (?={{identifier_title}})
-      set: object-type-name-extended
+      set: object-type-name
 
-  object-type-name-extended:
+  object-type-name:
+    # just Object
     - match: '{{identifier_title}}(?!\s*\.)'
       scope: support.class.qml
       pop: true
+
+    # Namespace.Object
     - match: '{{identifier_title}}'
       scope: support.class.qml
       set:
         - match: \.
           scope: punctuation.accessor.qml
-          set: object-type-name-extended
+          set: object-type-name
+
+    - include: else-pop
 
   object-block:
     - match: \{
       scope: punctuation.section.block.begin.qml
-      push:
+      set:
         - meta_scope: meta.block.qml
         - match: \}
           scope: punctuation.section.block.end.qml
-          pop: 2
-        - match: (?=\S)
-          push: object-block-statement
+          pop: true
+        - include: object-block-statements
+
+  object-block-statements:
+    - match: '\)|\}|\]'
+      scope: invalid.illegal.stray-bracket-end.qml
+      # pop: true  # Don't! Let the object flow further
+
+    - match: (?=\S)
+      push: object-block-statement
 
   object-block-statement:
     - match: \;
       scope: invalid.illegal.unexpected-terminator.qml
-      pop: 1
+      pop: true
+
     - include: object-standalone
     - include: object-id
     - include: property
     - include: regular-qml-method
     - include: regular-qml-signal
-    - include: else-pop
 
   object-id:
     - match: id{{identifier_break}}
@@ -294,7 +306,7 @@ contexts:
 
   property-type-simple:
     - include: property-type-basic
-    - include: object-type-name
+    - include: expect-object-type-name
     # fallback
     - match: '{{identifier}}'
       scope: storage.type.qml
