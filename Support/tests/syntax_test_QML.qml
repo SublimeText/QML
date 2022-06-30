@@ -306,4 +306,29 @@ Signals {
 //                         ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                             ^ meta.function.parameters punctuation.separator.type
 //                               ^^^^ meta.function.parameters storage.type support.type
+//                                   ^ meta.function.parameters punctuation.section.group.end
+}
+
+Expressions {
+    function multiline_strings() {
+        "use
+//      ^^^^^ meta.string string.quoted.double
+//      ^ punctuation.definition.string.begin
+//          ^ invalid.deprecated.newline.qml
+        strict";
+//      ^^^^^^^ meta.string string.quoted.double
+//            ^ punctuation.definition.string.end
+//             ^ - meta.string
+        const single = 'flip
+//                     ^^^^^^ meta.string string.quoted.single
+//                     ^ punctuation.definition.string.begin
+//                          ^ invalid.deprecated.newline.qml
+        flop';
+//      ^^^^^ meta.string string.quoted.single
+//          ^ punctuation.definition.string.end
+        const template = `hip
+//                       ^^^^^ meta.string string.quoted.other
+//                           ^ - invalid.deprecated.newline.qml
+        hop`;
+    }
 }

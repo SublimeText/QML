@@ -510,3 +510,31 @@ contexts:
     - include: else-pop
 
   # END signals
+
+  literal-string:
+    - match: "'"
+      scope: punctuation.definition.string.begin.qml
+      set:
+        - meta_include_prototype: false
+        - meta_scope: meta.string.qml string.quoted.single.qml
+        - match: \'
+          scope: punctuation.definition.string.end.qml
+          pop: true
+        # Qt/QML extension: newlines are allowed in double-quoted strings
+        - match: \n
+          scope: invalid.deprecated.newline.qml
+          # pop: true
+        - include: string-content
+    - match: '"'
+      scope: punctuation.definition.string.begin.qml
+      set:
+        - meta_include_prototype: false
+        - meta_scope: meta.string.qml string.quoted.double.qml
+        - match: \"
+          scope: punctuation.definition.string.end.qml
+          pop: true
+        # Qt/QML extension: newlines are allowed in double-quoted strings
+        - match: \n
+          scope: invalid.deprecated.newline.qml
+          # pop: true
+        - include: string-content
