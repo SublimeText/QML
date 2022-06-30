@@ -219,7 +219,7 @@ contexts:
   object-id:
     - match: id{{identifier_break}}
       scope: keyword.other.id.qml
-      push:
+      set:
         - object-id-meta
         - object-id-name
         - property-binding-expect-colon
