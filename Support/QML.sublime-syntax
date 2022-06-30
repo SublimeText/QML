@@ -254,10 +254,17 @@ contexts:
   property:
     - include: required-property
 
+  property-binding-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.binding.qml
+    - include: immediately-pop
+
   required-property:
     - match: required{{identifier_break}}
       scope: keyword.other.qml storage.modifier.required.qml
-      push: required-property-branch
+      set:
+        - property-binding-meta
+        - required-property-branch
 
   required-property-branch:
     - meta_scope: meta.binding.qml

@@ -174,7 +174,7 @@ RequiredProperties {
     required name; required /**/ text
 //  ^^^^^^^^^^^^^ meta.binding
 //                 ^^^^^^^^^^^^^^^^^^ meta.binding
-//               ^^ - meta.binding
+//                ^ - meta.binding
 //  ^^^^^^^^ storage.modifier.required
 //           ^^^^ meta.binding.name variable.other.member
 //               ^ punctuation.terminator.statement
@@ -214,15 +214,15 @@ RequiredProperties {
     required property list<Item> seven
 //                    ^^^^ storage.type support.other
 //                        ^ punctuation.definition.generic.begin
-//                         ^^^^ support.class.qml
+//                         ^^^^ support.class
 //                             ^ punctuation.definition.generic.end
 //                               ^^^^^ meta.binding.name variable.other.member
     required property list<QtQuick.Item> seven
 //                    ^^^^ storage.type support.other
 //                        ^ punctuation.definition.generic.begin
-//                         ^^^^^^^ support.class.qml
+//                         ^^^^^^^ support.class
 //                                ^ punctuation.accessor
-//                                 ^^^^ support.class.qml
+//                                 ^^^^ support.class
 //                                     ^ punctuation.definition.generic.end
 //                                       ^^^^^ meta.binding.name variable.other.member
     required property what isthis
@@ -384,3 +384,5 @@ Expressions {
         hop`;
     }
 }
+
+// <- - meta.block
