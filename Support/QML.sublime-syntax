@@ -48,6 +48,10 @@ contexts:
       pop: true
     - include: else-pop
 
+  else-pop-at-eol:
+    - include: else-pop
+    - include: line-continuation-or-pop
+
   line-continuation-or-pop:
     - match: (?=\s*($|;))
       pop: true
@@ -70,24 +74,37 @@ contexts:
     - match: import{{identifier_break}}
       scope: keyword.control.import.qml
       push:
-        - meta_scope: meta.import.qml
-
-        - include: import-string
-        - include: import-version
-        - include: import-alias
-        - include: qualified-name
-
-        - include: expect-semicolon-qml
-        - include: line-continuation-or-pop
+        - import-meta
+        - semicolon-or-eol-pop
+        - expect-import-alias
+        - expect-import-version
+        - expect-import-location
 
   import-meta:
     - meta_include_prototype: false
     - meta_scope: meta.import.qml
     - include: immediately-pop
 
+  expect-import-location:
+    - include: import-string
+    - include: qualified-name
+    - include: else-pop-at-eol
+
   import-string:
-    - match: (?=['"])
-      push: literal-string
+    - include: literal-string
+    - match: (?=`)
+      set:
+        - import-string-invalid-meta
+        - literal-string-template
+
+  import-string-invalid-meta:
+    - meta_include_prototype: false
+    - meta_scope: invalid.illegal.import-string.qml
+    - include: immediately-pop
+
+  expect-import-version:
+    - include: import-version
+    - include: else-pop-at-eol
 
   import-version:
     - match: '(\d+)(?:\s*(\.)\s*(\d+))?'
@@ -96,11 +113,17 @@ contexts:
         1: constant.numeric.value.qml
         2: punctuation.separator.decimal.qml
         3: constant.numeric.value.qml
+      pop: true
     - match: (@)(?:{{identifier}})(@)
       scope: variable.other.cmake
       captures:
         1: punctuation.definition.variable.begin.cmake
         2: punctuation.definition.variable.end.cmake
+      pop: true
+
+  expect-import-alias:
+    - include: import-alias
+    - include: else-pop-at-eol
 
   import-alias:
     - match: as{{identifier_break}}
@@ -109,9 +132,8 @@ contexts:
         - meta_scope: meta.import.alias.qml
         - match: '{{identifier_title}}'
           scope: entity.name.namespace.qml
-          set: expect-semicolon-qml
+          pop: true
         - include: import-illegal-names
-        - include: expect-semicolon-qml
 
   import-illegal-names:
     - match: '[^\s]+'
@@ -120,19 +142,23 @@ contexts:
 
   qualified-name:
     - match: (?={{identifier}})
-      push: qualified-name-extended
+      set:
+        - qualified-name-meta
+        - qualified-name-recursive
 
-  qualified-name-extended:
+  qualified-name-meta:
+    - meta_include_prototype: false
     - meta_scope: meta.path.qml
+    - include: immediately-pop
 
+  qualified-name-recursive:
     - match: '{{identifier}}'
       scope: meta.generic-name.qml
       set:
         - match: \.
           scope: punctuation.accessor.qml
-          set: qualified-name-extended
-        - include: line-continuation-or-pop
-        - include: else-pop
+          set: qualified-name-recursive
+        - include: else-pop-at-eol
 
   object-standalone:
     - match: '(?=[[:upper:]])'

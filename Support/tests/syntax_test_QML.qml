@@ -8,10 +8,13 @@ pragma Singleton
 /* no version */
 import QtQml
 // <- source.qml meta.import keyword.control.import
-//     ^^^^^ meta.path
+//     ^^^^^ meta.path meta.generic-name
 
 /* major-only version */
 import QtQuick 2
+// <-               meta.import.qml
+// ^^^^^^^^^^^^^    meta.import.qml
+//              ^ - meta.import.qml
 //             ^ meta.import constant.numeric
 
 import QtQuick 2 . 15
@@ -20,19 +23,44 @@ import QtQuick 2 . 15
 
 /* major & minor version */
 import QtQuick.Layouts 2.15
+// <-                          meta.import.qml
+// ^^^^^^^^^^^^^^^^^^^^^^^^    meta.import.qml
+//                         ^ - meta.import.qml
 // <- meta.import keyword.control.import
 //     ^^^^^^^^^^^^^^^ meta.path
 //            ^ punctuation.accessor
+//                     ^^^^ meta.number.version
 //                     ^ constant.numeric
 //                      ^ punctuation.separator
 //                       ^^ constant.numeric
-// ^^^^^^^^^^^^^^^^^^^^^^^^ meta.import.qml
 
-import org.kde.kirigami 2.20 as Kirigami
-//                           ^^ keyword.operator.as
-//                              ^^^^^^^^ entity.name.namespace
+import org.kde . kirigami 2.20 as Kirigami
+// <-                                       meta.import.qml
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^    meta.import.qml
+//                                        ^ - meta.import.qml
+//                        ^^^^ meta.number.version
+//                             ^^ keyword.operator.as
+//                                ^^^^^^^^ meta.import.alias entity.name.namespace
+
+import QtQuick.Controls as Controls
+// <-                                  meta.import.qml
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^    meta.import.qml
+//                                 ^ - meta.import.qml
+//     ^^^^^^^^^^^^^^^^ meta.path
+//     ^^^^^^^ meta.generic-name
+//            ^ punctuation.accessor
+//             ^^^^^^^^ meta.generic-name
+//                      ^^ keyword.operator.as
+//                         ^^^^^^^^ meta.import.alias entity.name.namespace
 
 import QtQuick.Controls @QQC2_VERSION@ as Controls;
+// <-                                               meta.import.qml
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.import.qml
+//                                                 ^ - meta.import.qml
+//     ^^^^^^^^^^^^^^^^ meta.path
+//     ^^^^^^^ meta.generic-name
+//            ^ punctuation.accessor
+//             ^^^^^^^^ meta.generic-name
 //                      ^^^^^^^^^^^^^^ variable.other.cmake
 //                      ^              punctuation.definition.variable.begin.cmake
 //                                   ^ punctuation.definition.variable.end.cmake
@@ -45,9 +73,19 @@ import Abc as abc
 import ":/components"
 //     ^^^^^^^^^^^^^^ meta.string string.quoted.double
 
+import ':/components' 2.5 as Components
+// <-                                   meta.import.qml
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.import.qml
+//                                     ^ - meta.import.qml
+//     ^^^^^^^^^^^^^^ meta.string string.quoted.single
+//                    ^^^ meta.number.version
+
 // Make sure import aliases work with strings
 import "./logic.js" as Logic
 //                  ^^ meta.import meta.import.alias keyword.operator.as
+
+import `templates`
+//     ^^^^^^^^^^^ meta.import.qml invalid.illegal.import-string meta.string string.quoted.other
 
 import One; import Two;
 //        ^             punctuation.terminator.statement.qml - punctuation.terminator.statement.empty
