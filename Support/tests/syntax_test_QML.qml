@@ -207,14 +207,17 @@ WithMethods {
 //                 ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                     ^ meta.function.parameters punctuation.separator.type
 //                       ^^^^^^ meta.function.parameters storage.type support.type
+//                             ^ meta.function.parameters punctuation.separator.parameter.function
 //                               ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                                   ^ meta.function.parameters punctuation.separator.type
 //                                     ^^^^ meta.function.parameters support.class
+//                                         ^ meta.function.parameters punctuation.separator.parameter.function
 //                                           ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                                               ^ meta.function.parameters punctuation.separator.type
 //                                                 ^^^^^^^ meta.function.parameters support.class
 //                                                        ^ meta.function.parameters punctuation.accessor
 //                                                         ^^^^ meta.function.parameters support.class
+//                                                             ^ meta.function.parameters punctuation.separator.parameter.function
 //                                                                 ^^^^^^^^^^ meta.function.parameters meta.binding.destructuring.mapping meta.mapping.key meta.binding.name variable.parameter.function
         let j = 9001;
 //      ^^^ meta.block.qml meta.function.js meta.block.js keyword.declaration.js
@@ -224,4 +227,83 @@ WithMethods {
 //                      ^^^^^^ meta.function.js storage.type support.type
 //                             ^^^^^^^^ meta.block.qml meta.function.js meta.block.js
 //                              ^^^ keyword.declaration.js
+}
+
+Signals {
+    signal basic1;
+//  ^^^^^^ meta.function keyword.declaration.function
+//         ^^^^^^ meta.function entity.name.function
+//               ^ meta.function punctuation.terminator.statement
+    signal basic2
+//  ^^^^^^ meta.function keyword.declaration.function
+//         ^^^^^^ meta.function entity.name.function
+    signal decorated1();
+//  ^^^^^^ meta.function keyword.declaration.function
+//         ^^^^^^^^^^ meta.function entity.name.function
+//                   ^ meta.function.parameters punctuation.section.group.begin
+//                    ^ meta.function.parameters punctuation.section.group.end
+//                     ^ meta.function punctuation.terminator.statement
+    signal decorated2()
+//  ^^^^^^ meta.function keyword.declaration.function
+//         ^^^^^^^^^^ meta.function entity.name.function
+//                   ^ meta.function.parameters punctuation.section.group.begin
+//                    ^ meta.function.parameters punctuation.section.group.end
+    signal untyped(arg1, arg2: string, arg3)
+//  ^^^^^^ meta.function keyword.declaration.function
+//         ^^^^^^^ meta.function entity.name.function
+//                ^ meta.function.parameters punctuation.section.group.begin
+//                 ^^^^ invalid.illegal.expected-type
+//                     ^ meta.function.parameters punctuation.separator.parameter.function
+//                       ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                           ^ meta.function.parameters punctuation.separator.type
+//                             ^^^^^^ meta.function.parameters storage.type support.type
+//                                   ^ meta.function.parameters punctuation.separator.parameter.function
+//                                     ^^^^ invalid.illegal.expected-type
+//                                         ^ meta.function.parameters punctuation.section.group.end
+    signal pressed(arg1: real, arg2: QQC2.Button)
+//  ^^^^^^ meta.function keyword.declaration.function
+//         ^^^^^^^ meta.function entity.name.function
+//                ^ meta.function.parameters punctuation.section.group.begin
+//                 ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                     ^ meta.function.parameters punctuation.separator.type
+//                       ^^^^ meta.function.parameters storage.type support.type
+//                           ^ meta.function.parameters punctuation.separator.parameter.function
+//                             ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                                 ^ meta.function.parameters punctuation.separator.type
+//                                   ^^^^ meta.function.parameters support.class
+//                                       ^ meta.function.parameters punctuation.accessor
+//                                        ^^^^^^ meta.function.parameters support.class
+//                                              ^ meta.function.parameters punctuation.section.group.end
+    signal clicked(point arg1, size arg2)
+//  ^^^^^^ meta.function keyword.declaration.function
+//         ^^^^^^^ meta.function entity.name.function
+//                ^ meta.function.parameters punctuation.section.group.begin
+//                 ^^^^^ meta.function.parameters storage.type support.type
+//                       ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                           ^ meta.function.parameters punctuation.separator.parameter.function
+//                             ^^^^ meta.function.parameters storage.type support.type
+//                                  ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                                      ^ meta.function.parameters punctuation.section.group.end
+    signal hovered(Item arg1, QQC2.Button arg2)
+//  ^^^^^^ meta.function keyword.declaration.function
+//         ^^^^^^^ meta.function entity.name.function
+//                ^ meta.function.parameters punctuation.section.group.begin
+//                 ^^^^ meta.function.parameters support.class
+//                      ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                          ^ meta.function.parameters punctuation.separator.parameter.function
+//                            ^^^^ meta.function.parameters support.class
+//                                ^ meta.function.parameters punctuation.accessor
+//                                 ^^^^^^ meta.function.parameters support.class
+//                                        ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                                            ^ meta.function.parameters punctuation.section.group.end
+    signal mixed(url arg1, arg2: bool)
+//  ^^^^^^ meta.function keyword.declaration.function
+//         ^^^^^ meta.function entity.name.function
+//              ^ meta.function.parameters punctuation.section.group.begin
+//               ^^^ meta.function.parameters storage.type support.type
+//                   ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                       ^ meta.function.parameters punctuation.separator.parameter.function
+//                         ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                             ^ meta.function.parameters punctuation.separator.type
+//                               ^^^^ meta.function.parameters storage.type support.type
 }

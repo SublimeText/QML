@@ -175,6 +175,7 @@ contexts:
     - include: object-id
     - include: property
     - include: regular-qml-method
+    - include: regular-qml-signal
     - include: else-pop
 
   object-id:
@@ -246,7 +247,6 @@ contexts:
     - match: property{{identifier_break}}
       scope: keyword.declaration.qml
       push:
-        # - required-property-after-name
         - required-property-name
         - required-property-type
 
@@ -395,3 +395,118 @@ contexts:
     - include: else-pop
 
   # END methods
+
+  # BEGIN signals
+
+  regular-qml-signal:
+    - match: (?=signal{{identifier_break}})
+      set: signal-declaration
+
+  signal-declaration:
+    - meta_include_prototype: false
+    - match: ''
+      set:
+        - signal-meta
+        - expect-semicolon
+        - signal-declaration-expect-parameters
+        - function-declaration-expect-name
+        - signal-declaration-expect-keyword
+
+  signal-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.function.js
+    - include: immediately-pop
+
+  signal-declaration-expect-keyword:
+    - match: signal{{identifier_break}}
+      scope: keyword.declaration.function.qml
+      pop: true
+    - include: else-pop
+
+  signal-declaration-expect-parameters:
+    - include: signal-declaration-parameters
+    - include: else-pop
+
+  signal-declaration-parameters:
+    - match: \(
+      scope: punctuation.section.group.begin.qml
+      set:
+        - clear_scopes: 1
+        - meta_scope: meta.function.parameters.qml
+        - match: \)
+          scope: punctuation.section.group.end.qml
+          pop: true
+        - include: signal-parameter-list
+
+  signal-parameter-list:
+    - match: ','
+      scope: punctuation.separator.parameter.function.qml
+    - match: (?={{identifier}})
+      push: signal-parameter
+    - include: else-pop
+
+  signal-parameter:
+    - match: (?={{identifier}})
+      # pop: true
+      branch:
+        - try-signal-parameter-name-first
+        - try-signal-parameter-type-first
+        - signal-parameter-untyped
+      branch_point: signal-parameter-signature
+    - include: else-pop
+
+  # TypeScript style: `param1: string`
+  try-signal-parameter-name-first:
+    - match: (?={{identifier}})
+      set:
+        - signal-parameter-expect-type
+        - maybe-signal-parameter-expect-colon
+        - signal-parameter-name
+    - match: (?=\S)
+      fail: signal-parameter-signature
+    - include: else-pop
+
+  maybe-signal-parameter-expect-colon:
+    - match: ':'
+      scope: punctuation.separator.type.qml
+      pop: true
+    - match: (?=\S)
+      fail: signal-parameter-signature
+
+  signal-parameter-name:
+    - match: '{{non_reserved_identifier}}'
+      scope: meta.binding.name.js variable.parameter.function.js
+      pop: 1
+    - match: '{{identifier_name}}'
+      scope: invalid.illegal.identifier.js meta.binding.name.js variable.parameter.function.js
+      pop: 1
+    - include: else-pop
+
+  signal-parameter-name-fail-on-missing:
+    - match: (?=,|\))
+      fail: signal-parameter-signature
+    - include: signal-parameter-name
+
+  signal-parameter-expect-type:
+    - include: property-type-simple
+    - include: else-pop
+
+  # C/C++ style: `string param1`
+  try-signal-parameter-type-first:
+    - match: ''
+      set:
+        - signal-parameter-name-fail-on-missing
+        - signal-parameter-expect-type
+
+  signal-parameter-untyped:
+    - match: ''
+      set:
+        - untyped-warn
+        - signal-parameter-name
+
+  untyped-warn:
+    - meta_include_prototype: false
+    - meta_scope: invalid.illegal.expected-type.qml
+    - include: else-pop
+
+  # END signals
