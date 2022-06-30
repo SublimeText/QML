@@ -232,6 +232,115 @@ RequiredProperties {
 //                         ^^^ invalid.illegal.expected-identifier.qml
 }
 
+RegularProperties {
+    property color bright
+//  ^^^^^^^^^^^^^^^^^^^^^^ meta.binding
+//  ^^^^^^^^ keyword.declaration
+//           ^^^^^ storage.type support.type
+//                 ^^^^^^ meta.binding.name variable.other.member
+    property color bright;
+//  ^^^^^^^^^^^^^^^^^^^^^^ meta.binding
+//                       ^ punctuation.terminator.statement
+//                        ^ meta.block - meta.binding
+    property Item child;
+//  ^^^^^^^^^^^^^^^^^^^^ meta.binding
+//  ^^^^^^^^ keyword.declaration
+//           ^^^^ support.class
+//                ^^^^^ meta.binding.name variable.other.member
+    property QQC2.Button button
+//  ^^^^^^^^^^^^^^^^^^^^ meta.binding
+//  ^^^^^^^^ keyword.declaration
+//           ^^^^ support.class
+//               ^ punctuation.accessor
+//                ^^^^^^ support.class
+//                       ^^^^^^ meta.binding.name variable.other.member
+    property list<Item> children
+//  ^^^^^^^^^^^^^^^^^^^^ meta.binding
+//  ^^^^^^^^ keyword.declaration
+//           ^^^^ storage.type support.other
+//               ^ punctuation.definition.generic.begin
+//                ^^^^ support.class
+//                    ^ punctuation.definition.generic.end
+//                      ^^^^^^^^ meta.binding.name variable.other.member
+    property alias those: root.background.children
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding
+//  ^^^^^^^^ keyword.declaration
+//           ^^^^^ keyword.other
+//                 ^^^^^ meta.binding.name variable.other.member
+//                      ^ punctuation.separator.mapping.key-value
+//                        ^^^^ variable.other.readwrite.js
+//                            ^ punctuation.accessor.js
+//                             ^^^^^^^^^^ meta.property.object.js
+//                                       ^ punctuation.accessor.js
+//                                        ^^^^^^^^ meta.property.object.js
+    default property list<QtObject> data
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding
+//  ^^^^^^^ keyword.other.qml storage.modifier.default.qml
+//          ^^^^^^^^ keyword.declaration
+//                                  ^^^^ meta.binding.name variable.other.member
+    readonly property string name: "xyz"
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding
+//  ^^^^^^^^ keyword.other.qml storage.modifier.required.qml
+//           ^^^^^^^^ keyword.declaration
+//                           ^^^^ meta.binding.name variable.other.member
+//                               ^ punctuation.separator.mapping.key-value.qml
+//                                 ^^^^^ meta.string string.quoted.double
+    property url icon: Qt.application.layoutDirection === Qt.RightToLeft
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.qml meta.binding.qml
+//  ^^^^^^^^ keyword.declaration
+//           ^^^ storage.type support.type
+//               ^^^^ meta.binding.name variable.other.member
+//                   ^ punctuation.separator.mapping.key-value.qml
+//                     ^^ support.class.js
+//                       ^ punctuation.accessor.js
+//                        ^^^^^^^^^^^ meta.property.object.js
+//                                   ^ punctuation.accessor.js
+//                                    ^^^^^^^^^^^^^^^ meta.property.object.js
+//                                                    ^^^ keyword.operator.comparison.js
+//                                                        ^^ support.class.js
+//                                                          ^ punctuation.accessor.js
+//                                                           ^^^^^^^^^^^ meta.property.object.js
+        ? "go-back-rtl" : "go-back"
+//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding
+//      ^ keyword.operator.ternary
+//        ^^^^^^^^^^^^^ meta.string string.quoted.double
+//                      ^ keyword.operator.ternary
+//                        ^^^^^^^^^ meta.string string.quoted.double
+    property int size: if (cond) { return 1; }
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding
+//  ^^^^^^^^ keyword.declaration
+//           ^^^ storage.type support.type
+//               ^^^^ meta.binding.name variable.other.member
+//                   ^ punctuation.separator.mapping.key-value
+//                     ^^ meta.conditional.js keyword.control.conditional.if.js
+//                        ^^^^^^ meta.conditional.js meta.group.js
+//                               ^^^^^^^^^^^^^ meta.conditional.js meta.block.js
+//                                 ^^^^^^ keyword.control.flow.return.js
+//                                         ^ punctuation.terminator.statement.js
+    else if { return 2; } else {}
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  meta.binding meta.conditional.js
+//                               ^ meta.binding
+//  ^^^^^^^ keyword.control.conditional.elseif.js
+//          ^^^^^^^^^^^^^ meta.block.js
+//                        ^^^^ keyword.control.conditional.else.js
+//                             ^^ meta.block.js
+    property point mouse:
+//  ^^^^^^^^^^^^^^^^^^^^^^ meta.binding
+//  ^^^^^^^^ keyword.declaration
+//           ^^^^^ storage.type support.type
+//                 ^^^^^ meta.binding.name variable.other.member
+        Qt.point(null, undefined, NaN)
+//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding
+//      ^^ meta.function-call.method.js support.class.js
+//        ^ meta.function-call.method.js punctuation.accessor.js
+//         ^^^^^ meta.function-call.method.js variable.function.js
+//               ^^^^ meta.function-call.method.js meta.group.js constant.language.null.js
+//                     ^^^^^^^^^ meta.function-call.method.js meta.group.js constant.language.undefined.js
+//                                ^^^ meta.function-call.method.js meta.group.js constant.language.nan.js
+}
+// <- meta.block punctuation.section.block.end
+// ^ - meta.block
+
 WithMethods {
     id: withMethods
     function abc(arg1) {}

@@ -253,6 +253,7 @@ contexts:
 
   property:
     - include: required-property
+    - include: non-required-property
 
   property-binding-meta:
     - meta_include_prototype: false
@@ -302,6 +303,92 @@ contexts:
 
   required-property-type:
     - include: property-type-member
+
+  non-required-property:
+    - match: (?=(?:readonly|default|property){{identifier_break}})
+      set:
+        - property-binding-meta
+        - expect-semicolon-qml
+        - expect-property-binding
+        - expect-property-name
+        - expect-property-type-member-or-alias
+        - expect-property-keyword
+        - expect-property-qualifiers
+
+  expect-property-qualifiers:
+    - include: property-keyword-readonly
+    - include: property-keyword-default
+    - include: else-pop-at-eol
+
+  property-keyword-readonly:
+    - match: readonly{{identifier_break}}
+      scope: keyword.other.qml storage.modifier.required.qml
+
+  property-keyword-default:
+    - match: default{{identifier_break}}
+      scope: keyword.other.qml storage.modifier.default.qml
+
+  expect-property-keyword:
+    - match: property{{identifier_break}}
+      scope: keyword.declaration.qml
+      pop: true
+    - include: else-pop-at-eol
+
+  expect-property-name:
+    - match: '{{non_reserved_identifier}}'
+      scope: meta.binding.name.qml variable.other.member.qml
+      pop: true
+    - include: illegal-property-name
+
+  expect-property-binding:
+    - match: ':'
+      scope: punctuation.separator.mapping.key-value.qml
+      set: expect-property-binding-value
+    - include: else-pop-at-eol
+
+  expect-property-binding-value:
+    # TODO: include QML object declaration
+    - match: (?=\S)
+      set: property-binding-value
+
+  property-binding-value:
+    - include: class
+    - include: regular-function
+    - include: conditionals
+    - include: block
+    - include: expression-statement
+    - include: else-pop-at-eol
+
+  # override here, so we can parse if-elseif-else chain in one go
+  conditionals:
+    - match: if{{identifier_break}}
+      scope: keyword.control.conditional.if.js
+      set:
+        - conditional-meta
+        - expect-condition-continuation
+        - statement
+        - expect-parenthesized-expression
+
+    - include: conditional
+
+  expect-condition-continuation:
+    - match: else\s+if{{identifier_break}}
+      scope: keyword.control.conditional.elseif.js
+      set:
+        - expect-condition-continuation
+        - statement
+        - expect-parenthesized-expression
+
+    - match: else{{identifier_break}}
+      scope: keyword.control.conditional.else.js
+      set:
+        - statement
+
+    - include: else-pop
+
+  expect-property-type-member-or-alias:
+    - include: property-type-member-or-alias
+    - include: else-pop-at-eol
 
   property-type-member-or-alias:
     - include: property-type-alias
