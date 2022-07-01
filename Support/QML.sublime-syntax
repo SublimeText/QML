@@ -227,7 +227,7 @@ contexts:
 
   object-id-meta:
     - meta_include_prototype: false
-    - meta_scope: meta.binding.qml
+    - meta_scope: meta.binding.property.qml
     - include: immediately-pop
 
   property-binding-expect-colon:
@@ -239,7 +239,7 @@ contexts:
       pop: true
 
   object-id-name:
-    - meta_scope: meta.binding.qml
+    - meta_scope: meta.binding.property.qml
     - match: '(?={{non_reserved_identifier}}){{identifier_untitle}}'
       scope: entity.name.label.qml
       set:
@@ -258,7 +258,7 @@ contexts:
 
   property-binding-meta:
     - meta_include_prototype: false
-    - meta_scope: meta.binding.qml
+    - meta_scope: meta.binding.property.qml
     - include: immediately-pop
 
   required-property:
@@ -269,7 +269,7 @@ contexts:
         - required-property-branch
 
   required-property-branch:
-    - meta_scope: meta.binding.qml
+    - meta_scope: meta.binding.property.qml
     - match: '(?={{non_reserved_identifier}})'
       branch_point: required-property-fail
       branch:
