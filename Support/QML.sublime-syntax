@@ -216,13 +216,17 @@ contexts:
       scope: invalid.illegal.unexpected-terminator.qml
       pop: true
 
-    - include: object-standalone
+    # prefixed (easily recognilable)
     - include: inline-component
-    - include: object-id
-    - include: property-declaration
     - include: regular-qml-method
     - include: regular-qml-signal
+    - include: property-declaration
+
+    # unprefixed (may require specifix order to work)
     - include: signal-handler-non-attached
+    - include: object-id
+    - include: object-standalone
+
     # temporarily allow random nested blocks until the syntax is complete
     - include: block
 
