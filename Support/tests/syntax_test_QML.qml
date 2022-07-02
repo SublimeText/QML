@@ -619,3 +619,39 @@ InlineComponents {
     G {}
 //  ^ support.class
 }
+
+Handlers {
+    onPressed: y = event.y;
+//  ^^^^^^^^^^^^^^^^^^^^^^^ meta.handler.qml
+//  ^^^^^^^^^ meta.binding.name variable.function
+//    ^^^^^^^ markup.underline
+//           ^ punctuation.separator.mapping.key-value
+//             ^ variable.other.readwrite.js
+//               ^ keyword.operator.assignment.js
+//                 ^^^^^ variable.other.readwrite.js
+//                      ^ punctuation.accessor.js
+//                       ^ meta.property.object.js
+//                        ^ punctuation.terminator.statement.js
+    onWidthChanged: {
+//  ^^^^^^^^^^^^^^^^^^ meta.handler.qml
+//  ^^^^^^^^^^^^^^ meta.binding.name variable.function
+//    ^^^^^ markup.underline
+//                ^ punctuation.separator.mapping.key-value
+//                  ^^ meta.block.js
+        const abc = "xyz";
+//      ^^^^^^^^^^^^^^^^^^ meta.handler.qml meta.block.js
+//      ^^^^^ keyword.declaration.js
+//                  ^^^^^ meta.string string.quoted.double
+    };;
+//  ^ meta.block.js
+//   ^^ invalid.illegal.unexpected-terminator
+
+// TODO: attached handlers
+/*Component.*/onCompleted: {}
+//            ^^^^^^^^^^^^^^^ meta.handler.qml
+//            ^^^^^^^^^^^ meta.binding.name variable.function
+//              ^^^^^^^^^ markup.underline
+
+    onEntered: Animation {}
+// TODO: objects as binding values
+}

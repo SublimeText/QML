@@ -12,6 +12,7 @@ variables:
   identifier: '\b[[:alpha:]_]{{identifier_continue}}*\b'
   identifier_title: '\b[[:upper:]]{{identifier_continue}}*\b'
   identifier_untitle: '\b[[:lower:]]{{identifier_continue}}*\b'
+  identifier_handler: '\b(on)(_*[[:upper:]]{{identifier_continue}}*?)(Changed)?\b'
   property_name: (?:(?!{{reserved_word}})(?![[:upper:]])(?:{{identifier_start}}{{identifier_part}}*{{identifier_break}}))
   path: '({{identifier}}[ ]*\.[ ]*)*{{identifier}}'
   qml_builtin_type: |-
@@ -221,6 +222,9 @@ contexts:
     - include: property
     - include: regular-qml-method
     - include: regular-qml-signal
+    - include: signal-handler-non-attached
+    # temporarily allow random nested blocks until the syntax is complete
+    - include: block
 
   object-id:
     - match: id{{identifier_break}}
@@ -768,3 +772,26 @@ contexts:
       scope: punctuation.separator.type.qml
       pop: true
     - include: else-pop
+
+  # BEGIN handlers
+
+  signal-handler-non-attached:
+    - match: (?={{identifier_handler}})
+      set:
+        - signal-binding-meta
+        - expect-binding
+        - signal-handler-name
+
+  signal-binding-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.handler.qml
+    - include: immediately-pop
+
+  signal-handler-name:
+    - match: '{{identifier_handler}}'
+      scope: meta.binding.name.qml variable.function.qml
+      captures:
+        2: markup.underline.qml
+      pop: true
+
+  # END handlers
