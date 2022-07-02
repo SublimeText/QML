@@ -261,7 +261,7 @@ RequiredProperties {
 
 RegularProperties {
     property color bright
-//  ^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
+//  ^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^^ keyword.declaration
 //           ^^^^^ storage.type support.type
 //                 ^^^^^^ meta.binding.name variable.other.member
@@ -276,14 +276,14 @@ RegularProperties {
 //                ^^^^^ meta.binding.name variable.other.member
 //                     ^ punctuation.terminator.statement
     property QQC2.Button button
-//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^^ keyword.declaration
 //           ^^^^ support.class
 //               ^ punctuation.accessor
 //                ^^^^^^ support.class
 //                       ^^^^^^ meta.binding.name variable.other.member
     property list<Item> children
-//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^^ keyword.declaration
 //           ^^^^ storage.type support.other
 //               ^ punctuation.definition.generic.begin
@@ -302,7 +302,7 @@ RegularProperties {
 //                                       ^ punctuation.accessor.js
 //                                        ^^^^^^^^ meta.property.object.js
     default property list<QtObject> data
-//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^ keyword.other.qml storage.modifier.default.qml
 //          ^^^^^^^^ keyword.declaration
 //                                  ^^^^ meta.binding.name variable.other.member
@@ -346,8 +346,7 @@ RegularProperties {
 //                                 ^^^^^^ keyword.control.flow.return.js
 //                                         ^ punctuation.terminator.statement.js
     else if { return 2; } else {}
-//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.conditional.js
-//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml meta.conditional.js
 //  ^^^^^^^ keyword.control.conditional.elseif.js
 //          ^^^^^^^^^^^^^ meta.block.js
 //                        ^^^^ keyword.control.conditional.else.js

@@ -52,9 +52,9 @@ contexts:
 
   else-pop-at-eol:
     - include: else-pop
-    - include: line-continuation-or-pop
+    - include: eol-pop
 
-  line-continuation-or-pop:
+  eol-pop:
     - match: (?=\s*($|;))
       pop: true
 
@@ -219,7 +219,7 @@ contexts:
     - include: object-standalone
     - include: inline-component
     - include: object-id
-    - include: property
+    - include: property-declaration
     - include: regular-qml-method
     - include: regular-qml-signal
     - include: signal-handler-non-attached
@@ -261,7 +261,7 @@ contexts:
       pop: true
     - include: semicolon-or-eol-pop
 
-  property:
+  property-declaration:
     - include: required-property
     - include: non-required-property
 
@@ -293,12 +293,8 @@ contexts:
     - include: illegal-property-name
 
   maybe-inside-simple-required-property:
-    - match: (?=:)
-      set:
-        - expect-semicolon-qml
-        - expect-illegal-binding
-
-    - include: semicolon-or-eol-pop
+    - include: illegal-binding
+    - include: eol-pop
     - match: '\S'
       fail: required-property-fail
 
@@ -306,6 +302,7 @@ contexts:
     - match: property{{identifier_break}}
       scope: keyword.declaration.qml
       set:
+        - expect-illegal-binding
         - required-property-name
         - required-property-type
 
@@ -317,11 +314,25 @@ contexts:
   required-property-type:
     - include: expect-property-type-member
 
+  required-property-name:
+    - match: '{{property_name}}'
+      scope: meta.binding.name.qml variable.other.member.qml
+      pop: true
+
+    - match: '\S+'
+      scope: invalid.illegal.expected-identifier.qml
+      pop: true
+
+  illegal-property-name:
+    - include: semicolon-or-eol-pop
+    - match: '\S+'
+      scope: invalid.illegal.expected-name.qml
+      pop: true
+
   non-required-property:
     - match: (?=(?:readonly|default|property){{identifier_break}})
       set:
         - property-binding-meta
-        - expect-semicolon-qml
         - expect-binding
         - expect-property-name
         - expect-property-type-member-or-alias
@@ -361,6 +372,9 @@ contexts:
     - include: else-pop-at-eol
 
   binding:
+    - match: \;
+      scope: punctuation.terminator.statement.qml
+      pop: true
     - match: ':'
       scope: punctuation.separator.mapping.key-value.qml
       set: expect-binding-value
@@ -370,6 +384,9 @@ contexts:
     - include: else-pop-at-eol
 
   illegal-binding:
+    - match: \;
+      scope: punctuation.terminator.statement.qml
+      pop: true
     - match: ':'
       scope: punctuation.separator.mapping.key-value.qml invalid.illegal.binding.qml
       set: expect-binding-value
@@ -504,23 +521,6 @@ contexts:
   list-type-generics-end:
     - match: '>'
       scope: punctuation.definition.generic.end.qml
-      pop: true
-
-  required-property-name:
-    - match: '{{property_name}}'
-      scope: meta.binding.name.qml variable.other.member.qml
-      set:
-        - expect-semicolon-qml
-        - expect-illegal-binding
-
-    - match: '\S+'
-      scope: invalid.illegal.expected-identifier.qml
-      pop: true
-
-  illegal-property-name:
-    - include: semicolon-or-eol-pop
-    - match: '\S+'
-      scope: invalid.illegal.expected-name.qml
       pop: true
 
   # BEGIN methods
