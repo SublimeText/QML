@@ -161,6 +161,10 @@ contexts:
           set: qualified-name-recursive
         - include: else-pop-at-eol
 
+  expect-object-standalone:
+    - include: object-standalone
+    - include: else-pop
+
   object-standalone:
     - match: '(?=[[:upper:]])'
       set:
@@ -212,6 +216,7 @@ contexts:
       pop: true
 
     - include: object-standalone
+    - include: inline-component
     - include: object-id
     - include: property
     - include: regular-qml-method
@@ -734,3 +739,32 @@ contexts:
           scope: invalid.deprecated.newline.qml
           # pop: true
         - include: string-content
+
+  inline-component:
+    - match: component{{identifier_break}}
+      scope: keyword.declaration.component.qml
+      set:
+        - inline-component-meta
+        - expect-object-standalone
+        - inline-component-expect-colon-separator
+        - inline-component-expect-name
+
+  inline-component-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.component.qml
+    - include: immediately-pop
+
+  inline-component-expect-name:
+    - include: inline-component-name
+    - include: else-pop
+
+  inline-component-name:
+    - match: '{{identifier_title}}'
+      scope: entity.name.class.qml
+      pop: true
+
+  inline-component-expect-colon-separator:
+    - match: ':'
+      scope: punctuation.separator.type.qml
+      pop: true
+    - include: else-pop

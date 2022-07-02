@@ -594,3 +594,28 @@ Expressions {
 }
 
 // <- - meta.block
+
+InlineComponents {
+    component A : Label {}
+//  ^^^^^^^^^ keyword.declaration.component
+//            ^ entity.name.class
+//              ^ punctuation.separator.type
+//                ^^^^^ support.class
+//                      ^^ meta.block meta.block
+//                      ^ punctuation.section.block.begin
+//                       ^ punctuation.section.block.end
+//  ^^^^^^^^^^^^^^^^^^^^^^ meta.component.qml
+
+// <- - meta.component.qml
+    component B : C.D {}
+//  ^^^^^^^^^ keyword.declaration.component
+//                ^ support.class
+//                 ^ punctuation.accessor
+//                  ^ support.class
+    B {}
+//  ^ support.class
+    component E : F {};
+//                    ^ invalid.illegal.unexpected-terminator.qml
+    G {}
+//  ^ support.class
+}
