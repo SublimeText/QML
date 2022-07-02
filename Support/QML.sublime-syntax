@@ -239,14 +239,6 @@ contexts:
     - meta_scope: meta.binding.property.qml
     - include: immediately-pop
 
-  property-binding-expect-colon:
-    - match: ':'
-      scope: keyword.operator.assignment.qml
-      pop: true
-    - match: '\S+'
-      scope: invalid.illegal.qml
-      pop: true
-
   object-id-name:
     - match: '(?={{non_reserved_identifier}}){{identifier_untitle}}'
       scope: entity.name.label.qml
@@ -259,6 +251,14 @@ contexts:
       scope: invalid.illegal.identifier.qml
       pop: true
     - include: semicolon-or-eol-pop
+
+  property-binding-expect-colon:
+    - match: ':'
+      scope: keyword.operator.assignment.qml
+      pop: true
+    - match: '\S+'
+      scope: invalid.illegal.qml
+      pop: true
 
   property-declaration:
     - include: required-property
