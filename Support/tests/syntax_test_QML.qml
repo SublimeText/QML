@@ -220,16 +220,16 @@ RequiredProperties {
 //                         ^^^^ support.class
 //                             ^ punctuation.definition.generic.end
 //                               ^^^^^ meta.binding.name variable.other.member
-    required property list<QtQuick.Item> seven
+    required property list<QtQuick.Item> six
 //                    ^^^^ storage.type support.other
 //                        ^ punctuation.definition.generic.begin
 //                         ^^^^^^^ support.class
 //                                ^ punctuation.accessor
 //                                 ^^^^ support.class
 //                                     ^ punctuation.definition.generic.end
-//                                       ^^^^^ meta.binding.name variable.other.member
+//                                       ^^^ meta.binding.name variable.other.member
     required property what isthis
-//                    ^^^^ storage.type.qml - support.type
+//                    ^^^^ - storage.type.qml & - support.type
 //                         ^^^^^^ meta.binding.name variable.other.member
     required property what for
 //                         ^^^ invalid.illegal.expected-identifier.qml
@@ -471,6 +471,77 @@ Signals {
 //                             ^ meta.function.parameters punctuation.separator.type
 //                               ^^^^ meta.function.parameters storage.type support.type
 //                                   ^ meta.function.parameters punctuation.section.group.end
+    signal multiline(url one,
+//                   ^^^ meta.function.parameters storage.type support.type
+//                       ^^^ meta.function.parameters meta.binding.name variable.parameter.function
+//                          ^ meta.function.parameters punctuation.separator.parameter.function
+        two   ,
+//      ^^^ meta.function.parameters invalid.illegal.expected-type.qml meta.binding.name.js variable.parameter.function.js
+//         ^^^^^ - invalid.illegal
+//            ^ meta.function.parameters punctuation.separator.parameter.function
+        string three url four,
+//      ^^^^^^ storage.type support.type
+//             ^^^^^ meta.binding.name variable.parameter.function
+//                   ^^^ storage.type support.type
+//                       ^^^^ meta.binding.name variable.parameter.function
+//                           ^ punctuation.separator.parameter.function
+//      ^^^^^^^^^^^^^^^^^^^^^^ meta.function.parameters - invalid.illegal
+        five,
+//      ^^^^ invalid.illegal.expected-type.qml meta.binding.name.js variable.parameter.function.js
+//          ^ punctuation.separator.parameter.function
+//          ^^ - invalid.illegal
+//      ^^^^^^ meta.function.parameters
+        six/**/:/**/ var/**/,
+//      ^^^ meta.binding.name variable.parameter.function
+//             ^ punctuation.separator.type
+//                   ^^^ storage.type support.other
+//                          ^ punctuation.separator.parameter.function
+//      ^^^^^^^^^^^^^^^^^^^^^^ meta.function.parameters - invalid.illegal
+        string
+//      ^^^^^^ storage.type support.type
+//      ^^^^^^^ meta.function.parameters - invalid.illegal
+            seven,
+//          ^^^^^ meta.binding.name variable.parameter.function
+//               ^ punctuation.separator.parameter.function
+//          ^^^^^^^ meta.function.parameters - invalid.illegal
+        eight:
+//      ^^^^^ meta.binding.name variable.parameter.function
+//           ^ punctuation.separator.type
+//      ^^^^^^^ meta.function.parameters - invalid.illegal
+            url,
+//          ^^^ storage.type support.type
+//             ^ punctuation.separator.parameter.function
+//          ^^^^^ meta.function.parameters - invalid.illegal
+        nine/**/
+//      ^^^^ meta.binding.name variable.parameter.function
+//          ^^^^ comment.block
+//      ^^^^^^^^^ meta.function.parameters - invalid.illegal
+            /**/:/**/
+//          ^^^^ comment.block
+//              ^ punctuation.separator.type
+//               ^^^^ comment.block
+//          ^^^^^^^^^^ meta.function.parameters - invalid.illegal
+            /**/url,
+//          ^^^^ comment.block
+//              ^^^ storage.type support.type
+//                 ^ punctuation.separator.parameter.function
+//          ^^^^^^^^^ meta.function.parameters - invalid.illegal
+        url: url,
+//      ^^^ meta.binding.name variable.parameter.function
+//         ^ punctuation.separator.type
+//           ^^^ storage.type support.type
+//              ^ punctuation.separator.parameter.function
+        url  url,
+//      ^^^ storage.type support.type
+//           ^^^ meta.binding.name variable.parameter.function
+//              ^ punctuation.separator.parameter.function
+    )
+//  ^ meta.function.parameters punctuation.section.group.end
+
+// <- meta.block.qml meta.function.js
+    ;
+//  ^ meta.function.js punctuation.terminator.statement.js
+//   ^ - meta.function.js punctuation.terminator.statement.js
 }
 
 Expressions {

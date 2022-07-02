@@ -303,7 +303,7 @@ contexts:
       pop: true
 
   required-property-type:
-    - include: property-type-member
+    - include: expect-property-type-member
 
   non-required-property:
     - match: (?=(?:readonly|default|property){{identifier_break}})
@@ -390,38 +390,80 @@ contexts:
 
     - include: else-pop
 
+  property-type-fallback:
+    - match: '{{identifier}}'
+      # Don't highlight unknown type
+      pop: true
+    - include: else-pop-at-eol
+
   expect-property-type-member-or-alias:
     - include: property-type-member-or-alias
-    - include: else-pop-at-eol
+
+    - include: property-type-fallback
 
   property-type-member-or-alias:
     - include: property-type-alias
     - include: property-type-member
 
+  expect-property-type-member:
+    - include: property-type-member
+
+    - include: property-type-fallback
+
   property-type-member:
     - include: property-type-list
     - include: property-type-simple
 
+  expect-property-type-simple:
+    - include: property-type-simple
+
+    - include: property-type-fallback
+
   property-type-simple:
     - include: property-type-basic
     - include: expect-object-type-name
-    # fallback
-    - match: '{{identifier}}'
-      scope: storage.type.qml
-      pop: 1
-    - match: '\S+'
-      scope: invalid.illegal.expected-type.qml
-      pop: 1
+
+  expect-property-type-basic:
+    - include: property-type-basic
+
+    - include: property-type-fallback
 
   property-type-basic:
-    - match: '{{qml_builtin_type}}'
-      scope: storage.type.qml support.type.qml
+    - match: (?={{qml_builtin_type}})
+      set:
+        - property-type-basic-meta
+        - property-type-basic-content
+
+  property-type-basic-meta:
+    - meta_include_prototype: false
+    - meta_scope: storage.type.qml
+    - include: immediately-pop
+
+  property-type-basic-content:
+    - match: 'variant{{identifier_break}}'
+      scope: support.other.qml invalid.deprecated.variant.qml
       pop: true
+    - match: 'var{{identifier_break}}'
+      scope: support.other.qml
+      pop: true
+    - match: '{{qml_builtin_type}}'
+      scope: support.type.qml
+      pop: true
+
+  expect-property-type-alias:
+    - include: property-type-alias
+
+    - include: property-type-fallback
 
   property-type-alias:
     - match: alias{{identifier_break}}
       scope: keyword.other.qml
       pop: true
+
+  expect-property-type-list:
+    - include: property-type-list
+
+    - include: property-type-fallback
 
   property-type-list:
     - match: list{{identifier_break}}
@@ -433,7 +475,7 @@ contexts:
       scope: punctuation.definition.generic.begin.qml
       set:
         - list-type-generics-end
-        - property-type-simple
+        - expect-property-type-simple
 
   list-type-generics-end:
     - match: '>'
@@ -583,7 +625,7 @@ contexts:
 
   signal-parameter:
     - match: (?={{identifier}})
-      # pop: true
+      pop: true
       branch:
         - try-signal-parameter-name-first
         - try-signal-parameter-type-first
@@ -595,36 +637,44 @@ contexts:
   try-signal-parameter-name-first:
     - match: (?={{identifier}})
       set:
-        - signal-parameter-expect-type
-        - maybe-signal-parameter-expect-colon
-        - signal-parameter-name
+        - expect-signal-parameter-type
+        - maybe-signal-parameter-colon
+        - expect-signal-parameter-name
     - match: (?=\S)
       fail: signal-parameter-signature
     - include: else-pop
 
-  maybe-signal-parameter-expect-colon:
+  maybe-signal-parameter-colon:
     - match: ':'
       scope: punctuation.separator.type.qml
       pop: true
     - match: (?=\S)
       fail: signal-parameter-signature
 
+  expect-signal-parameter-name:
+    - match: (?={{identifier_name}})
+      set: signal-parameter-name
+
+    - include: else-pop
+
   signal-parameter-name:
     - match: '{{non_reserved_identifier}}'
       scope: meta.binding.name.js variable.parameter.function.js
-      pop: 1
+      pop: true
     - match: '{{identifier_name}}'
       scope: invalid.illegal.identifier.js meta.binding.name.js variable.parameter.function.js
-      pop: 1
-    - include: else-pop
+      pop: true
 
   signal-parameter-name-fail-on-missing:
     - match: (?=,|\))
       fail: signal-parameter-signature
-    - include: signal-parameter-name
+    - match: (?=\S)
+      set: signal-parameter-name
 
-  signal-parameter-expect-type:
-    - include: property-type-simple
+  expect-signal-parameter-type:
+    # intentionally skip newlines
+    - match: (?=\S)
+      set: expect-property-type-simple
     - include: else-pop
 
   # C/C++ style: `string param1`
@@ -632,18 +682,18 @@ contexts:
     - match: ''
       set:
         - signal-parameter-name-fail-on-missing
-        - signal-parameter-expect-type
+        - expect-signal-parameter-type
 
   signal-parameter-untyped:
     - match: ''
       set:
-        - untyped-warn
-        - signal-parameter-name
+        - untyped-meta
+        - expect-signal-parameter-name
 
-  untyped-warn:
+  untyped-meta:
     - meta_include_prototype: false
     - meta_scope: invalid.illegal.expected-type.qml
-    - include: else-pop
+    - include: immediately-pop
 
   # END signals
 
