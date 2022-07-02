@@ -310,7 +310,7 @@ contexts:
       set:
         - property-binding-meta
         - expect-semicolon-qml
-        - expect-property-binding
+        - expect-binding
         - expect-property-name
         - expect-property-type-member-or-alias
         - expect-property-keyword
@@ -344,13 +344,13 @@ contexts:
       scope: meta.binding.name.qml variable.other.member.qml
       pop: true
 
-  expect-property-binding:
+  expect-binding:
     - match: ':'
       scope: punctuation.separator.mapping.key-value.qml
-      set: expect-property-binding-value
+      set: expect-binding-value
     - include: else-pop-at-eol
 
-  expect-property-binding-value:
+  expect-binding-value:
     # TODO: include QML object declaration
     - match: (?=\S)
       set: property-binding-value
