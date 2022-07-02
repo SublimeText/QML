@@ -284,7 +284,11 @@ contexts:
     - include: illegal-property-name
 
   maybe-inside-simple-required-property:
-    - include: illegal-property-binding
+    - match: (?=:)
+      set:
+        - expect-semicolon-qml
+        - expect-illegal-binding
+
     - include: semicolon-or-eol-pop
     - match: '\S'
       fail: required-property-fail
@@ -344,10 +348,22 @@ contexts:
       pop: true
 
   expect-binding:
+    - include: binding
+    - include: else-pop-at-eol
+
+  binding:
     - match: ':'
       scope: punctuation.separator.mapping.key-value.qml
       set: expect-binding-value
+
+  expect-illegal-binding:
+    - include: illegal-binding
     - include: else-pop-at-eol
+
+  illegal-binding:
+    - match: ':'
+      scope: punctuation.separator.mapping.key-value.qml invalid.illegal.binding.qml
+      set: expect-binding-value
 
   expect-binding-value:
     # TODO: include QML object declaration
@@ -485,16 +501,11 @@ contexts:
     - match: '{{property_name}}'
       scope: meta.binding.name.qml variable.other.member.qml
       set:
-        - include: illegal-property-binding
-        - include: semicolon-or-eol-pop
+        - expect-semicolon-qml
+        - expect-illegal-binding
 
     - match: '\S+'
       scope: invalid.illegal.expected-identifier.qml
-      pop: true
-
-  illegal-property-binding:
-    - match: ':'
-      scope: invalid.illegal.binding.qml
       pop: true
 
   illegal-property-name:

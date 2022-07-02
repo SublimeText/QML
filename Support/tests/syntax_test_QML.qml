@@ -171,15 +171,16 @@ WithId {
 }
 
 RequiredProperties {
-    required name; required /**/ text
+    required name;; required /**/ text
 //  ^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^^ storage.modifier.required
 //           ^^^^ meta.binding.name variable.other.member
 //               ^ punctuation.terminator.statement
-//                ^ - meta.binding.property.qml
-//                 ^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
-//                          ^^^^ comment.block
-//                               ^^^^ meta.binding.name variable.other.member
+//                ^^ - meta.binding.property.qml
+//                ^ invalid.illegal.unexpected-terminator.qml
+//                  ^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
+//                           ^^^^ comment.block
+//                                ^^^^ meta.binding.name variable.other.member
     required Four
 //           ^^^^ invalid.illegal.expected-name
     required 5
@@ -188,7 +189,8 @@ RequiredProperties {
 //           ^^^^^ invalid.illegal.expected-name
     required prop: 42
 //  ^^^^^^^^^^^^^ meta.binding.property.qml
-//               ^ invalid.illegal.binding
+//               ^ punctuation.separator.mapping.key-value.qml invalid.illegal.binding
+//                 ^^ meta.number.integer.decimal.js constant.numeric.value.js
     required foo bar
 //           ^^^ invalid.illegal.expected-property
     required break;
@@ -224,8 +226,12 @@ RequiredProperties {
 //                        ^^^^ meta.binding.name variable.other.member
 //                            ^ punctuation.terminator.statement.qml
 //                             ^ invalid.illegal.unexpected-terminator.qml - meta.binding.property
-    required property url ten: 10
-//                           ^ invalid.illegal.binding
+    required property url ten:
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
+//                           ^ punctuation.separator.mapping.key-value.qml invalid.illegal.binding
+        10
+//      ^^^ meta.binding.property
+//      ^^ meta.number.integer.decimal.js constant.numeric.value.js
     required property list<url> eight
 //                    ^^^^ storage.type support.other
 //                        ^ punctuation.definition.generic.begin
