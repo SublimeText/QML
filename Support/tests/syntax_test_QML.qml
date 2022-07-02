@@ -319,15 +319,15 @@ RegularProperties {
 //           ^^^ storage.type support.type
 //               ^^^^ meta.binding.name variable.other.member
 //                   ^ punctuation.separator.mapping.key-value.qml
-//                     ^^ support.class.js
+//                     ^^ support.class.builtin.qml
 //                       ^ punctuation.accessor.js
-//                        ^^^^^^^^^^^ meta.property.object.js
+//                        ^^^^^^^^^^^ support.type.object.qt.qml support.class.builtin.qml
 //                                   ^ punctuation.accessor.js
-//                                    ^^^^^^^^^^^^^^^ meta.property.object.js
+//                                    ^^^^^^^^^^^^^^^ support.type.object.application.qml
 //                                                    ^^^ keyword.operator.comparison.js
-//                                                        ^^ support.class.js
+//                                                        ^^ support.class.builtin.qml
 //                                                          ^ punctuation.accessor.js
-//                                                           ^^^^^^^^^^^ meta.property.object.js
+//                                                           ^^^^^^^^^^^ support.constant.builtin.qml
         ? "go-back-rtl" : "go-back"
 //      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //      ^ keyword.operator.ternary
@@ -357,13 +357,13 @@ RegularProperties {
 //           ^^^^^ storage.type support.type
 //                 ^^^^^ meta.binding.name variable.other.member
         Qt.point(null, undefined, NaN)
-//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
-//      ^^ meta.function-call.method.js support.class.js
-//        ^ meta.function-call.method.js punctuation.accessor.js
-//         ^^^^^ meta.function-call.method.js variable.function.js
-//               ^^^^ meta.function-call.method.js meta.group.js constant.language.null.js
-//                     ^^^^^^^^^ meta.function-call.method.js meta.group.js constant.language.undefined.js
-//                                ^^^ meta.function-call.method.js meta.group.js constant.language.nan.js
+//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml meta.function-call.method.js
+//      ^^ support.class.builtin.qml
+//        ^ punctuation.accessor.js
+//         ^^^^ support.function.builtin.qml
+//               ^^^^ meta.group.js constant.language.null.js
+//                     ^^^^^^^^^ meta.group.js constant.language.undefined.js
+//                                ^^^ meta.group.js constant.language.nan.js
 }
 // <- meta.block punctuation.section.block.end
 // ^ - meta.block
@@ -614,6 +614,195 @@ Expressions {
 //                       ^^^^^ meta.string string.quoted.other
 //                           ^ - invalid.deprecated.newline.qml
         hop`;
+    }
+    function support_js() {
+        ArrayWho();
+//      ^^^^^^^^ meta.function-call.js variable.function.js - support.class
+        Array(42);
+//      ^^^^^ meta.function-call.js support.class.builtin.js
+        Date.now();
+//      ^^^^^^^^^^ meta.function-call.method.js
+//      ^^^^ support.class.builtin.js
+//          ^ punctuation.accessor.js
+//           ^^^ support.function.builtin.js
+        window
+//      ^^^^^^ - support.type
+        XMLHttpRequest
+//      ^^^^^^^^^^^^^^ support.class.dom.js
+    }
+    function support_qtqml() {
+        Binding.RestoreBinding
+//              ^^^^^^^^^^^^^^ support.constant.builtin.qml
+        Binding.RestoreBindingOr
+//              ^^^^^^^^^^^^^^^^ - support.constant.builtin.qml
+        Binding.RestoreBindingOrValue
+//              ^^^^^^^^^^^^^^^^^^^^^ support.constant.builtin.qml
+        print(); qsTr("abc"); QT_TR_NOOP();
+//      ^^^^^ support.function.qml
+//               ^^^^ support.function.qml
+//                            ^^^^^^^^^^ support.function.qml
+        Qt.quit();
+//      ^^^^^^^^^ meta.function-call.method.js
+//      ^^ support.class.builtin.qml
+//        ^ punctuation.accessor.js
+//         ^^^^ support.function.builtin.qml
+        Qt.AlignRight | Qt.AlignVCenter | Qt.AlignBananas
+//      ^^ support.class.builtin.qml
+//         ^^^^^^^^^^ support.constant.builtin.qml
+//                         ^^^^^^^^^^^^ support.constant.builtin.qml
+//                                           ^^^^^^^^^^^^ - support.constant.builtin.qml
+        Qt.ControlModifier
+//         ^^^^^^^^^^^^^^^ support.constant.builtin.qml
+        Qt.ShiftModifier
+//         ^^^^^^^^^^^^^ support.constant.builtin.qml
+        Qt.Key_F
+//         ^^^^^ support.constant.builtin.qml
+        Qt.Key_F12
+//         ^^^^^^^ support.constant.builtin.qml
+        Qt.Key_F42
+//         ^^^^^^^ - support.constant.builtin.qml
+        Qt.application.domain
+//      ^^ support.class.builtin.qml
+//         ^^^^^^^^^^^ support.type.object.qt.qml support.class.builtin.qml
+//                     ^^^^^^ support.type.object.application.qml
+        Qt.platform.os
+//                  ^^ support.type.object.platform.qml
+    }
+    function support_qtquick() {
+        Animation.Infinite
+//      ^^^^^^^^^ support.class.builtin.qml
+//                ^^^^^^^^ support.constant.builtin.qml
+        DoubleValidator.StandardNotation, DoubleValidator.Invalid
+//                      ^^^^^^^^^^^^^^^^ support.constant.builtin.qml
+//                                                        ^^^^^^^ support.constant.builtin.qml
+        Drag.Automatic, Drag.XAndYAxis
+//           ^^^^^^^^^ support.constant.builtin.qml
+//                           ^^^^^^^^^ support.constant.builtin.qml
+        DragHandler.SnapAlways
+//                  ^^^^^^^^^^ support.constant.builtin.qml
+        Easing.OutQuad
+//      ^^^^^^ support.class.builtin.qml
+//             ^^^^^^^ support.constant.builtin.qml
+        EventPoint.GrabPassive
+//                 ^^^^^^^^^^^ support.constant.builtin.qml
+        Flickable.FollowBoundsBehavior, Flickable.VerticalFlick
+//                ^^^^^^^^^^^^^^^^^^^^ support.constant.builtin.qml
+//                                                ^^^^^^^^^^^^^ support.constant.builtin.qml
+        Font.Bold, FontLoader.Ready
+//           ^^^^ support.constant.builtin.qml
+//                            ^^^^^ support.constant.builtin.qml
+        Gradient.Horizontal
+//               ^^^^^^^^^^ support.constant.builtin.qml
+        GraphicsInfo.Software
+//                   ^^^^^^^^ support.constant.builtin.qml
+        GridView.view.width, GridView.TopToBottom, GridView.NoSnap
+//               ^^^^ support.class.builtin.qml
+//                                    ^^^^^^^^^^^ support.constant.builtin.qml
+//                                                          ^^^^^^ support.constant.builtin.qml
+        Image.AlignRight, Image.Tile
+//            ^^^^^^^^^^ support.constant.builtin.qml
+//                              ^^^^ support.constant.builtin.qml
+        InputMethod.ContextMenu
+//                  ^^^^^^^^^^^ support.constant.builtin.qml
+        Item.BottomRight
+//           ^^^^^^^^^^^ support.constant.builtin.qml
+        ItemView.ApplyRange, ItemView.OvershootBounds
+//               ^^^^^^^^^^ support.constant.builtin.qml
+//                                    ^^^^^^^^^^^^^^^ support.constant.builtin.qml
+        KeyNavigation.BeforeItem, Keys.AfterItem
+//                    ^^^^^^^^^^ support.constant.builtin.qml
+//                                     ^^^^^^^^^ support.constant.builtin.qml
+        ListView.Horizontal, ListView.OverlayFooter
+        Loader.Ready
+//             ^^^^^ support.constant.builtin.qml
+        PathAnimation.LeftFirst
+//                    ^^^^^ support.constant.builtin.qml
+        PathArc.Clockwise
+//              ^^^^^^^^^ support.constant.builtin.qml
+        PathView.StrictlyEnforceRange
+//               ^^^^^^^^^^^^^^^^^^^^ support.constant.builtin.qml
+        Pinch.XAndYAxis
+//            ^^^^^^^^^ support.constant.builtin.qml
+        PointerDevice.Pen
+//                    ^^^ support.constant.builtin.qml
+        RotationAnimation.Shortest, RotationAnimator.Numerical
+//                        ^^^^^^^^ support.constant.builtin.qml
+//                                                   ^^^^^^^^^ support.constant.builtin.qml
+        ShaderEffect.BackFaceCulling
+//                   ^^^^^^^^^^^^^^^ support.constant.builtin.qml
+        ShaderEffectSource.RGBA, ShaderEffectSource.Repeat
+//                         ^^^^ support.constant.builtin.qml
+//                                                  ^^^^^^ support.constant.builtin.qml
+        SmoothedAnimation.Sync
+//                        ^^^^ support.constant.builtin.qml
+        StandardKey.Copy
+//                  ^^^^ support.constant.builtin.qml
+        SystemPalette.Active
+//                    ^^^^^^ support.constant.builtin.qml
+        TableView.OvershootBounds
+//                ^^^^^^^^^^^^^^^ support.constant.builtin.qml
+        TapHandler.WithinBounds
+//                 ^^^^^^^^^^^^ support.constant.builtin.qml
+        Text.AlignJustify, Image.AlignJustify
+//           ^^^^^^^^^^^^ support.constant.builtin.qml
+//                               ^^^^^^^^^^^^ - support.constant.builtin.qml
+        TextEdit.SelectWords
+//               ^^^^^^^^^^^ support.constant.builtin.qml
+        TextInput.CursorOnCharacter
+//                ^^^^^^^^^^^^^^^^^ support.constant.builtin.qml
+        // V - Validators
+        IntValidator.Invalid, RegExpValidator.Invalid, RegularExpressionValidator.Invalid
+//                   ^^^^^^^ support.constant.builtin.qml
+//                                            ^^^^^^^ support.constant.builtin.qml
+//                                                                                ^^^^^^^ support.constant.builtin.qml
+        ViewSection.InlineLabels, ViewSection.FirstCharacter
+//                  ^^^^^^^^^^^^ support.constant.builtin.qml
+//                                            ^^^^^^^^^^^^^^ support.constant.builtin.qml
+    }
+    function support_qtquick_dialogs() {
+        StandardButton.Cancel
+//                     ^^^^^^ support.constant.builtin.qml
+        StandardIcon.Question
+//                   ^^^^^^^^ support.constant.builtin.qml
+    }
+    function support_qtquick_controls() {
+        AbstractButton.TextBesideIcon, Button.TextBesideIcon
+//                     ^^^^^^^^^^^^^^ support.constant.builtin.qml
+//                                            ^^^^^^^^^^^^^^ support.constant.builtin.qml
+        Popup.Center, Popup.CloseOnEscape
+//            ^^^^^^ support.constant.builtin.qml
+//                          ^^^^^^^^^^^^^ support.constant.builtin.qml
+        Dial.NoSnap, Dial.Circular
+//           ^^^^^^ support.constant.builtin.qml
+//                        ^^^^^^^^ support.constant.builtin.qml
+        Dialog         .Ok, Dialog.NoAutoClose
+//                      ^^ support.constant.builtin.qml
+//                                 ^^^^^^^^^^^ support.constant.builtin.qml
+        DialogButtonBox.Ok, DialogButtonBox.AcceptRole, DialogButtonBox.AndroidLayout
+//                      ^^ support.constant.builtin.qml
+//                                          ^^^^^^^^^^ support.constant.builtin.qml
+//                                                                      ^^^^^^^^^^^^^ support.constant.builtin.qml
+        DialogButtonBox.Header
+//                      ^^^^^^ support.constant.builtin.qml
+        ScrollBar.NoSnap, ScrollBar.AlwaysOff
+//                ^^^^^^ support.constant.builtin.qml
+//                                  ^^^^^^^^^ support.constant.builtin.qml
+        Slider.NoSnap
+//             ^^^^^^ support.constant.builtin.qml
+        StackView.Activating
+//                ^^^^^^^^^^ support.constant.builtin.qml
+        TabBar.Header
+//             ^^^^^^ support.constant.builtin.qml
+        TextArea.WrapAnywhere
+//               ^^^^^^^^^^^^ support.constant.builtin.qml
+        TextField.SelectCharacters
+//                ^^^^^^^^^^^^^^^^ support.constant.builtin.qml
+    }
+    function support_qtquick_templates() {
+        T.Button.TextBesideIcon
+//               ^^^^^^^^^^^^^^ support.constant.builtin.qml
+        QQC2.ScrollBar.AlwaysOff
+//                     ^^^^^^^^^ support.constant.builtin.qml
     }
 }
 

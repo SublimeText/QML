@@ -755,6 +755,1244 @@ contexts:
           # pop: true
         - include: string-content
 
+  # BEGIN support
+
+  support:
+    - meta_append: false
+
+    - include: support-variable-ecma
+    - include: support-variable-console
+    - include: support-variable-xhr
+
+    - include: support-variable-qtqml
+    - include: support-variable-qtquick
+    - include: support-variable-qtquick-controls
+    - include: support-variable-qtquick-dialogs
+    - include: support-variable-qtquick-templates
+    - include: support-variable-kde
+
+  support-variable-xhr:
+    - match: XMLHttpRequest{{identifier_break}}
+      scope: support.class.dom.js
+      pop: true
+
+  support-variable-qtqml:
+    - match: Binding{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtqml-binding
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    # https://doc.qt.io/qt-5/qml-qtqml-qt.html
+    - match: Qt{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtqml-qt
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    # https://doc.qt.io/qt-5/qtqml-javascript-qmlglobalobject.html
+    - match: (?:qsTr|qsTranslate|qsTrId|QT_TR_NOOP|QT_TRANSLATE_NOOP|QT_TRID_NOOP|gc|print){{identifier_break}}
+      scope: support.function.qml
+      pop: true
+
+  support-property-qtqml-binding:
+    - match: (?:RestoreNone|RestoreBinding|RestoreValue|RestoreBindingOrValue){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtqml-qt:
+    - match: (?:Asynchronous|Synchronous){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+    # https://doc.qt.io/qt-5/qt.html
+    # qtbase/src/corelib/global/qnamespace.h
+    - match: |-
+        (?x:(?:
+        # ScrollBarPolicy
+        ScrollBarAsNeeded|ScrollBarAlwaysOff|ScrollBarAlwaysOn
+        # FocusPolicy
+        |NoFocus|TabFocus|ClickFocus|StrongFocus|WheelFocus
+        # ContextMenuPolicy
+        |NoContextMenu|DefaultContextMenu|ActionsContextMenu|CustomContextMenu|PreventContextMenu
+        # ArrowType
+        |NoArrow|UpArrow|DownArrow|LeftArrow|RightArrow
+        # ToolButtonStyle
+        |ToolButtonIconOnly|ToolButtonTextOnly|ToolButtonTextBesideIcon|ToolButtonTextUnderIcon|ToolButtonFollowStyle
+        # PenStyle
+        |NoPen|SolidLine|DashLine|DotLine|DashDotLine|DashDotDotLine|CustomDashLine|MPenStyle
+        # PenCapStyle
+        |FlatCap|SquareCap|RoundCap|MPenCapStyle
+        # PenJoinStyle
+        |MiterJoin|BevelJoin|RoundJoin|SvgMiterJoin|MPenJoinStyle
+        # BrushStyle
+        |NoBrush|(?:Solid|Dense[1-7]|Hor|Ver|Cross|BDiag|FDiag|DiagCross|LinearGradient|RadialGradient|ConicalGradient|Texture)Pattern
+        # FillRule
+        |OddEvenFill|WindingFill
+        # MaskMode
+        |MaskInColor|MaskOutColor
+        # BGMode
+        |TransparentMode|OpaqueMode
+        # ClipOperation
+        |NoClip|ReplaceClip|IntersectClip
+        # SizeMode
+        |AbsoluteSize|RelativeSize
+        # Axis
+        |XAxis|YAxis|ZAxis
+        # Corner
+        |TopLeftCorner|TopRightCorner|BottomLeftCorner|BottomRightCorner
+        # Edge
+        |TopEdge|LeftEdge|RightEdge|BottomEdge
+        # LayoutDirection
+        |LeftToRight|RightToLeft|LayoutDirectionAuto
+        # SizeHint
+        |MinimumSize|PreferredSize|MaximumSize|MinimumDescent|NSizeHints
+        # Orientation
+        |Horizontal|Vertical
+        # DropAction
+        |CopyAction|MoveAction|LinkAction|ActionMask|TargetMoveAction|IgnoreAction
+        # AlignmentFlag
+        |Align(?:Left|Leading|Right|Trailing|HCenter|Justify|Absolute|Horizontal_Mask|Top|Bottom|VCenter|Baseline|Vertical_Mask|Center)
+        # TextFlag
+        |Text(?:SingleLine|DontClip|ExpandTabs|ShowMnemonic|WordWrap|WrapAnywhere|DontPrint|IncludeTrailingSpaces|HideMnemonic|JustificationForced|ForceLeftToRight|ForceRightToLeft|LongestVariant|BypassShaping)
+        # SplitBehaviorFlags
+        |(?:Keep|Skip)EmptyParts
+        # DockWidgetArea - omited
+        # ToolBarArea
+        |LeftToolBarArea|RightToolBarArea|TopToolBarArea|BottomToolBarArea
+        # TextFormat
+        |PlainText|RichText|AutoText|MarkdownText
+        # TextElideMode
+        |ElideLeft|ElideRight|ElideMiddle|ElideNone
+        # DateFormat
+        |TextDate|ISODate|SystemLocaleDate|LocalDate|LocaleDate|SystemLocaleShortDate|SystemLocaleLongDate|DefaultLocaleShortDate|DefaultLocaleLongDate|RFC2822Date|ISODateWithMs
+        # TimeSpec
+        |LocalTime|UTC|OffsetFromUTC|TimeZone
+        # DayOfWeek
+        |Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday
+        # CursorShape
+        |ArrowCursor|UpArrowCursor|CrossCursor|WaitCursor|IBeamCursor|SizeVerCursor|SizeHorCursor|SizeBDiagCursor|SizeFDiagCursor|SizeAllCursor|BlankCursor|SplitVCursor|SplitHCursor|PointingHandCursor|ForbiddenCursor|WhatsThisCursor|BusyCursor|OpenHandCursor|ClosedHandCursor|DragCopyCursor|DragMoveCursor|DragLinkCursor|LastCursor|BitmapCursor|CustomCursor
+        # GlobalColor
+        |color0|color1|black|white|darkGray|gray|lightGray|red|green|blue|cyan|magenta|yellow|darkRed|darkGreen|darkBlue|darkCyan|darkMagenta|darkYellow|transparent
+        # AspectRatioMode
+        |IgnoreAspectRatio|KeepAspectRatio|KeepAspectRatioByExpanding
+        # TransformationMode
+        |FastTransformation|SmoothTransformation
+        # ImageConversionFlag
+        |ColorMode_Mask|AutoColor|ColorOnly|MonoOnly|AlphaDither_Mask|ThresholdAlphaDither|OrderedAlphaDither|DiffuseAlphaDither|NoAlpha|Dither_Mask|DiffuseDither|OrderedDither|ThresholdDither|DitherMode_Mask|AutoDither|PreferDither|AvoidDither|NoOpaqueDetection|NoFormatConversion
+        # Key
+        |Key_(?:Escape|Tab|Backtab|Backspace|Return|Enter|Insert|Delete|Pause|Print|SysReq|Clear|Home|End|Left|Up|Right|Down|PageUp|PageDown|Shift|Control|Meta|Alt|CapsLock|NumLock|ScrollLock|F[12][0-9]?|F3[0-5]?|F[4-9]|Super_[LR]|Menu|Hyper_[LR]|Help|Direction_[LR]|Space|Any|Exclam|QuoteDbl|NumberSign|Dollar|Percent|Ampersand|Apostrophe|ParenLeft|ParenRight|Asterisk|Plus|Comma|Minus|Period|Slash|[0-9]|Colon|Semicolon|Less|Equal|Greater|Question|At|[A-Z]|Bracket(?:Left|Right)|Backslash|AsciiCircum|Underscore|QuoteLeft|Brace(?:Left|Right)|Bar|AsciiTilde|nobreakspace|exclamdown|cent|sterling|currency|yen|brokenbar|section|diaeresis|copyright|ordfeminine|guillemotleft|notsign|hyphen|registered|macron|degree|plusminus|twosuperior|threesuperior|acute|mu|paragraph|periodcentered|cedilla|onesuperior|masculine|guillemotright|onequarter|onehalf|threequarters|questiondown|Agrave|Aacute|Acircumflex|Atilde|Adiaeresis|Aring|AE|Ccedilla|Egrave|Eacute|Ecircumflex|Ediaeresis|Igrave|Iacute|Icircumflex|Idiaeresis|ETH|Ntilde|Ograve|Oacute|Ocircumflex|Otilde|Odiaeresis|multiply|Ooblique|Ugrave|Uacute|Ucircumflex|Udiaeresis|Yacute|THORN|ssharp|division|ydiaeresis|AltGr|Multi_key|Codeinput|SingleCandidate|MultipleCandidate|PreviousCandidate|Mode_switch|Kanji|Muhenkan|Henkan|Romaji|Hiragana|Katakana|Hiragana_Katakana|Zenkaku|Hankaku|Zenkaku_Hankaku|Touroku|Massyo|Kana_Lock|Kana_Shift|Eisu_Shift|Eisu_toggle|Hangul|Hangul_(?:Start|End|Hanja|Jamo|Romaja|Jeonja|Banja|PreHanja|PostHanja|Special)|Dead_(?:Grave|Acute|Circumflex|Tilde|Macron|Breve|Abovedot|Diaeresis|Abovering|Doubleacute|Caron|Cedilla|Ogonek|Iota|Voiced_Sound|Semivoiced_Sound|Belowdot|Hook|Horn|Stroke|Abovecomma|Abovereversedcomma|Doublegrave|Belowring|Belowmacron|Belowcircumflex|Belowtilde|Belowbreve|Belowdiaeresis|Invertedbreve|Belowcomma|Currency|a|A|e|E|i|I|o|O|u|U|Small_Schwa|Capital_Schwa|Greek|Lowline|Aboveverticalline|Belowverticalline|Longsolidusoverlay|Key_Back)|Forward|Stop|Refresh|Volume(?:Down|Mute|Up)|Bass(?:Boost|Up|Down)|Treble(?:Up|Down)|Media(?:Play|Stop|Previous|Next|Record|Pause|TogglePlayPause)|HomePage|Favorites|Search|Standby|OpenUrl|LaunchMail|LaunchMedia|Launch[0-9A-F]|MonBrightness(?:Up|Down)|KeyboardLightOnOff|KeyboardBrightness(?:Up|Down)|PowerOff|WakeUp|Eject|ScreenSaver|WWW|Memo|LightBulb|Shop|History|AddFavorite|HotLinks|BrightnessAdjust|Finance|Community|AudioRewind|BackForward|ApplicationLeft|ApplicationRight|Book|CD|Calculator|ToDoList|ClearGrab|Close|Copy|Cut|Display|DOS|Documents|Excel|Explorer|Game|Go|iTouch|LogOff|Market|Meeting|MenuKB|MenuPB|MySites|News|OfficeHome|Option|Paste|Phone|Calendar|Reply|Reload|RotateWindows|RotationPB|RotationKB|Save|Send|Spell|SplitScreen|Support|TaskPane|Terminal|Tools|Travel|Video|Word|Xfer|Zoom(?:In|Out)|Away|Messenger|WebCam|MailForward|Pictures|Music|Battery|Bluetooth|WLAN|UWB|AudioForward|AudioRepeat|AudioRandomPlay|Subtitle|AudioCycleTrack|Time|Hibernate|View|TopMenu|PowerDown|Suspend|ContrastAdjust|LaunchG|LaunchH|TouchpadToggle|Touchpad(?:On|Off)|MicMute|Red|Green|Yellow|Blue|ChannelUp|ChannelDown|Guide|Info|Settings|MicVolumeUp|MicVolumeDown|New|Open|Find|Undo|Redo|MediaLast|Select|Yes|No|Cancel|Printer|Execute|Sleep|Play|Zoom|Exit|Context[1-4]|Call|Hangup|Flip|ToggleCallHangup|VoiceDial|LastNumberRedial|Camera|CameraFocus|unknown)
+        # ShortcutContext
+        |WidgetShortcut|WindowShortcut|ApplicationShortcut|WidgetWithChildrenShortcut
+        # TextInteractionFlag
+        |NoTextInteraction|TextSelectableBy(?:Mouse|Keyboard)|LinksAccessibleBy(?:Mouse|Keyboard)|TextEditable|TextEditorInteraction|TextBrowserInteraction
+        # ItemSelectionMode
+        |(?:Contains|Intersects)Item(?:Shape|BoundingRect)
+        # ItemSelectionOperation
+        |ReplaceSelection|AddToSelection
+        # ItemFlag
+        |NoItemFlags|ItemIs(?:Selectable|Editable|DragEnabled|DropEnabled|UserCheckable|Enabled|AutoTristate|Tristate)|ItemNeverHasChildren|ItemIsUserTristate
+        # CheckState
+        |Unchecked|PartiallyChecked|Checked
+        # ItemDataRole
+        |DisplayRole|DecorationRole|EditRole|ToolTipRole|StatusTipRole|WhatsThisRole|FontRole|TextAlignmentRole|BackgroundRole|ForegroundRole|BackgroundColorRole|TextColorRole|CheckStateRole|AccessibleTextRole|AccessibleDescriptionRole|SizeHintRole|InitialSortOrderRole|DisplayPropertyRole|DecorationPropertyRole|ToolTipPropertyRole|StatusTipPropertyRole|WhatsThisPropertyRole|UserRole
+        # SortOrder
+        |AscendingOrder|DescendingOrder
+        # CaseSensitivity
+        |CaseInsensitive|CaseSensitive
+        # MatchFlag
+        |MatchExactly|MatchContains|MatchStartsWith|MatchEndsWith|MatchRegExp|MatchWildcard|MatchFixedString|MatchRegularExpression|MatchCaseSensitive|MatchWrap|MatchRecursive
+        # KeyboardModifier
+        |NoModifier|ShiftModifier|ControlModifier|AltModifier|MetaModifier|KeypadModifier|GroupSwitchModifier|KeyboardModifierMask
+        # MouseButton
+        |(?:No|Left|Right|Middle|Mid|Back)Button|XButton1|ExtraButton1|ForwardButton|XButton2|ExtraButton2|TaskButton|ExtraButton(?:[3-9]|1[0-9]|2[0-4])|AllButtons|MaxMouseButton|MouseButtonMask
+        # WindowType
+        |Widget|Window|Dialog|Sheet|Drawer|Popup|Tool|ToolTip|SplashScreen|Desktop|SubWindow|ForeignWindow|CoverWindow|WindowType_Mask|MSWindowsFixedSizeDialogHint|MSWindowsOwnDC|BypassWindowManagerHint|X11BypassWindowManagerHint|FramelessWindowHint|WindowTitleHint|WindowSystemMenuHint|WindowMinimizeButtonHint|WindowMaximizeButtonHint|WindowMinMaxButtonsHint|WindowContextHelpButtonHint|WindowShadeButtonHint|WindowStaysOnTopHint|WindowTransparentForInput|WindowOverridesSystemGestures|WindowDoesNotAcceptFocus|MaximizeUsingFullscreenGeometryHint|CustomizeWindowHint|WindowStaysOnBottomHint|WindowCloseButtonHint|MacWindowToolBarButtonHint|BypassGraphicsProxyWidget|NoDropShadowWindowHint|WindowFullscreenButtonHint
+        # WindowState
+        |WindowNoState|WindowMinimized|WindowMaximized|WindowFullScreen|WindowActive
+        # WindowModality
+        |NonModal|WindowModal|ApplicationModal
+        # WidgetAttribute - omited
+        # ApplicationAttribute - omited
+        # FocusReason
+        |MouseFocusReason|TabFocusReason|BacktabFocusReason|ActiveWindowFocusReason|PopupFocusReason|ShortcutFocusReason|MenuBarFocusReason|OtherFocusReason|NoFocusReason
+        # InputMethodHint
+        |ImhNone|ImhHiddenText|ImhSensitiveData|ImhNoAutoUppercase|ImhPreferNumbers|ImhPreferUppercase|ImhPreferLowercase|ImhNoPredictiveText|ImhDate|ImhTime|ImhPreferLatin|ImhMultiLine|ImhNoEditMenu|ImhNoTextHandles|ImhDigitsOnly|ImhFormattedNumbersOnly|ImhUppercaseOnly|ImhLowercaseOnly|ImhDialableCharactersOnly|ImhEmailCharactersOnly|ImhUrlCharactersOnly|ImhLatinOnly|ImhExclusiveInputMask
+        # InputMethodQuery - omited
+        # EnterKeyType
+        |EnterKeyDefault|EnterKeyReturn|EnterKeyDone|EnterKeyGo|EnterKeySend|EnterKeySearch|EnterKeyNext|EnterKeyPrevious
+        # TouchPointState
+        |TouchPointPressed|TouchPointMoved|TouchPointStationary|TouchPointReleased
+        # ScreenOrientation
+        |PrimaryOrientation|PortraitOrientation|LandscapeOrientation|InvertedPortraitOrientation|InvertedLandscapeOrientation
+        # ConnectionType
+        |AutoConnection|DirectConnection|QueuedConnection|BlockingQueuedConnection|UniqueConnection
+        # ApplicationState
+        |ApplicationSuspended|ApplicationHidden|ApplicationInactive|ApplicationActive
+        # GestureState
+        |NoGesture|GestureStarted|GestureUpdated|GestureFinished|GestureCanceled
+        # GestureType
+        |TapGesture|TapAndHoldGesture|PanGesture|PinchGesture|SwipeGesture|CustomGesture|LastGestureType
+        # NativeGestureType
+        |BeginNativeGesture|EndNativeGesture|PanNativeGesture|ZoomNativeGesture|SmartZoomNativeGesture|RotateNativeGesture|SwipeNativeGesture
+        # CursorMoveStyle
+        |LogicalMoveStyle|VisualMoveStyle
+        # TimerType
+        |PreciseTimer|CoarseTimer|VeryCoarseTimer
+        # ScrollPhase
+        |NoScrollPhase|ScrollBegin|ScrollUpdate|ScrollEnd|ScrollMomentum
+        # MouseEventSource
+        |MouseEventNotSynthesized|MouseEventSynthesizedBySystem|MouseEventSynthesizedByQt|MouseEventSynthesizedByApplication
+        # MouseEventFlag
+        |MouseEventCreatedDoubleClick|MouseEventFlagMask
+        # ChecksumType - omited
+        # HighDpiScaleFactorRoundingPolicy - omited
+        # TabFocusBehavior
+        |NoTabFocus|TabFocusTextControls|TabFocusListControls|TabFocusAllControls
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+    - match: (?:include|isQtObject|rgba|hsla|hsva|colorEqual|rect|point|size|font|vector2d|vector3d|vector4d|quaternion|matrix4x4|formatDate|formatTime|formatDateTime|openUrlExternally|fontFamilies|md5|btoa|atob|resolvedUrl|locale|binding|lighter|darker|tint|quit|exit|createQmlObject|createComponent|callLater){{identifier_break}}
+      scope: support.function.builtin.qml
+      pop: true
+
+    - match: application{{identifier_break}}
+      scope: support.type.object.qt.qml support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtqml-qt-application
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: platform{{identifier_break}}
+      scope: support.type.object.qt.qml support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtqml-qt-platform
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: (?:inputMethod|styleHints){{identifier_break}}
+      scope: support.type.object.qt.qml
+      pop: true
+
+  support-property-qtqml-qt-application:
+    - match: (?:active|state|layoutDirection|font|arguments|name|displayName|version|organization|domain|supportsMultipleWindows|screens){{identifier_break}}
+      scope: support.type.object.application.qml
+      pop: true
+
+  support-property-qtqml-qt-platform:
+    - match: (?:os|pluginName){{identifier_break}}
+      scope: support.type.object.platform.qml
+      pop: true
+
+  support-variable-qtquick:
+    - match: Animation{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-animation
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: DoubleValidator{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-doublevalidator
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Drag{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-drag
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: DragHandler{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-draghandler
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Easing{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-easing
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: EventPoint{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-eventpoint
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: (?:Flickable|TableView){{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-flickable
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Font{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-font
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: FontLoader{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-fontloader
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Gradient{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-gradient
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: GraphicsInfo{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-graphicsinfo
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: GridView{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-gridview
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Image{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-image
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: InputMethod{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-inputmethod
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Item{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-item
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: ItemView{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-itemview
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: KeyNavigation{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-keynavigation
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Keys{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-keys
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: ListView{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-listview
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Loader{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-loader
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: PathAnimation{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-pathanimation
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: PathArc{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-patharc
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: PathView{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-pathview
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Pinch{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-parts-pinch
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: PointerDevice{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-pointerdevice
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Rotation(?:Animation|Animator){{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-rotationanimation
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: ShaderEffect{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-shadereffect
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: ShaderEffectSource{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-shadereffectsource
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: SmoothedAnimation{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-smoothedanimation
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: StandardKey{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-standardkey
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: SystemPalette{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-systempalette
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: TapHandler{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-taphandler
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Text{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-text
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: TextEdit{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-textedit
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: TextInput{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-textinput
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: (?:Int|RegExp|RegularExpression)Validator{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-parts-validator
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: ViewSection{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-viewsection
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+  support-property-qtquick-parts-alignment:
+    - match: Align(?:Left|Right|HCenter|Top|Bottom|VCenter){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-parts-status:
+    - match: (?:Null|Ready|Loading|Error){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-parts-orientation:
+    - match: (?:Horizontal|Vertical){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-parts-pinch:
+    - match: (?:XAxis|YAxis|XAndYAxis|XandYAxis){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-parts-position:
+    - match: (?:Header|Footer){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-parts-transform-origin:
+    - match: (?:TopLeft|Top|TopRight|Left|Center|Right|BottomLeft|Bottom|BottomRight){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-parts-validator:
+    - match: (?:Invalid|Intermediate|Acceptable){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-animation:
+    - match: Infinite{{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-doublevalidator:
+    - include: support-property-qtquick-parts-validator
+    - match: (?:StandardNotation|ScientificNotation){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-drag:
+    - include: support-property-qtquick-parts-pinch
+    - match: (?:None|Automatic|Internal){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-draghandler:
+    - match: (?:NoSnap|SnapAuto|SnapIfPressedOutsideTarget|SnapAlways){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-easing:
+    - match: (?:Linear|InQuad|OutQuad|InOutQuad|OutInQuad|InCubic|OutCubic|InOutCubic|OutInCubic|InQuart|OutQuart|InOutQuart|OutInQuart|InQuint|OutQuint|InOutQuint|OutInQuint|InSine|OutSine|InOutSine|OutInSine|InExpo|OutExpo|InOutExpo|OutInExpo|InCirc|OutCirc|InOutCirc|OutInCirc|InElastic|OutElastic|InOutElastic|OutInElastic|InBack|OutBack|InOutBack|OutInBack|InBounce|OutBounce|InOutBounce|OutInBounce){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-eventpoint:
+    - match: |-
+        (?x:(?:
+        # State
+        Pressed|Updated|Stationary|Released
+        # GrabTransition
+        |GrabPassive|UngrabPassive|CancelGrabPassive|OverrideGrabPassive|GrabExclusive|UngrabExclusive|CancelGrabExclusive
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-flickable:
+    - match: |-
+        (?x:(?:
+        # BoundsBehavior & BoundsMovement
+        StopAtBounds|DragOverBounds|OvershootBounds|DragAndOvershootBounds|FollowBoundsBehavior
+        # FlickableDirection
+        |AutoFlickDirection|(?:Horizontal|Vertical|HorizontalAndVertical)Flick|AutoFlickIfNeeded
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-font:
+    - match: |-
+        (?x:(?:
+        # FontWeight
+        Thin|ExtraLight|Light|Normal|Medium|DemiBold|Bold|ExtraBold|Black
+        # Capitalization
+        |MixedCase|AllUppercase|AllLowercase|SmallCaps|Capitalize
+        # HintingPreference
+        |PreferDefaultHinting|PreferNoHinting|PreferVerticalHinting|PreferFullHinting
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-fontloader:
+    - include: support-property-qtquick-parts-status
+
+  support-property-qtquick-gradient:
+    - match: (?:Vertical|Horizontal){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-graphicsinfo:
+    - match: |-
+        (?x:(?:
+        # GraphicsApi
+        Unknown|Software|OpenGL|Direct3D12|OpenVG|OpenGLRhi|Direct3D11Rhi|VulkanRhi|MetalRhi|NullRhi
+        # ShaderType
+        |UnknownShadingLanguage|GLSL|HLSL|RhiShader
+        # ShaderCompilationType
+        |RuntimeCompilation|OfflineCompilation
+        # ShaderSourceType
+        |ShaderSourceString|ShaderSourceFile|ShaderByteCode
+        # OpenGLContextProfile
+        |OpenGLNoProfile|OpenGLCoreProfile|OpenGLCompatibilityProfile
+        # RenderableType
+        |SurfaceFormatUnspecified|SurfaceFormatOpenGL|SurfaceFormatOpenGLES
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-gridview:
+    - include: support-property-qtquick-itemview
+    - match: |-
+        (?x:(?:
+        # Flow
+        FlowLeftToRight|FlowTopToBottom
+        # SnapMode
+        |NoSnap|SnapToRow|SnapOneRow
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-image:
+    - include: support-property-qtquick-parts-alignment
+    - include: support-property-qtquick-parts-status
+    - match: (?:Stretch|PreserveAspectFit|PreserveAspectCrop|Tile|TileVertically|TileHorizontally|Pad){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-inputmethod:
+    - match: (?:Click|ContextMenu){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-item:
+    - include: support-property-qtquick-parts-transform-origin
+
+  support-property-qtquick-itemview:
+    - include: support-property-qtquick-flickable
+    - match: |-
+        (?x:(?:
+        # LayoutDirection
+        LeftToRight|RightToLeft|VerticalTopToBottom|VerticalBottomToTop
+        # VerticalLayoutDirection
+        |TopToBottom|BottomToTop
+        # HighlightRangeMode
+        |NoHighlightRange|ApplyRange|StrictlyEnforceRange
+        # PositionMode
+        |Beginning|Center|End|Visible|Contain|SnapPosition
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+    - match: (?:delayRemove|isCurrentItem|view|nextSection|previousSection|section){{identifier_break}}
+      scope: support.class.builtin.qml
+      pop: true
+
+  support-property-qtquick-keynavigation:
+    - match: (?:BeforeItem|AfterItem){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-keys:
+    - include: support-property-qtquick-keynavigation
+
+  support-property-qtquick-listview:
+    - include: support-property-qtquick-itemview
+    - include: support-property-qtquick-parts-orientation
+    - match: (?:NoSnap|SnapToItem|SnapOneItem|InlineHeader|OverlayHeader|PullBackHeader|InlineFooter|OverlayFooter|PullBackFooter){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-loader:
+    - include: support-property-qtquick-parts-status
+
+  support-property-qtquick-pathanimation:
+    - match: (?:Fixed|RightFirst|LeftFirst|BottomFirst|TopFirst){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-patharc:
+    - match: (?:Clockwise|Counterclockwise){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-pathview:
+    - match: |-
+        (?x:(?:
+        # HighlightRangeMode
+        (?:NoHighlight|Apply|StrictlyEnforce)Range
+        # SnapMode
+        |NoSnap|Snap(?:ToItem|OneItem)
+        # MovementDirection
+        |Shortest|Negative|Positive
+        # PositionMode
+        |Beginning|Center|End|Contain|SnapPosition
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-pointerdevice:
+    - match: |-
+        (?x:(?:
+        # DeviceType
+        UnknownDevice|Mouse|TouchScreen|TouchPad|Puck|Stylus|Airbrush|AllDevices
+        # PointerType
+        |GenericPointer|Finger|Pen|Eraser|Cursor|AllPointerTypes
+        # CapabilityFlag
+        |Position|Area|Pressure|Velocity|MouseEmulation|Scroll|Hover|Rotation|XTilt|YTilt
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-rotationanimation:
+    - match: (?:Numerical|Shortest|Clockwise|Counterclockwise){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-shadereffect:
+    - match: (?:NoCulling|BackFaceCulling|FrontFaceCulling|Compiled|Uncompiled|Error){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-shadereffectsource:
+    - match: |-
+        (?x:(?:
+        # WrapMode
+        ClampToEdge|Repeat(?:Horizontally|Vertically)?
+        # Format
+        |Alpha|RGBA?
+        # TextureMirroring
+        |NoMirroring|MirrorHorizontally|MirrorVertically
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-smoothedanimation:
+    - match: (?:Eased|Immediate|Sync){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-standardkey:
+    - match: |-
+        (?x:(?:
+        # StandardKey
+        UnknownKey|HelpContents|WhatsThis|Open|Close|Save|New|Delete|Cut|Copy|Paste|Undo|Redo|Back|Forward|Refresh|ZoomIn|ZoomOut|Print|AddTab|NextChild|PreviousChild|Find|FindNext|FindPrevious|Replace|SelectAll|Bold|Italic|Underline|MoveToNextChar|MoveToPreviousChar|MoveToNextWord|MoveToPreviousWord|MoveToNextLine|MoveToPreviousLine|MoveToNextPage|MoveToPreviousPage|MoveToStartOfLine|MoveToEndOfLine|MoveToStartOfBlock|MoveToEndOfBlock|MoveToStartOfDocument|MoveToEndOfDocument|SelectNextChar|SelectPreviousChar|SelectNextWord|SelectPreviousWord|SelectNextLine|SelectPreviousLine|SelectNextPage|SelectPreviousPage|SelectStartOfLine|SelectEndOfLine|SelectStartOfBlock|SelectEndOfBlock|SelectStartOfDocument|SelectEndOfDocument|DeleteStartOfWord|DeleteEndOfWord|DeleteEndOfLine|InsertParagraphSeparator|InsertLineSeparator|SaveAs|Preferences|Quit|FullScreen|Deselect|DeleteCompleteLine|Backspace|Cancel
+        # SequenceFormat
+        |NativeText|PortableText
+        # SequenceMatch
+        |NoMatch|PartialMatch|ExactMatch
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-systempalette:
+    - match: (?:Active|Inactive|Disabled){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-taphandler:
+    - match: (?:DragThreshold|WithinBounds|ReleaseWithinBounds){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-text:
+    - include: support-property-qtquick-parts-alignment
+    - match: |-
+        (?x:(?:
+        # HAlignment - not in parts
+        AlignJustify
+        # TextStyle
+        |Normal|Outline|Raised|Sunken
+        # TextFormat
+        |(?:Plain|Rich|Markdown|Auto|Styled)Text
+        # TextElideMode
+        |Elide(?:Left|Right|Middle|None)
+        # WrapMode
+        |NoWrap|WordWrap|WrapAnywhere|WrapAtWordBoundaryOrAnywhere|Wrap
+        # RenderType
+        |QtRendering|NativeRendering
+        # LineHeightMode
+        |ProportionalHeight|FixedHeight
+        # FontSizeMode
+        |FixedSize|HorizontalFit|VerticalFit|Fit
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-textedit:
+    - include: support-property-qtquick-parts-alignment
+    - match: |-
+        (?x:(?:
+        # HAlignment - not in parts
+        AlignJustify
+        # TextFormat
+        |(?:Plain|Rich|Auto|Markdown)Text
+        # WrapMode
+        |NoWrap|WordWrap|WrapAnywhere|WrapAtWordBoundaryOrAnywhere|Wrap
+        # SelectionMode
+        |Select(?:Characters|Words)
+        # RenderType
+        |QtRendering|NativeRendering
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-textinput:
+    - include: support-property-qtquick-parts-alignment
+    - match: |-
+        (?x:(?:
+        # EchoMode
+        Normal|NoEcho|Password|PasswordEchoOnEdit
+        # WrapMode
+        |NoWrap|WordWrap|WrapAnywhere|WrapAtWordBoundaryOrAnywhere|Wrap
+        # SelectionMode
+        |Select(?:Characters|Words)
+        # CursorPosition
+        |CursorBetweenCharacters|CursorOnCharacter
+        # RenderType
+        |QtRendering|NativeRendering
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-viewsection:
+    - match: (?:FullString|FirstCharacter|InlineLabels|CurrentLabelAtStart|NextLabelAtEnd){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-variable-qtquick-dialogs:
+    - match: StandardButton{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-dialogs-standardbutton
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: StandardIcon{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-dialogs-standardicon
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+  support-property-qtquick-dialogs-standardbutton:
+    - match: (?:NoButton|Ok|Save|SaveAll|Open|Yes|YesToAll|No|NoToAll|Abort|Retry|Ignore|Close|Cancel|Discard|Help|Apply|Reset|RestoreDefaults|NButtons){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-dialogs-standardicon:
+    - match: (?:NoIcon|Information|Warning|Critical|Question){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-variable-qtquick-controls:
+    - match: (?:AbstractButton|Button|RoundButton|ToolButton){{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-controls-abstractbutton
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Popup{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-controls-popup
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Dial{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-controls-dial
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Dialog{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-controls-dialog
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: DialogButtonBox{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-controls-dialogbuttonbox
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: ScrollBar{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-controls-scrollbar
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: Slider{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-controls-slider
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: StackView{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-controls-stackview
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: TabBar{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-controls-tabbar
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: TextArea{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            # inherits TextEdit
+            - include: support-property-qtquick-textedit
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+    - match: TextField{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            # inherits TextInput
+            - include: support-property-qtquick-textinput
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+  support-property-qtquick-controls-parts-buttonrole:
+    - match: (?:(?:Invalid|Accept|Reject|Destructive|Action|Help|Yes|No|Reset|Apply)Role|NRoles|RoleMask|AlternateRole|Stretch|Reverse|EOL){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-controls-parts-snap-mode:
+    - match: (?:NoSnap|SnapAlways|SnapOnRelease){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-controls-abstractbutton:
+    - match: (?:IconOnly|TextOnly|TextBesideIcon|TextUnderIcon){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-controls-popup:
+    - include: support-property-qtquick-parts-transform-origin
+    - match: (?:NoAutoClose|CloseOn(?:PressOutside|PressOutsideParent|ReleaseOutside|ReleaseOutsideParent|Escape)){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-controls-dial:
+    - include: support-property-qtquick-controls-parts-snap-mode
+    - match: |-
+        (?x:(?:
+        # SnapMode
+        NoSnap|SnapAlways|SnapOnRelease
+        # InputMode
+        |Circular|Horizontal|Vertical
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-controls-dialog:
+    - include: support-property-qtquick-controls-popup
+    - include: support-property-qtquick-dialogs-standardbutton
+
+  support-property-qtquick-controls-dialogbuttonbox:
+    - include: support-property-qtquick-dialogs-standardbutton
+    - include: support-property-qtquick-controls-parts-buttonrole
+    - include: support-property-qtquick-parts-position
+    - match: (?:UnknownLayout|WinLayout|MacLayout|KdeLayout|GnomeLayout|MacModelessLayout|AndroidLayout){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-controls-scrollbar:
+    - include: support-property-qtquick-controls-parts-snap-mode
+    - match: (?:AsNeeded|AlwaysOff|AlwaysOn){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-controls-slider:
+    - include: support-property-qtquick-controls-parts-snap-mode
+
+  support-property-qtquick-controls-stackview:
+    - match: (?:Inactive|Deactivating|Activating|Active){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-controls-tabbar:
+    - include: support-property-qtquick-parts-position
+
+  support-variable-qtquick-templates:
+    - match: (?:T|Controls|QtControls2?|QQC2?){{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-variable-qtquick-controls
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+  support-variable-kde:
+    # https://api.kde.org/frameworks/ki18n/html/classKLocalizedContext.html
+    - match: (?:i18n|i18nc|i18np|i18ncp|i18nd|i18ndc|i18ndp|i18ndcp|xi18n|xi18nc|xi18np|xi18ncp|xi18nd|xi18ndc|xi18ndp|xi18ndcp|translationDomain){{identifier_break}}
+      scope: support.function.qml
+      pop: true
+
+  # END support
+
   # BEGIN component
 
   inline-component:
