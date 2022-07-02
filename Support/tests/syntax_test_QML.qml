@@ -172,7 +172,7 @@ WithId {
 
 RequiredProperties {
     required name; required /**/ text
-//  ^^^^^^^^^^^^^ meta.binding.property.qml
+//  ^^^^^^^^^^^^^^ meta.binding.property.qml
 //                 ^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //                ^ - meta.binding.property.qml
 //  ^^^^^^^^ storage.modifier.required
@@ -198,11 +198,14 @@ RequiredProperties {
 //           ^^^^^^^^ meta.binding.name variable.other.member - invalid.illegal
     required property
 //           ^^^^^^^^ meta.binding.name variable.other.member - invalid.illegal
-    required property int nine
+    required property int nine;;
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
 //  ^^^^^^^^ keyword.other storage.modifier.required
 //           ^^^^^^^^ keyword.declaration
 //                    ^^^ storage.type support.type
 //                        ^^^^ meta.binding.name variable.other.member
+//                            ^ punctuation.terminator.statement.qml
+//                             ^ invalid.illegal.unexpected-terminator.qml - meta.binding.property
     required property url ten: 10
 //                           ^ invalid.illegal.binding
     required property list<url> eight

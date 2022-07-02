@@ -293,7 +293,7 @@ contexts:
   required-property-extended:
     - match: property{{identifier_break}}
       scope: keyword.declaration.qml
-      push:
+      set:
         - required-property-name
         - required-property-type
 
