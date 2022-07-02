@@ -248,7 +248,6 @@ contexts:
       pop: true
 
   object-id-name:
-    - meta_scope: meta.binding.property.qml
     - match: '(?={{non_reserved_identifier}}){{identifier_untitle}}'
       scope: entity.name.label.qml
       set:
