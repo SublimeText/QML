@@ -368,6 +368,31 @@ RegularProperties {
 // <- meta.block punctuation.section.block.end
 // ^ - meta.block
 
+Properties {
+    x: 42
+//  ^^^^^^ meta.binding.property
+//  ^ meta.binding.name variable.other.member
+//   ^ punctuation.separator.mapping.key-value
+//     ^^ meta.number.integer.decimal.js constant.numeric.value.js
+    y: 42;
+//       ^ meta.binding.property punctuation.terminator.statement.js
+//        ^ - meta.binding.property
+    z;
+//  ^^ meta.binding.property
+//  ^ meta.binding.name variable.other.member
+//   ^ punctuation.terminator.statement.qml - invalid.illegal.unexpected-terminator
+    implicitHeight: implicitContentHeight
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
+//  ^^^^^^^^^^^^^^ meta.binding.name variable.other.member
+//                ^ punctuation.separator.mapping.key-value
+//                  ^^^^^^^^^^^^^^^^^^^^^ variable.other.readwrite.js
+        + header.height + footer.height;;
+//      ^ keyword.operator.arithmetic.js
+//                      ^ keyword.operator.arithmetic.js
+//                                     ^ punctuation.terminator.statement.js
+//                                      ^ invalid.illegal.unexpected-terminator
+}
+
 WithMethods {
     id: withMethods
     function abc(arg1) {}

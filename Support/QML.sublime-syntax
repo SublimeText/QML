@@ -225,6 +225,7 @@ contexts:
     # unprefixed (may require specifix order to work)
     - include: signal-handler-non-attached
     - include: object-id
+    - include: property-binding
     - include: object-standalone
 
     # temporarily allow random nested blocks until the syntax is complete
@@ -369,6 +370,13 @@ contexts:
     - match: '{{property_name}}'
       scope: meta.binding.name.qml variable.other.member.qml
       pop: true
+
+  property-binding:
+    - match: (?={{identifier_untitle}})
+      set:
+        - property-binding-meta
+        - expect-binding
+        - expect-property-name
 
   expect-binding:
     - include: binding
