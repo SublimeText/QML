@@ -747,6 +747,8 @@ contexts:
           # pop: true
         - include: string-content
 
+  # BEGIN component
+
   inline-component:
     - match: component{{identifier_break}}
       scope: keyword.declaration.component.qml
@@ -775,6 +777,8 @@ contexts:
       scope: punctuation.separator.type.qml
       pop: true
     - include: else-pop
+
+  # END component
 
   # BEGIN handlers
 
