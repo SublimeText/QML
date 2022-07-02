@@ -173,11 +173,11 @@ WithId {
 RequiredProperties {
     required name; required /**/ text
 //  ^^^^^^^^^^^^^^ meta.binding.property.qml
-//                 ^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
-//                ^ - meta.binding.property.qml
 //  ^^^^^^^^ storage.modifier.required
 //           ^^^^ meta.binding.name variable.other.member
 //               ^ punctuation.terminator.statement
+//                ^ - meta.binding.property.qml
+//                 ^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //                          ^^^^ comment.block
 //                               ^^^^ meta.binding.name variable.other.member
     required Four
@@ -198,6 +198,24 @@ RequiredProperties {
 //           ^^^^^^^^ meta.binding.name variable.other.member - invalid.illegal
     required property
 //           ^^^^^^^^ meta.binding.name variable.other.member - invalid.illegal
+    required property var modelData
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
+//  ^^^^^^^^ keyword.other storage.modifier.required
+//           ^^^^^^^^ keyword.declaration
+//                    ^^^ storage.type support.other
+//                        ^^^^^^^^^ meta.binding.name variable.other.member
+    required property varia modelData
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
+//  ^^^^^^^^ keyword.other storage.modifier.required
+//           ^^^^^^^^ keyword.declaration
+//                    ^^^^^ - storage.type
+//                          ^^^^^^^^^ meta.binding.name variable.other.member
+    required property variant modelData
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
+//  ^^^^^^^^ keyword.other storage.modifier.required
+//           ^^^^^^^^ keyword.declaration
+//                    ^^^^^^^ storage.type support.other invalid.deprecated.variant
+//                            ^^^^^^^^^ meta.binding.name variable.other.member
     required property int nine;;
 //  ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
 //  ^^^^^^^^ keyword.other storage.modifier.required
@@ -250,15 +268,16 @@ RegularProperties {
 //  ^^^^^^^^ keyword.declaration
 //           ^^^^ support.class
 //                ^^^^^ meta.binding.name variable.other.member
+//                     ^ punctuation.terminator.statement
     property QQC2.Button button
-//  ^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^^ keyword.declaration
 //           ^^^^ support.class
 //               ^ punctuation.accessor
 //                ^^^^^^ support.class
 //                       ^^^^^^ meta.binding.name variable.other.member
     property list<Item> children
-//  ^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^^ keyword.declaration
 //           ^^^^ storage.type support.other
 //               ^ punctuation.definition.generic.begin
@@ -282,7 +301,7 @@ RegularProperties {
 //          ^^^^^^^^ keyword.declaration
 //                                  ^^^^ meta.binding.name variable.other.member
     readonly property string name: "xyz"
-//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^^ keyword.other.qml storage.modifier.required.qml
 //           ^^^^^^^^ keyword.declaration
 //                           ^^^^ meta.binding.name variable.other.member
@@ -321,8 +340,8 @@ RegularProperties {
 //                                 ^^^^^^ keyword.control.flow.return.js
 //                                         ^ punctuation.terminator.statement.js
     else if { return 2; } else {}
-//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  meta.binding.property.qml meta.conditional.js
-//                               ^ meta.binding.property.qml
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.conditional.js
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^ keyword.control.conditional.elseif.js
 //          ^^^^^^^^^^^^^ meta.block.js
 //                        ^^^^ keyword.control.conditional.else.js
@@ -480,52 +499,52 @@ Signals {
 //         ^^^^^ - invalid.illegal
 //            ^ meta.function.parameters punctuation.separator.parameter.function
         string three url four,
+//      ^^^^^^^^^^^^^^^^^^^^^^ meta.function.parameters - invalid.illegal
 //      ^^^^^^ storage.type support.type
 //             ^^^^^ meta.binding.name variable.parameter.function
 //                   ^^^ storage.type support.type
 //                       ^^^^ meta.binding.name variable.parameter.function
 //                           ^ punctuation.separator.parameter.function
-//      ^^^^^^^^^^^^^^^^^^^^^^ meta.function.parameters - invalid.illegal
         five,
+//      ^^^^^^ meta.function.parameters
 //      ^^^^ invalid.illegal.expected-type.qml meta.binding.name.js variable.parameter.function.js
 //          ^ punctuation.separator.parameter.function
 //          ^^ - invalid.illegal
-//      ^^^^^^ meta.function.parameters
         six/**/:/**/ var/**/,
+//      ^^^^^^^^^^^^^^^^^^^^^^ meta.function.parameters - invalid.illegal
 //      ^^^ meta.binding.name variable.parameter.function
 //             ^ punctuation.separator.type
 //                   ^^^ storage.type support.other
 //                          ^ punctuation.separator.parameter.function
-//      ^^^^^^^^^^^^^^^^^^^^^^ meta.function.parameters - invalid.illegal
         string
 //      ^^^^^^ storage.type support.type
 //      ^^^^^^^ meta.function.parameters - invalid.illegal
             seven,
+//          ^^^^^^^ meta.function.parameters - invalid.illegal
 //          ^^^^^ meta.binding.name variable.parameter.function
 //               ^ punctuation.separator.parameter.function
-//          ^^^^^^^ meta.function.parameters - invalid.illegal
         eight:
+//      ^^^^^^^ meta.function.parameters - invalid.illegal
 //      ^^^^^ meta.binding.name variable.parameter.function
 //           ^ punctuation.separator.type
-//      ^^^^^^^ meta.function.parameters - invalid.illegal
             url,
+//          ^^^^^ meta.function.parameters - invalid.illegal
 //          ^^^ storage.type support.type
 //             ^ punctuation.separator.parameter.function
-//          ^^^^^ meta.function.parameters - invalid.illegal
         nine/**/
+//      ^^^^^^^^^ meta.function.parameters - invalid.illegal
 //      ^^^^ meta.binding.name variable.parameter.function
 //          ^^^^ comment.block
-//      ^^^^^^^^^ meta.function.parameters - invalid.illegal
             /**/:/**/
+//          ^^^^^^^^^^ meta.function.parameters - invalid.illegal
 //          ^^^^ comment.block
 //              ^ punctuation.separator.type
 //               ^^^^ comment.block
-//          ^^^^^^^^^^ meta.function.parameters - invalid.illegal
             /**/url,
+//          ^^^^^^^^^ meta.function.parameters - invalid.illegal
 //          ^^^^ comment.block
 //              ^^^ storage.type support.type
 //                 ^ punctuation.separator.parameter.function
-//          ^^^^^^^^^ meta.function.parameters - invalid.illegal
         url: url,
 //      ^^^ meta.binding.name variable.parameter.function
 //         ^ punctuation.separator.type

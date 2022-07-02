@@ -269,7 +269,6 @@ contexts:
         - required-property-branch
 
   required-property-branch:
-    - meta_scope: meta.binding.property.qml
     - match: '(?={{non_reserved_identifier}})'
       branch_point: required-property-fail
       branch:
