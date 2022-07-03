@@ -169,14 +169,14 @@ contexts:
   object-standalone:
     - match: (?={{identifier_title}})
       set:
-        - object-block
+        - expect-object-block
         - expect-object-type-name
 
   expect-object-type-name:
-    # either Namespace.Object or just Object
     - match: (?={{identifier_title}})
       set: object-type-name
 
+  # either Namespace.Object or just Object
   object-type-name:
     # just Object
     - match: '{{identifier_title}}(?!\s*\.)'
@@ -191,6 +191,56 @@ contexts:
           scope: punctuation.accessor.qml
           set: object-type-name
 
+    - include: else-pop
+
+  # same as above, but fails with not-standalone-object
+  try-standalone-object-type-name:
+    - match: (?={{identifier_title}})
+      set: standalone-object-type-name
+
+    - match: (?=\S)
+      fail: not-standalone-object
+
+  standalone-object-type-name:
+    - match: '{{identifier_title}}(?!\s*\.)'
+      scope: support.class.qml
+      pop: true
+
+    - match: '{{identifier_title}}'
+      scope: support.class.qml
+      set:
+        - match: \.
+          scope: punctuation.accessor.qml
+          set: standalone-object-type-name
+
+    - match: (?=\S)
+      fail: not-standalone-object
+
+  # same as above, but fails with not-value-object
+  try-value-object-type-name:
+    - match: (?={{identifier_title}})
+      set: value-object-type-name
+
+    - match: (?=\S)
+      fail: not-value-object
+
+  value-object-type-name:
+    - match: '{{identifier_title}}(?!\s*\.)'
+      scope: support.class.qml
+      pop: true
+
+    - match: '{{identifier_title}}'
+      scope: support.class.qml
+      set:
+        - match: \.
+          scope: punctuation.accessor.qml
+          set: value-object-type-name
+
+    - match: (?=\S)
+      fail: not-value-object
+
+  expect-object-block:
+    - include: object-block
     - include: else-pop
 
   object-block:
@@ -407,23 +457,23 @@ contexts:
   standalone-object-or-attached-member:
     - match: (?={{identifier_title}})
       pop: true
-      branch_point: not-an-object
+      branch_point: not-standalone-object
       branch:
-        - try-object-standalone
+        - try-standalone-object
         - attached-member
 
-  try-object-standalone:
+  try-standalone-object:
     - match: (?={{identifier_title}})
       set:
-        - try-object-block
-        - expect-object-type-name
+        - try-standalone-object-block
+        - try-standalone-object-type-name
 
-  try-object-block:
+  try-standalone-object-block:
     - match: (?=\{)
       set: object-block
 
     - match: '\S'
-      fail: not-an-object
+      fail: not-standalone-object
 
   attached-member:
     - include: support-attached
@@ -433,7 +483,7 @@ contexts:
     - match: (?={{identifier_title}})
       set:
         - expect-attached-member
-        - object-type-name
+        - expect-object-type-name
 
   expect-attached-member:
     - include: signal-handler-non-attached
@@ -449,7 +499,7 @@ contexts:
       pop: true
     - match: ':'
       scope: punctuation.separator.mapping.key-value.qml
-      set: expect-binding-value
+      set: binding-value
 
   expect-illegal-binding:
     - include: illegal-binding
@@ -461,20 +511,75 @@ contexts:
       pop: true
     - match: ':'
       scope: punctuation.separator.mapping.key-value.qml invalid.illegal.binding.qml
-      set: expect-binding-value
+      set: binding-value
 
-  expect-binding-value:
-    # TODO: include QML object declaration
+  binding-value:
     - match: (?=\S)
-      set: property-binding-value
+      pop: true
+      branch_point: not-value-object
+      branch:
+        - try-value-object
+        - maybe-array-of-objects
+        - binding-expression
 
-  property-binding-value:
+  binding-expression:
     - include: class
     - include: regular-function
     - include: conditionals
     - include: block
     - include: expression-statement
+
     - include: else-pop-at-eol
+
+  try-value-object:
+    - match: (?={{identifier_title}})
+      set:
+        - try-value-object-block
+        - try-value-object-type-name
+    - match: '\S'
+      fail: not-value-object
+
+  try-value-object-block:
+    - match: (?=\{)
+      set: object-block
+
+    - match: '\S'
+      fail: not-value-object
+
+  maybe-array-of-objects:
+    - match: '\['
+      scope: punctuation.section.sequence.begin.qml
+      set:
+        - maybe-array-of-objects-meta
+        # Only fail on first object. If this one succeeds, others shall be parsed as objects too.
+        - array-of-objects-content
+        # And if it's an empty array, fallback to JavaScript expression
+        - try-value-object
+    - match: '\S'
+      fail: not-value-object
+
+  maybe-array-of-objects-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.sequence.qml
+    - include: immediately-pop
+
+  array-of-objects-content:
+    - match: \,
+      scope: punctuation.separator.comma.qml
+    - match: '\]'
+      scope: punctuation.section.sequence.end.qml
+      pop: true
+    - match: (?={{identifier_title}})
+      push: object-standalone
+    - match: (?=\S)
+      push:
+        - array-of-objects-content-invalid-meta
+        - expression-begin
+
+  array-of-objects-content-invalid-meta:
+    - meta_include_prototype: false
+    - meta_scope: invalid.illegal.expected-object.qml
+    - include: immediately-pop
 
   # override here, so we can parse if-elseif-else chain in one go
   conditionals:
@@ -594,6 +699,7 @@ contexts:
     - match: '>'
       scope: punctuation.definition.generic.end.qml
       pop: true
+    - include: else-pop
 
   # BEGIN methods
   # Copied from JavaScript syntax, replaced 'function-' with 'qml-method-', added parameter types.

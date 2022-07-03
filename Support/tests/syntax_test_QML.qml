@@ -877,9 +877,12 @@ Handlers {
 //            ^^^^^^^^^^^^^^^ meta.handler
 //            ^^^^^^^^^^^ meta.binding.name support.function markup.italic
 //              ^^^^^^^^^ markup.underline
-
     onEntered: Animation {}
-// TODO: objects as binding values
+//  ^^^^^^^^^^^^^^^^^^^^^^^ meta.handler.qml
+//  ^^^^^^^^^ meta.binding.name variable.function
+//    ^^^^^^^ markup.underline
+//             ^^^^^^^^^ support.class.qml
+//                       ^^ meta.block.qml
 }
 
 GroupedProperties {
@@ -976,3 +979,66 @@ AttachedProperties {
 //                                  ^ punctuation.terminator.statement.js
 //                                   ^ - meta.handler.qml & - meta.binding.property
 }
+
+ObjectsAsProperties {
+    delegate: Item { required property string modelData }
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block meta.binding.property
+//  ^^^^^^^^ meta.binding.name variable.other.member
+//          ^ punctuation.separator.mapping.key-value
+//            ^^^^ support.class
+//                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block meta.binding.property meta.block
+//                 ^ punctuation.section.block.begin
+//                   ^^^^^^^^ meta.binding.property.qml keyword.other.qml storage.modifier.required.qml
+//                                                      ^ punctuation.section.block.end.qml
+//                                                       ^ - meta.block meta.block
+    empty: []
+//         ^^ meta.sequence.js - meta.sequence.qml
+    actions: [Action {}]
+//           ^^^^^^^^^^^ meta.binding.property meta.sequence
+//                      ^ - meta.binding.property & - meta.sequence
+//            ^^^^^^ support.class.qml
+//                   ^^ meta.block.qml meta.block.qml
+//                   ^ punctuation.section.block.begin
+//                    ^ punctuation.section.block.end
+    actions: [Action {name: "cut"}, Action {name: "copy"},, Action {name: "paste"}]
+//           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.sequence.qml
+//            ^^^^^^ support.class
+//                                ^ punctuation.separator.comma.qml
+//                                  ^^^^^^ support.class
+//                                                       ^^ punctuation.separator.comma.qml
+//                                                          ^^^^^^ support.class
+    signals: Signals {
+//                   ^^ meta.block.qml meta.binding.property.qml meta.block.qml
+        onFired: {}
+//      ^^^^^^^ meta.handler.qml meta.binding.name.qml variable.function.qml
+        Component.onCompleted: {}
+//      ^^^^^^^^^ support.class.builtin.qml
+//                ^^^^^^^^^^^ meta.handler.qml meta.binding.name.qml support.function.qml markup.italic.qml
+    }
+    incomplete: [
+    A {}, B, C {}, someId, D {} ]
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml meta.sequence.qml
+//        ^ support.class
+//         ^ punctuation.separator.comma.qml
+//           ^ support.class
+//               ^ punctuation.separator.comma.qml
+//                 ^^^^^^ invalid.illegal.expected-object.qml variable.other.readwrite.js
+//                       ^ punctuation.separator.comma.qml
+//                         ^ support.class
+    strings: ["a", "b", "c"]
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
+//  ^^^^^^^ meta.binding.name.qml variable.other.member.qml
+//         ^ punctuation.separator.mapping.key-value.qml
+//           ^^^^^^^^^^^^^^^ meta.sequence.js - invalid.illegal.expected-object
+//            ^^^ meta.string.qml
+//               ^ punctuation.separator.comma.js
+    methods: [
+        QtObject {
+            function method() {}
+//          ^^^^^^^^ meta.sequence.qml meta.block.qml meta.function.js keyword.declaration.function.js
+//                   ^^^^^^ meta.function.js entity.name.function.js
+        }
+    ]
+}
+
+// <- - meta.block
