@@ -375,8 +375,32 @@ contexts:
     - match: (?={{identifier_untitle}})
       set:
         - property-binding-meta
-        - expect-binding
+        - property-binding-or-group
         - expect-property-name
+
+  property-binding-inside-group:
+    - match: (?={{identifier_untitle}})
+      set:
+        # Don't nest meta scopes
+        - property-binding-or-group
+        - expect-property-name
+
+  property-binding-or-group:
+    - match: \.
+      scope: punctuation.accessor.qml
+      set:
+        - include: property-binding-inside-group
+        - include: else-pop
+    - match: \{
+      scope: punctuation.section.block.begin.qml
+      set:
+        - meta_scope: meta.block.qml
+        - match: \}
+          scope: punctuation.section.block.end.qml
+          pop: true
+        - include: object-block-statements
+    - include: binding
+    - include: else-pop-at-eol
 
   expect-binding:
     - include: binding

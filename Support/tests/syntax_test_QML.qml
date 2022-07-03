@@ -868,3 +868,50 @@ Handlers {
     onEntered: Animation {}
 // TODO: objects as binding values
 }
+
+GroupedProperties {
+    font.pixelSize: 42
+//  ^^^^^^^^^^^^^^^^^^^ meta.binding.property
+//       ^^^^^^^^^^^^^^ - meta.binding.property meta.binding.property
+//  ^^^^ meta.binding.name variable.other.member
+//      ^ punctuation.accessor
+//       ^^^^^^^^^ meta.binding.name variable.other.member
+//                ^ punctuation.separator.mapping.key-value
+//                  ^^ meta.number.integer.decimal.js constant.numeric.value.js
+    x.y.z: 42;;
+//  ^^^^^^^^^^ meta.binding.property
+//  ^^^^^^^^^^ - meta.binding.property meta.binding.property
+//           ^ punctuation.terminator.statement.js - invalid.illegal
+//            ^ invalid.illegal.unexpected-terminator.qml
+    anchors {
+//  ^^^^^^^^^^ meta.binding.property
+//          ^ meta.binding.property meta.block punctuation.section.block.begin
+        left: parent.left
+//      ^^^^^^^^^^^^^^^^^^ meta.binding.property meta.block meta.binding.property
+        right: undefined
+//      ^^^^^^^^^^^^^^^^^ meta.binding.property meta.block meta.binding.property
+//      ^^^^^ meta.binding.name variable.other.member
+//           ^ punctuation.separator.mapping.key-value
+//             ^^^^^^^^^ constant.language.undefined.js
+
+// This is weird and illegal, but should work in editor
+        onError: {}
+//      ^^^^^^^^^^^ meta.binding.property meta.block meta.handler
+//      ^^^^^^^ meta.binding.name variable.function
+//             ^ punctuation.separator.mapping.key-value
+        Item {}
+//      ^^^^ meta.binding.property meta.block support.class
+    }
+//  ^ meta.binding.property meta.block punctuation.section.block.end
+    border { size {
+//           ^^^^^^^ meta.binding.property meta.block meta.binding.property
+//           ^^^^ meta.binding.name variable.other.member
+            width: NaN
+//          ^^^^^^^^^^^ meta.binding.property meta.block meta.binding.property meta.block meta.binding.property
+//          ^^^^^ meta.binding.name variable.other.member
+//               ^ punctuation.separator.mapping.key-value
+//                 ^^^ constant.language.nan.js
+    } }
+//  ^ meta.block meta.binding.property meta.block meta.binding.property meta.block punctuation.section.block.end
+//     ^ meta.block - meta.binding.property
+}
