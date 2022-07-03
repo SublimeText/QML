@@ -167,7 +167,7 @@ contexts:
     - include: else-pop
 
   object-standalone:
-    - match: '(?=[[:upper:]])'
+    - match: (?={{identifier_title}})
       set:
         - object-block
         - expect-object-type-name
@@ -223,10 +223,10 @@ contexts:
     - include: property-declaration
 
     # unprefixed (may require specifix order to work)
-    - include: signal-handler-non-attached
     - include: object-id
+    - include: signal-handler-non-attached
     - include: property-binding
-    - include: object-standalone
+    - include: standalone-object-or-attached-member
 
     # temporarily allow random nested blocks until the syntax is complete
     - include: block
@@ -379,6 +379,7 @@ contexts:
         - expect-property-name
 
   property-binding-inside-group:
+    - include: signal-handler-non-attached
     - match: (?={{identifier_untitle}})
       set:
         # Don't nest meta scopes
@@ -401,6 +402,41 @@ contexts:
         - include: object-block-statements
     - include: binding
     - include: else-pop-at-eol
+
+  standalone-object-or-attached-member:
+    - match: (?={{identifier_title}})
+      pop: true
+      branch_point: not-an-object
+      branch:
+        - try-object-standalone
+        - attached-member
+
+  try-object-standalone:
+    - match: (?={{identifier_title}})
+      set:
+        - try-object-block
+        - expect-object-type-name
+
+  try-object-block:
+    - match: (?=\{)
+      set: object-block
+
+    - match: '\S'
+      fail: not-an-object
+
+  attached-member:
+    - include: support-attached
+    - include: regular-attached
+
+  regular-attached:
+    - match: ''
+      set:
+        - expect-attached-member
+        - object-type-name
+
+  expect-attached-member:
+    - include: signal-handler-non-attached
+    - include: property-binding
 
   expect-binding:
     - include: binding
@@ -2015,6 +2051,25 @@ contexts:
       scope: support.function.qml
       pop: true
 
+  support-attached:
+    - include: support-attached-member-qtqml
+
+  support-attached-member-qtqml:
+    - match: Component{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-attached-member-qtqml-component
+            - include: expect-attached-member
+            - include: else-pop
+        - include: else-pop
+
+  support-attached-member-qtqml-component:
+    - match: (?=on(?:Completed|Destruction){{identifier_break}})
+      set: signal-handler-non-attached-support
+
   # END support
 
   # BEGIN component
@@ -2059,6 +2114,14 @@ contexts:
         - expect-binding
         - signal-handler-name
 
+  # only set this context from verified support contexts
+  signal-handler-non-attached-support:
+    - match: (?={{identifier_handler}})
+      set:
+        - signal-binding-meta
+        - expect-binding
+        - signal-handler-name-support
+
   signal-binding-meta:
     - meta_include_prototype: false
     - meta_scope: meta.handler.qml
@@ -2067,6 +2130,15 @@ contexts:
   signal-handler-name:
     - match: '{{identifier_handler}}'
       scope: meta.binding.name.qml variable.function.qml
+      captures:
+        2: markup.underline.qml
+      pop: true
+
+  signal-handler-name-support:
+    - match: '{{identifier_handler}}'
+      # Italic is not how many themes treat support scopes, but without it
+      # an underline scope would reset text style back to regular.
+      scope: meta.binding.name.qml support.function.qml markup.italic.qml
       captures:
         2: markup.underline.qml
       pop: true

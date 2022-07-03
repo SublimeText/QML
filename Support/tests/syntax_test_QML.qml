@@ -858,11 +858,11 @@ Handlers {
     };;
 //  ^ meta.block.js
 //   ^^ invalid.illegal.unexpected-terminator
-
-// TODO: attached handlers
-/*Component.*/onCompleted: {}
-//            ^^^^^^^^^^^^^^^ meta.handler.qml
-//            ^^^^^^^^^^^ meta.binding.name variable.function
+    Component.onCompleted: {}
+//  ^^^^^^^^^ support.class.builtin
+//           ^ punctuation.accessor.js
+//            ^^^^^^^^^^^^^^^ meta.handler
+//            ^^^^^^^^^^^ meta.binding.name support.function markup.italic
 //              ^^^^^^^^^ markup.underline
 
     onEntered: Animation {}
@@ -914,4 +914,52 @@ GroupedProperties {
     } }
 //  ^ meta.block meta.binding.property meta.block meta.binding.property meta.block punctuation.section.block.end
 //     ^ meta.block - meta.binding.property
+}
+
+AttachedProperties {
+    Layout.fillWidth: true
+//  ^^^^^^ support.class
+//        ^ punctuation.accessor
+//         ^^^^^^^^^ meta.binding.name variable.other.member
+//                  ^ punctuation.separator.mapping.key-value
+//                    ^^^^ constant.language.boolean.true.js
+//         ^^^^^^^^^^^^^^^^ meta.binding.property
+    T.ScrollBar.vertical.policy: T.ScrollBar.AlwaysOff
+//  ^ support.class
+//   ^ punctuation.accessor
+//    ^^^^^^^^^ support.class
+//             ^ punctuation.accessor
+//              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
+//              ^^^^^^^^ meta.binding.name variable.other.member
+//                      ^ punctuation.accessor
+//                       ^^^^^^ meta.binding.name variable.other.member
+//                             ^ punctuation.separator.mapping.key-value
+//                               ^ support.class.builtin
+//                                ^ punctuation.accessor.js
+//                                 ^^^^^^^^^ support.class.builtin
+//                                          ^ punctuation.accessor.js
+//                                           ^^^^^^^^^ support.constant.builtin
+    Component.onCompleted: print(42)
+//  ^^^^^^^^^ support.class.builtin
+//           ^ punctuation.accessor.js
+//            ^^^^^^^^^^^^^^^^^^^^^^^ meta.handler
+//            ^^^^^^^^^^^ meta.binding.name support.function markup.italic
+//              ^^^^^^^^^ markup.underline
+//                       ^ punctuation.separator.mapping.key-value
+//                         ^^^^^ meta.function-call.js support.function
+
+// It wouldn't work (at least didn't for me), but it's perfectly legit
+    Window.window.onWidthChanged: 42;
+//         ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
+//                ^^^^^^^^^^^^^^^^^^^ meta.handler.qml
+//  ^^^^^^ support.class
+//        ^ punctuation.accessor
+//         ^^^^^^ meta.binding.name variable.other.member
+//               ^ punctuation.accessor
+//                ^^^^^^^^^^^^^^ meta.binding.name variable.function
+//                  ^^^^^ markup.underline.qml
+//                              ^ punctuation.separator.mapping.key-value
+//                                ^^ meta.number.integer.decimal.js constant.numeric.value.js
+//                                  ^ punctuation.terminator.statement.js
+//                                   ^ - meta.handler.qml & - meta.binding.property
 }
