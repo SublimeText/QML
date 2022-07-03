@@ -55,7 +55,7 @@ contexts:
     - include: eol-pop
 
   eol-pop:
-    - match: (?=\s*($|;))
+    - match: (?=\s*($|;|\}))
       pop: true
 
   semicolon-or-eol-pop:
@@ -329,9 +329,10 @@ contexts:
 
   illegal-property-name:
     - include: semicolon-or-eol-pop
-    - match: '\S+'
+    - match: '(?!\})\S+'
       scope: invalid.illegal.expected-name.qml
       pop: true
+    - include: else-pop
 
   non-required-property:
     - match: (?=(?:readonly|default|property){{identifier_break}})
@@ -429,7 +430,7 @@ contexts:
     - include: regular-attached
 
   regular-attached:
-    - match: ''
+    - match: (?={{identifier_title}})
       set:
         - expect-attached-member
         - object-type-name

@@ -258,6 +258,13 @@ RequiredProperties {
     required property what for
 //                         ^^^ invalid.illegal.expected-identifier.qml
 }
+Item {required modelData}
+//   ^^^^^^^^^^^^^^^^^^^^ meta.block
+//                       ^ - meta.block
+//    ^^^^^^^^^^^^^^^^^^ meta.binding.property
+//    ^^^^^^^^ keyword.other storage.modifier.required
+//             ^^^^^^^^^ meta.binding.name variable.other.member
+//                      ^ punctuation.section.block.end.qml - invalid.illegal
 
 RegularProperties {
     property color bright
@@ -367,6 +374,12 @@ RegularProperties {
 }
 // <- meta.block punctuation.section.block.end
 // ^ - meta.block
+Item {property}
+//   ^^^^^^^^^^ meta.block
+//             ^ - meta.block
+Item {property int}
+//   ^^^^^^^^^^^^^^ meta.block
+//                 ^ - meta.block
 
 Properties {
     x: 42
