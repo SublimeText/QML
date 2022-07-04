@@ -19,7 +19,7 @@ This package provides the following features:
 Installation
 ------------
 
-Currently the new remastered package is in alpha, and cannot be installed via
+Currently the new remastered package is in beta, and cannot be installed via
 Package Control yet. If you want to try it out, close this repository
 (or download and unzip it) into Sublime Text's Packages folder.
 
