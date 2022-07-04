@@ -861,6 +861,29 @@ InlineComponents {
 //  ^ support.class
 }
 
+Enums {
+    enum Days {
+//  ^^^^^^^^^^^^ meta.enum.qml
+//       ^^^^ meta.enum.identifier.qml entity.name.enum.qml
+//  ^^^^ keyword.declaration.enum.qml
+        Monday, Saturday,
+//      ^^^^^^^^^^^^^^^^^^ meta.enum.qml meta.block.qml meta.sequence.constants.qml
+//      ^^^^^^ meta.constants.identifier.qml entity.name.constant.qml
+//            ^ punctuation.separator.comma.qml
+//              ^^^^^^^^ meta.constants.identifier.qml entity.name.constant.qml
+        sunday, Friday
+//      ^^^^^^ - meta.constants.identifier.qml & - entity.name.constant.qml
+//              ^^^^^^ meta.constants.identifier.qml entity.name.constant.qml
+    };
+//  ^ meta.enum.qml meta.block.qml meta.sequence.constants.qml punctuation.section.block.end.qml
+//   ^ - meta.enum.qml & invalid.illegal.unexpected-terminator.qml
+    enum Months
+//  ^^^^^^^^^^^^ meta.enum.qml
+//  ^^^^ keyword.declaration.enum.qml
+    enum
+//  ^^^^ - invalid.illegal.unexpected-terminator.qml
+}
+
 Handlers {
     onPressed: y = event.y;
 //  ^^^^^^^^^^^^^^^^^^^^^^^ meta.handler.qml

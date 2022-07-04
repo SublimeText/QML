@@ -268,6 +268,7 @@ contexts:
 
     # prefixed (easily recognilable)
     - include: inline-component
+    - include: enum-declaration
     - include: regular-qml-method
     - include: regular-qml-signal
     - include: property-declaration
@@ -2251,6 +2252,48 @@ contexts:
     - include: else-pop
 
   # END component
+
+  # BEGIN enum
+
+  enum-declaration:
+    - match: (?=enum{{identifier_break}})
+      set:
+        - enum-meta
+        - expect-enum-block
+        - expect-enum-name
+        - expect-enum-keyword
+
+  enum-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.enum.qml
+    - include: immediately-pop
+
+  expect-enum-block:
+    - match: \{
+      scope: punctuation.section.block.begin.qml
+      set:
+        - meta_scope: meta.block.qml meta.sequence.constants.qml
+        - match: \}
+          scope: punctuation.section.block.end.qml
+          pop: true
+        - match: ','
+          scope: punctuation.separator.comma.qml
+        - match: '{{identifier_title}}'
+          scope: meta.constants.identifier.qml entity.name.constant.qml
+    - include: else-pop
+
+  expect-enum-name:
+    - match: '{{identifier_title}}'
+      scope: meta.enum.identifier.qml entity.name.enum.qml
+      pop: true
+    - include: else-pop
+
+  expect-enum-keyword:
+    - match: enum{{identifier_break}}
+      scope: keyword.declaration.enum.qml
+      pop: true
+
+  # END enum
 
   # BEGIN handlers
 
