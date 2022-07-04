@@ -404,6 +404,11 @@ Properties {
 //  ^^ meta.binding.property
 //  ^ meta.binding.name variable.other.member
 //   ^ punctuation.terminator.statement.qml - invalid.illegal.unexpected-terminator
+    property: "color"
+//  ^^^^^^^^^^^^^^^^^^ meta.binding.property
+//  ^^^^^^^^ meta.binding.name variable.other.member
+//          ^ punctuation.separator.mapping.key-value
+//            ^^^^^^^ meta.string.qml
     implicitHeight: implicitContentHeight
 //  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^^^^^^^^ meta.binding.name variable.other.member

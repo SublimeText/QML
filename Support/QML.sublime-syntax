@@ -411,27 +411,41 @@ contexts:
     - include: semicolon-or-eol-pop
 
   other-property:
-    - match: (?=(?:readonly|property){{identifier_break}})
+    - match: (?=property{{identifier_break}})
+      branch_point: not-property-declaration
+      branch:
+        - try-property-declaration
+        - property-binding
+
+    - match: (?=readonly{{identifier_break}})
       set:
         - property-binding-meta
         - expect-binding
         - expect-property-name
         - expect-property-type-member-or-alias
         - expect-property-keyword
-        - expect-property-qualifiers
+        - property-keyword-readonly
 
-  expect-property-qualifiers:
-    - include: property-keyword-readonly
-    - include: property-keyword-default
-    - include: else-pop-at-eol
+  try-property-declaration:
+    - match: (?=property{{identifier_break}})
+      set:
+        - immediately-pop-2
+        - property-binding-meta
+        - expect-binding
+        - expect-property-name
+        - expect-property-type-member-or-alias
+        - fail-on-semicolon
+        - expect-property-keyword
+
+  fail-on-semicolon:
+    - match: ':'
+      fail: not-property-declaration
+    - include: else-pop
 
   property-keyword-readonly:
     - match: readonly{{identifier_break}}
       scope: keyword.other.qml storage.modifier.required.qml
-
-  property-keyword-default:
-    - match: default{{identifier_break}}
-      scope: keyword.other.qml storage.modifier.default.qml
+      pop: true
 
   expect-property-keyword:
     - match: property{{identifier_break}}
