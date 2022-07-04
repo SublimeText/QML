@@ -115,6 +115,31 @@ Nested {
 //  ^^^ meta.block support.class
 //      ^^^ meta.block support.class
 //          ^^ meta.block meta.block
+    Behavior on height { NumberAnimation {} }
+//  ^^^^^^^^ meta.block support.class
+//           ^^ keyword.other.on.qml
+//              ^^^^^^ meta.binding.name.qml variable.other.member.qml
+//                     ^^^^^^^^^^^^^^^^^^^^^^ meta.block meta.block
+//                       ^^^^^^^^^^^^^^^ support.class
+    Behavior on border.color
+//              ^^^^^^^^^^^^ meta.binding.name.qml
+//              ^^^^^^ meta.binding.name.qml variable.other.member.qml
+//                    ^ punctuation.accessor
+//                     ^^^^^ meta.binding.name.qml variable.other.member.qml
+    { NumberAnimation {} }
+//    ^^^^^^^^^^^^^^^ support.class.qml
+    Behavior on width
+//  ^^^^^^^^ meta.block support.class
+//           ^^ keyword.other.on.qml
+//              ^^^^^ meta.binding.name.qml variable.other.member.qml
+    Behavior
+//  ^^^^^^^^ meta.block support.class
+    Behavior on Layout.preferredWidth {}
+//  ^^^^^^^^ meta.block support.class
+//           ^^ keyword.other.on.qml
+//              ^^^^^^ support.class
+//                    ^ punctuation.accessor
+//                     ^^^^^^^^^^^^^^ variable.other.member
 }
 // <- meta.block punctuation.section.block.end
 

@@ -385,7 +385,7 @@ contexts:
 
   illegal-property-name:
     - include: semicolon-or-eol-pop
-    - match: '(?!\})\S+'
+    - match: '(?![\{\}])\S+'
       scope: invalid.illegal.expected-name.qml
       pop: true
     - include: else-pop
@@ -454,6 +454,19 @@ contexts:
       pop: true
     - include: else-pop-at-eol
 
+  expect-intercepted-property:
+    - match: (?={{identifier}})
+      set:
+        - meta_scope: meta.binding.name.qml
+        - match: (?={{identifier_title}})
+          push: object-type-name
+        - match: '{{property_name}}'
+          scope: variable.other.member.qml
+        - match: \.
+          scope: punctuation.accessor.qml
+        - include: illegal-property-name
+    - include: illegal-property-name
+
   expect-property-name:
     - include: property-name
     - include: illegal-property-name
@@ -500,8 +513,24 @@ contexts:
       pop: true
       branch_point: not-standalone-object
       branch:
+        - try-standalone-object-interceptor
         - try-standalone-object
         - attached-member
+
+  try-standalone-object-interceptor:
+    - match: (?={{identifier_title}})
+      set:
+        - expect-object-block
+        - try-property-interceptor
+        - try-standalone-object-type-name
+
+  try-property-interceptor:
+    - match: on{{identifier_break}}
+      scope: keyword.other.on.qml
+      set: expect-intercepted-property
+
+    - match: (?=\S)
+      fail: not-standalone-object
 
   try-standalone-object:
     - match: (?={{identifier_title}})
@@ -513,7 +542,7 @@ contexts:
     - match: (?=\{)
       set: object-block
 
-    - match: '\S'
+    - match: (?=\S)
       fail: not-standalone-object
 
   attached-member:
@@ -529,6 +558,7 @@ contexts:
   expect-attached-member:
     - include: signal-handler-non-attached
     - include: property-binding
+    - include: else-pop
 
   expect-binding:
     - include: binding
