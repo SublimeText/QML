@@ -257,6 +257,16 @@ RequiredProperties {
 //                         ^^^^^^ meta.binding.name variable.other.member
     required property what for
 //                         ^^^ invalid.illegal.expected-identifier.qml
+    required default property string name: "abc"
+//  ^^^^^^^^ keyword.other storage.modifier.required
+//           ^^^^^^^ keyword.other storage.modifier.default
+//                   ^^^^^^^^ keyword.declaration
+//                                       ^ punctuation.separator.mapping.key-value.qml invalid.illegal.binding
+    default required property string name: "xyz"
+//  ^^^^^^^ keyword.other storage.modifier.default
+//          ^^^^^^^^ keyword.other storage.modifier.required
+//                   ^^^^^^^^ keyword.declaration
+//                                       ^ punctuation.separator.mapping.key-value.qml invalid.illegal.binding
 }
 Item {required modelData}
 //   ^^^^^^^^^^^^^^^^^^^^ meta.block

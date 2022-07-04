@@ -317,7 +317,8 @@ contexts:
 
   property-declaration:
     - include: required-property
-    - include: non-required-property
+    - include: default-property
+    - include: other-property
 
   property-binding-meta:
     - meta_include_prototype: false
@@ -332,6 +333,10 @@ contexts:
         - required-property-branch
 
   required-property-branch:
+    - match: default{{identifier_break}}
+      scope: keyword.other.qml storage.modifier.default.qml
+      set: required-property-extended
+
     - match: '(?={{non_reserved_identifier}})'
       branch_point: required-property-fail
       branch:
@@ -384,8 +389,29 @@ contexts:
       pop: true
     - include: else-pop
 
-  non-required-property:
-    - match: (?=(?:readonly|default|property){{identifier_break}})
+  default-property:
+    - match: default{{identifier_break}}
+      scope: keyword.other.qml storage.modifier.default.qml
+      set:
+        - property-binding-meta
+        - default-property-content
+
+  default-property-content:
+    - match: required{{identifier_break}}
+      scope: keyword.other.qml storage.modifier.required.qml
+      set: required-property-extended
+
+    - match: (?=\S)
+      set:
+        - expect-binding
+        - expect-property-name
+        - expect-property-type-member
+        - expect-property-keyword
+
+    - include: semicolon-or-eol-pop
+
+  other-property:
+    - match: (?=(?:readonly|property){{identifier_break}})
       set:
         - property-binding-meta
         - expect-binding
