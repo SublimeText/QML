@@ -170,7 +170,6 @@ WithId {
 //  ^^^^^^^ meta.binding.property.qml
 //    ^ keyword.operator.assignment
 //      ^^^ entity.name.label
-//          ^^^ invalid.illegal
     id : three
 //     ^ meta.binding.property.qml keyword.operator.assignment
 //       ^^^^^ entity.name.label
@@ -194,6 +193,11 @@ WithId {
     id: break
 //      ^^^^^ invalid.illegal.identifier
 }
+OnlyId { id: only }
+//       ^^^^^^^^ meta.binding.property.qml
+//       ^^ keyword.other.id.qml
+//         ^ keyword.operator.assignment.qml
+//                ^ - meta.binding & - invalid.illegal
 
 RequiredProperties {
     required name;; required /**/ text
