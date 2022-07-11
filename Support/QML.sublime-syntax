@@ -407,7 +407,7 @@ contexts:
       set:
         - expect-binding
         - expect-property-name
-        - expect-property-type-member
+        - expect-property-type-member-or-alias
         - expect-property-keyword
 
     - include: semicolon-or-eol-pop

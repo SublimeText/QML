@@ -358,6 +358,12 @@ RegularProperties {
 //  ^^^^^^^ keyword.other.qml storage.modifier.default.qml
 //          ^^^^^^^^ keyword.declaration
 //                                  ^^^^ meta.binding.name variable.other.member
+    default property alias mainItem: control.contentItem
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
+//  ^^^^^^^ keyword.other.qml storage.modifier.default.qml
+//          ^^^^^^^^ keyword.declaration
+//                   ^^^^^ keyword.other
+//                                 ^ punctuation.separator.mapping.key-value
     readonly property string name: "xyz"
 //  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^^ keyword.other.qml storage.modifier.required.qml
