@@ -186,10 +186,16 @@ WithId {
 //              ^^^^ comment.block
     id: eight; id: nine/**/; id: ten
 //           ^ punctuation.terminator.statement
-//  ^^^^^^^^^  meta.binding.property.qml
+//  ^^^^^^^^^ meta.binding.property.qml
 //             ^^^^^^^^ meta.binding.property.qml
 //                     ^^^^ comment.block
 //                           ^^^^^^^ meta.binding.property.qml
+    id: __eleven
+//  ^^^^^^^^^^^^ meta.binding.property.qml
+//      ^^^^^^^^ entity.name.label
+    id: __Twelve
+//  ^^^^^^^^^^^^ meta.binding.property.qml
+//      ^^^^^^^^ invalid.illegal
     id: break
 //      ^^^^^ invalid.illegal.identifier
 }

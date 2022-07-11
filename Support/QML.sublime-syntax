@@ -11,7 +11,7 @@ variables:
   identifier_continue: '[[:alnum:]_]'
   identifier: '\b[[:alpha:]_]{{identifier_continue}}*\b'
   identifier_title: '\b[[:upper:]]{{identifier_continue}}*\b'
-  identifier_untitle: '\b[[:lower:]]{{identifier_continue}}*\b'
+  identifier_untitle: '\b_*[[:lower:]]{{identifier_continue}}*\b'
   identifier_handler: '\b(on)(_*[[:upper:]]{{identifier_continue}}*?)(Changed)?\b'
   property_name: (?:(?!{{reserved_word}})(?![[:upper:]])(?:{{identifier_start}}{{identifier_part}}*{{identifier_break}}))
   path: '({{identifier}}[ ]*\.[ ]*)*{{identifier}}'
