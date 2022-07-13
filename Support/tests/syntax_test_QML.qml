@@ -1132,4 +1132,23 @@ ObjectsAsProperties {
     ]
 }
 
+@Annotation1 {}
+// <- meta.annotation.qml punctuation.definition.annotation.qml
+// ^^^^^^^^^ support.class.qml
+//           ^^ meta.block
+@Annotation2 {
+// <- meta.annotation.qml punctuation.definition.annotation.qml
+// ^^^^^^^^^ support.class.qml
+//           ^ meta.block punctuation.section.block.begin
+    signal member
+//  ^^^^^^ meta.block.qml meta.function.js keyword.declaration.function.qml
+//         ^^^^^^ meta.block.qml meta.function.js entity.name.function.js
+}
+Annotations {
+    @AnnotateProp { one.two: 3 }
+//  ^ meta.annotation.qml punctuation.definition.annotation.qml
+    property int x: 5
+//  ^^^^^^^^ meta.binding.property.qml keyword.declaration.qml
+}
+
 // <- - meta.block

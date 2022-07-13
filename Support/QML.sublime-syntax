@@ -42,6 +42,7 @@ contexts:
 
     - include: pragma-statement
     - include: import-statement
+    - include: qml-annotation
     - include: object-standalone
 
   expect-semicolon-qml:
@@ -268,6 +269,7 @@ contexts:
 
     # prefixed (easily recognilable)
     - include: inline-component
+    - include: qml-annotation
     - include: enum-declaration
     - include: regular-qml-method
     - include: regular-qml-signal
@@ -2254,6 +2256,22 @@ contexts:
       set: signal-handler-non-attached-support
 
   # END support
+
+  # BEGIN annotations
+
+  qml-annotation:
+    - match: '@'
+      scope: punctuation.definition.annotation.qml
+      push:
+        - qml-annotation-meta
+        - expect-object-standalone
+
+  qml-annotation-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.annotation.qml
+    - include: immediately-pop
+
+  # END annotations
 
   # BEGIN component
 
