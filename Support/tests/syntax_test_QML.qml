@@ -962,6 +962,18 @@ Handlers {
 //    ^^^^^^^ markup.underline
 //             ^^^^^^^^^ support.class.qml
 //                       ^^ meta.block.qml
+    Connections {
+//  ^^^^^^^^^^^ support.class
+        target: root
+//      ^^^^^^^^^^^^^ meta.block meta.block meta.binding.property
+        function onPressed(event) {}
+//               ^^^^^^^^^ meta.binding.name variable.function
+//                 ^^^^^^^ markup.underline
+//                         ^^^^^ meta.function.parameters.qml meta.binding.name.js variable.parameter.function.js
+        function onWidthChanged() {}
+//               ^^^^^^^^^^^^^^ meta.binding.name variable.function
+//                 ^^^^^ markup.underline
+    }
 }
 
 GroupedProperties {

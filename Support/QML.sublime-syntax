@@ -787,10 +787,14 @@ contexts:
         - function-declaration-expect-body
         - qml-method-declaration-expect-return-type
         - qml-method-declaration-expect-parameters
-        - function-declaration-expect-name
+        - qml-method-declaration-expect-name
         - function-declaration-expect-generator-star
         - function-declaration-expect-function-keyword
         - function-declaration-expect-async
+
+  qml-method-declaration-expect-name:
+    - include: signal-handler-name
+    - include: function-declaration-expect-name
 
   qml-method-declaration-expect-parameters:
     - include: qml-method-declaration-parameters
