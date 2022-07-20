@@ -1,0 +1,183 @@
+%YAML 1.2
+---
+version: 2
+name: QML Module (qmldir)
+file_extensions:
+  - qmldir
+scope: source.qmldir
+extends: Packages/QML/Support/QML.sublime-syntax
+
+contexts:
+  main:
+    - include: statements-qmldir
+
+  prototype:
+    - include: comments
+
+  comments:
+    - include: line-comments
+
+  line-comments:
+    - match: '#'
+      scope: punctuation.definition.comment.qmldir
+      push:
+        - meta_scope: comment.line.number-sign.qmldir
+        - match: \n
+          pop: 1
+
+  else-pop:
+    - match: (?=\S)
+      pop: 1
+
+  immediately-pop:
+    - match: ''
+      pop: 1
+
+  eol-pop:
+    - match: (?=\s*$)
+      pop: 1
+
+  statements-qmldir:
+    - include: module
+    - include: internal
+    - include: optional
+    - include: plugin
+    - include: classname
+    - include: typeinfo
+    - include: depends
+    - include: import-statement
+    - include: designersupported
+    - include: resource
+    - include: prefer
+
+  module:
+    - match: module{{identifier_break}}
+      scope: keyword.declaration.module.qmldir
+      push:
+        - module-meta
+        - expect-qualified-name
+
+  module-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.module.qmldir
+    - include: immediately-pop
+
+  expect-qualified-name:
+    - include: qualified-name
+    - include: eol-pop
+
+  internal:
+    - match: internal{{identifier_break}}
+      scope: keyword.other.qmldir
+      push:
+        - internal-meta
+        - expect-file
+        - expect-type-name
+
+  internal-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.internal.qmldir
+    - include: immediately-pop
+
+  optional:
+    - match: optional{{identifier_break}}
+      scope: storage.modifier.qmldir
+      push: expect-plugin
+
+  expect-plugin:
+    - include: plugin
+    - include: eol-pop
+
+  plugin:
+    - match: plugin{{identifier_break}}
+      scope: keyword.other.qmldir
+      push:
+        - expect-file
+        - expect-library-name
+
+  expect-library-name:
+    - include: library-name
+    - include: eol-pop
+
+  library-name:
+    - match: '{{identifier}}'
+      scope: meta.library-name.qmldir
+      pop: 1
+
+  classname:
+    - match: classname{{identifier_break}}
+      scope: keyword.other.qmldir
+      push: expect-class
+
+  expect-class:
+    - include: class
+    - include: eol-pop
+
+  class:
+    - match: '{{identifier}}'
+      scope: entity.name.class.forward-decl.c++
+      pop: 1
+
+  typeinfo:
+    - match: typeinfo{{identifier_break}}
+      scope: keyword.other.qmldir
+      push: expect-file
+
+  expect-file:
+    - match: (?=\S)
+      push: file-path
+    - include: eol-pop
+
+  file-path:
+    - meta_include_prototype: false
+    - meta_content_scope: meta.path.url.qmldir meta.string.qmldir string.unquoted.qmldir
+    - include: eol-pop
+    - include: scope:text.html.basic#tag-href-attribute-value-content
+
+  depends:
+    - match: depends{{identifier_break}}
+      scope: keyword.other.qmldir
+      push:
+        - expect-import-version
+        - expect-qualified-name
+
+  import-statement:
+    - match: import{{identifier_break}}
+      scope: keyword.control.import.qmldir
+      push:
+        - import-meta
+        - expect-import-version
+        - expect-qualified-name
+
+  designersupported:
+    - match: designersupported{{identifier_break}}
+      scope: keyword.other.qmldir
+      push: eol-pop
+
+  prefer:
+    - match: prefer{{identifier_break}}
+      scope: keyword.other.qmldir
+      push: expect-file
+
+  resource:
+    - match: (?={{identifier_title}}|singleton{{identifier_break}})
+      push:
+        - expect-file
+        - expect-import-version
+        - expect-type-name
+        - maybe-singleton
+
+  expect-type-name:
+    - include: type-name
+    - include: else-pop-at-eol
+
+  type-name:
+    - match: '{{identifier_title}}'
+      scope: support.class.qml
+      pop: 1
+
+  maybe-singleton:
+    - match: singleton{{identifier_break}}
+      scope: storage.modifier.singleton.qmldir
+      pop: 1
+    - include: else-pop

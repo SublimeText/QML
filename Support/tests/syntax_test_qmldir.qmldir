@@ -1,0 +1,77 @@
+# SYNTAX TEST "Packages/QML/Support/qmldir.sublime-syntax"
+
+module ModuleIdentifier
+# <- meta.module.qmldir keyword.declaration.module.qmldir
+# ^^^^ meta.module.qmldir keyword.declaration.module.qmldir
+#      ^^^^^^^^^^^^^^^^ meta.module.qmldir meta.path.qml
+
+module QtQuick.Layouts
+#      ^^^^^^^^^^^^^^^ meta.module.qmldir meta.path.qml
+#             ^ meta.module.qmldir meta.path.qml punctuation.accessor.qml
+
+singleton Style 1.0 qrc://Style.qml
+# <- storage.modifier.singleton.qmldir
+# ^^^^^^^ storage.modifier.singleton.qmldir
+#         ^^^^^ support.class.qml
+#               ^^^ meta.number.version.qml
+#                   ^^^^^^^^^^^^^^^ meta.path.url.qmldir meta.string.qmldir string.unquoted.qmldir
+#                      ^^^ punctuation.separator.path.html
+
+internal MyPrivateType MyPrivateType.qml
+# <- meta.internal.qmldir keyword.other.qmldir
+# ^^^^^^ meta.internal.qmldir keyword.other.qmldir
+#        ^^^^^^^^^^^^^ meta.internal.qmldir support.class.qml
+#                      ^^^^^^^^^^^^^^^^^ meta.internal.qmldir meta.path.url.qmldir meta.string.qmldir string.unquoted.qmldir
+
+MyScript 1.0 MyScript.js
+# <- support.class.qml
+# ^^^^^^ support.class.qml
+#        ^ constant.numeric.value.qml
+#         ^ punctuation.separator.decimal.qml
+#          ^ constant.numeric.value.qml
+#        ^^^ meta.number.version.qml
+#            ^^^^^^^^^^^ meta.path.url.qmldir meta.string.qmldir string.unquoted.qmldir
+
+plugin MyPluginLibrary
+# <- keyword.other.qmldir
+# ^^^^ keyword.other.qmldir
+#      ^^^^^^^^^^^^^^^ meta.library-name.qmldir
+
+plugin MyPluginLibrary bin/myplugin
+# ^^^^ keyword.other.qmldir
+#      ^^^^^^^^^^^^^^^ meta.library-name.qmldir
+#                      ^^^^^^^^^^^^ meta.path.url.qmldir meta.string.qmldir string.unquoted.qmldir
+
+optional plugin helper
+# ^^^^^^ storage.modifier.qmldir
+#        ^^^^^^ keyword.other.qmldir
+#               ^^^^^^ meta.library-name.qmldir
+
+classname MyPluginClass
+# ^^^^^^^ keyword.other.qmldir
+#         ^^^^^^^^^^^^^ entity.name.class.forward-decl.c++
+
+typeinfo mymodule.qmltypes
+# <- keyword.other.qmldir
+# ^^^^^^ keyword.other.qmldir
+#        ^^^^^^^^^^^^^^^^^ meta.path.url.qmldir meta.string.qmldir string.unquoted.qmldir
+
+depends MyOtherModule 1.0
+# <- keyword.other.qmldir
+# ^^^^^ keyword.other.qmldir
+#       ^^^^^^^^^^^^^ meta.path.qml meta.generic-name.qml
+#                     ^^^ meta.number.version.qml
+
+import MyOtherModule 1.0
+# ^^^^ meta.import.qml keyword.control.import.qmldir
+#      ^^^^^^^^^^^^^ meta.import.qml meta.path.qml meta.generic-name.qml
+#                    ^^^ meta.import.qml meta.number.version.qml
+
+designersupported
+# <- keyword.other.qmldir
+# ^^^^^^^^^^^^^^^ keyword.other.qmldir
+
+prefer :/my/path/MyModule
+# <- keyword.other.qmldir
+# ^^^^ keyword.other.qmldir
+#      ^^^^^^^^^^^^^^^^^^ meta.path.url.qmldir meta.string.qmldir string.unquoted.qmldir
