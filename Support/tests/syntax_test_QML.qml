@@ -1,4 +1,4 @@
-// SYNTAX TEST "Packages/Sublime-QML/Support/QML.sublime-syntax"
+// SYNTAX TEST "Packages/QML/Support/QML.sublime-syntax"
 
 pragma Singleton
 // <-  meta.pragma keyword.control.pragma

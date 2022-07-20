@@ -1,13 +1,13 @@
-Sublime-QML
+QML for SublimeText
 ===========
 
-[![Syntax Tests](https://github.com/ratijas/Sublime-QML/actions/workflows/syntax.yml/badge.svg?branch=work%2Fratijas%2Fremaster)](https://github.com/ratijas/Sublime-QML/actions/workflows/syntax.yml)
+[![Syntax Tests](https://github.com/SublimeText/QML/actions/workflows/syntax.yml/badge.svg?branch=master)](https://github.com/SublimeText/QML/actions/workflows/syntax.yml)
 ![Package Control](https://img.shields.io/packagecontrol/dm/QML)
 
 About
 -----
 
-Sublime-QML is a [Sublime Text](https://www.sublimetext.com/) & [Sublime Merge](https://www.sublimemerge.com/) package which adds support for the [Qt/QML](https://en.wikipedia.org/wiki/QML) ecosystem.
+This is a [Sublime Text](https://www.sublimetext.com/) & [Sublime Merge](https://www.sublimemerge.com/) package that adds support for the [Qt/QML](https://en.wikipedia.org/wiki/QML) ecosystem.
 
 This package provides the following features:
 
