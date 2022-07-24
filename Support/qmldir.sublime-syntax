@@ -138,8 +138,14 @@ contexts:
     - match: depends{{identifier_break}}
       scope: keyword.other.qmldir
       push:
+        - depends-meta
         - expect-import-version
         - expect-qualified-name
+
+  depends-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.depends.qmldir
+    - include: immediately-pop
 
   import-statement:
     - match: import{{identifier_break}}
@@ -173,7 +179,7 @@ contexts:
 
   type-name:
     - match: '{{identifier_title}}'
-      scope: support.class.qml
+      scope: entity.name.class.qml
       pop: 1
 
   maybe-singleton:

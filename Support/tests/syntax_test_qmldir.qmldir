@@ -12,7 +12,7 @@ module QtQuick.Layouts
 singleton Style 1.0 qrc://Style.qml
 # <- storage.modifier.singleton.qmldir
 # ^^^^^^^ storage.modifier.singleton.qmldir
-#         ^^^^^ support.class.qml
+#         ^^^^^ entity.name.class.qml
 #               ^^^ meta.number.version.qml
 #                   ^^^^^^^^^^^^^^^ meta.path.url.qmldir meta.string.qmldir string.unquoted.qmldir
 #                      ^^^ punctuation.separator.path.html
@@ -20,12 +20,12 @@ singleton Style 1.0 qrc://Style.qml
 internal MyPrivateType MyPrivateType.qml
 # <- meta.internal.qmldir keyword.other.qmldir
 # ^^^^^^ meta.internal.qmldir keyword.other.qmldir
-#        ^^^^^^^^^^^^^ meta.internal.qmldir support.class.qml
+#        ^^^^^^^^^^^^^ meta.internal.qmldir entity.name.class.qml
 #                      ^^^^^^^^^^^^^^^^^ meta.internal.qmldir meta.path.url.qmldir meta.string.qmldir string.unquoted.qmldir
 
 MyScript 1.0 MyScript.js
-# <- support.class.qml
-# ^^^^^^ support.class.qml
+# <- entity.name.class.qml
+# ^^^^^^ entity.name.class.qml
 #        ^ constant.numeric.value.qml
 #         ^ punctuation.separator.decimal.qml
 #          ^ constant.numeric.value.qml
@@ -57,6 +57,7 @@ typeinfo mymodule.qmltypes
 #        ^^^^^^^^^^^^^^^^^ meta.path.url.qmldir meta.string.qmldir string.unquoted.qmldir
 
 depends MyOtherModule 1.0
+# ^^^^^^^^^^^^^^^^^^^^^^^ meta.depends.qmldir
 # <- keyword.other.qmldir
 # ^^^^^ keyword.other.qmldir
 #       ^^^^^^^^^^^^^ meta.path.qml meta.generic-name.qml
