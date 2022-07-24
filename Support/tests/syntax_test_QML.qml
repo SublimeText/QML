@@ -118,28 +118,28 @@ Nested {
     Behavior on height { NumberAnimation {} }
 //  ^^^^^^^^ meta.block support.class
 //           ^^ keyword.other.on.qml
-//              ^^^^^^ meta.binding.name.qml variable.other.member.qml
+//              ^^^^^^ meta.binding.name.qml
 //                     ^^^^^^^^^^^^^^^^^^^^^^ meta.block meta.block
 //                       ^^^^^^^^^^^^^^^ support.class
     Behavior on border.color
 //              ^^^^^^^^^^^^ meta.binding.name.qml
-//              ^^^^^^ meta.binding.name.qml variable.other.member.qml
+//              ^^^^^^ meta.binding.name.qml
 //                    ^ punctuation.accessor
-//                     ^^^^^ meta.binding.name.qml variable.other.member.qml
+//                     ^^^^^ meta.binding.name.qml
     { NumberAnimation {} }
 //    ^^^^^^^^^^^^^^^ support.class.qml
     Behavior on width
 //  ^^^^^^^^ meta.block support.class
 //           ^^ keyword.other.on.qml
-//              ^^^^^ meta.binding.name.qml variable.other.member.qml
+//              ^^^^^ meta.binding.name.qml
     Behavior
 //  ^^^^^^^^ meta.block support.class
     Behavior on Layout.preferredWidth {}
 //  ^^^^^^^^ meta.block support.class
 //           ^^ keyword.other.on.qml
+//              ^^^^^^^^^^^^^^^^^^^^^^ meta.binding.name.qml
 //              ^^^^^^ support.class
 //                    ^ punctuation.accessor
-//                     ^^^^^^^^^^^^^^ variable.other.member
 }
 // <- meta.block punctuation.section.block.end
 
@@ -435,7 +435,7 @@ Item {property int}
 Properties {
     x: 42
 //  ^^^^^^ meta.binding.property
-//  ^ meta.binding.name variable.other.member
+//  ^ meta.binding.name
 //   ^ punctuation.separator.mapping.key-value
 //     ^^ meta.number.integer.decimal.js constant.numeric.value.js
     y: 42;
@@ -443,16 +443,16 @@ Properties {
 //        ^ - meta.binding.property
     z;
 //  ^^ meta.binding.property
-//  ^ meta.binding.name variable.other.member
+//  ^ meta.binding.name
 //   ^ punctuation.terminator.statement.qml - invalid.illegal.unexpected-terminator
     property: "color"
 //  ^^^^^^^^^^^^^^^^^^ meta.binding.property
-//  ^^^^^^^^ meta.binding.name variable.other.member
+//  ^^^^^^^^ meta.binding.name - variable.other.member
 //          ^ punctuation.separator.mapping.key-value
 //            ^^^^^^^ meta.string.qml
     implicitHeight: implicitContentHeight
 //  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
-//  ^^^^^^^^^^^^^^ meta.binding.name variable.other.member
+//  ^^^^^^^^^^^^^^ meta.binding.name - variable.other.member
 //                ^ punctuation.separator.mapping.key-value
 //                  ^^^^^^^^^^^^^^^^^^^^^ variable.other.readwrite.js
         + header.height + footer.height;;
@@ -980,9 +980,9 @@ GroupedProperties {
     font.pixelSize: 42
 //  ^^^^^^^^^^^^^^^^^^^ meta.binding.property
 //       ^^^^^^^^^^^^^^ - meta.binding.property meta.binding.property
-//  ^^^^ meta.binding.name variable.other.member
+//  ^^^^ meta.binding.name
 //      ^ punctuation.accessor
-//       ^^^^^^^^^ meta.binding.name variable.other.member
+//       ^^^^^^^^^ meta.binding.name
 //                ^ punctuation.separator.mapping.key-value
 //                  ^^ meta.number.integer.decimal.js constant.numeric.value.js
     x.y.z: 42;;
@@ -997,7 +997,7 @@ GroupedProperties {
 //      ^^^^^^^^^^^^^^^^^^ meta.binding.property meta.block meta.binding.property
         right: undefined
 //      ^^^^^^^^^^^^^^^^^ meta.binding.property meta.block meta.binding.property
-//      ^^^^^ meta.binding.name variable.other.member
+//      ^^^^^ meta.binding.name
 //           ^ punctuation.separator.mapping.key-value
 //             ^^^^^^^^^ constant.language.undefined.js
 
@@ -1012,10 +1012,10 @@ GroupedProperties {
 //  ^ meta.binding.property meta.block punctuation.section.block.end
     border { size {
 //           ^^^^^^^ meta.binding.property meta.block meta.binding.property
-//           ^^^^ meta.binding.name variable.other.member
+//           ^^^^ meta.binding.name
             width: NaN
 //          ^^^^^^^^^^^ meta.binding.property meta.block meta.binding.property meta.block meta.binding.property
-//          ^^^^^ meta.binding.name variable.other.member
+//          ^^^^^ meta.binding.name
 //               ^ punctuation.separator.mapping.key-value
 //                 ^^^ constant.language.nan.js
     } }
@@ -1027,7 +1027,7 @@ AttachedProperties {
     Layout.fillWidth: true
 //  ^^^^^^ support.class
 //        ^ punctuation.accessor
-//         ^^^^^^^^^ meta.binding.name variable.other.member
+//         ^^^^^^^^^ meta.binding.name
 //                  ^ punctuation.separator.mapping.key-value
 //                    ^^^^ constant.language.boolean.true.js
 //         ^^^^^^^^^^^^^^^^ meta.binding.property
@@ -1037,9 +1037,9 @@ AttachedProperties {
 //    ^^^^^^^^^ support.class
 //             ^ punctuation.accessor
 //              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
-//              ^^^^^^^^ meta.binding.name variable.other.member
+//              ^^^^^^^^ meta.binding.name
 //                      ^ punctuation.accessor
-//                       ^^^^^^ meta.binding.name variable.other.member
+//                       ^^^^^^ meta.binding.name
 //                             ^ punctuation.separator.mapping.key-value
 //                               ^ support.class.builtin
 //                                ^ punctuation.accessor.js
@@ -1061,7 +1061,7 @@ AttachedProperties {
 //                ^^^^^^^^^^^^^^^^^^^ meta.handler.qml
 //  ^^^^^^ support.class
 //        ^ punctuation.accessor
-//         ^^^^^^ meta.binding.name variable.other.member
+//         ^^^^^^ meta.binding.name
 //               ^ punctuation.accessor
 //                ^^^^^^^^^^^^^^ meta.binding.name variable.function
 //                  ^^^^^ markup.underline.qml
@@ -1074,7 +1074,7 @@ AttachedProperties {
 ObjectsAsProperties {
     delegate: Item { required property string modelData }
 //  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block meta.binding.property
-//  ^^^^^^^^ meta.binding.name variable.other.member
+//  ^^^^^^^^ meta.binding.name
 //          ^ punctuation.separator.mapping.key-value
 //            ^^^^ support.class
 //                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block meta.binding.property meta.block
@@ -1118,7 +1118,7 @@ ObjectsAsProperties {
 //                         ^ support.class
     strings: ["a", "b", "c"]
 //  ^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
-//  ^^^^^^^ meta.binding.name.qml variable.other.member.qml
+//  ^^^^^^^ meta.binding.name.qml
 //         ^ punctuation.separator.mapping.key-value.qml
 //           ^^^^^^^^^^^^^^^ meta.sequence.js - invalid.illegal.expected-object
 //            ^^^ meta.string.qml

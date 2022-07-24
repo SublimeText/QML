@@ -3,7 +3,8 @@
 <dict>
 	<key>scope</key>
 	<string>
-		entity.name.label.qml
+		entity.name.label.qml,
+		variable.other.member.qml
 	</string>
 	<key>settings</key>
 	<dict>

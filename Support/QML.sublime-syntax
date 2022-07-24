@@ -408,7 +408,7 @@ contexts:
     - match: (?=\S)
       set:
         - expect-binding
-        - expect-property-name
+        - expect-property-declaration-name
         - expect-property-type-member-or-alias
         - expect-property-keyword
 
@@ -425,7 +425,7 @@ contexts:
       set:
         - property-binding-meta
         - expect-binding
-        - expect-property-name
+        - expect-property-declaration-name
         - expect-property-type-member-or-alias
         - expect-property-keyword
         - property-keyword-readonly
@@ -436,7 +436,7 @@ contexts:
         - immediately-pop-2
         - property-binding-meta
         - expect-binding
-        - expect-property-name
+        - expect-property-declaration-name
         - expect-property-type-member-or-alias
         - fail-on-semicolon
         - expect-property-keyword
@@ -464,7 +464,7 @@ contexts:
         - match: (?={{identifier_title}})
           push: object-type-name
         - match: '{{property_name}}'
-          scope: variable.other.member.qml
+          scope: ''
         - match: \.
           scope: punctuation.accessor.qml
         - include: illegal-property-name
@@ -475,6 +475,15 @@ contexts:
     - include: illegal-property-name
 
   property-name:
+    - match: '{{property_name}}'
+      scope: meta.binding.name.qml
+      pop: true
+
+  expect-property-declaration-name:
+    - include: property-declaration-name
+    - include: illegal-property-name
+
+  property-declaration-name:
     - match: '{{property_name}}'
       scope: meta.binding.name.qml variable.other.member.qml
       pop: true
