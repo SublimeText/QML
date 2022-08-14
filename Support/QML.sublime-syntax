@@ -1031,6 +1031,17 @@ contexts:
       pop: true
 
   support-variable-qtqml:
+    - match: Component{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtqml-component
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
     - match: Binding{{identifier_break}}
       scope: support.class.builtin.qml
       set:
@@ -1058,6 +1069,9 @@ contexts:
     - match: (?:qsTr|qsTranslate|qsTrId|QT_TR_NOOP|QT_TRANSLATE_NOOP|QT_TRID_NOOP|gc|print){{identifier_break}}
       scope: support.function.qml
       pop: true
+
+  support-property-qtqml-component:
+    - include: support-property-qtquick-parts-status
 
   support-property-qtqml-binding:
     - match: (?:RestoreNone|RestoreBinding|RestoreValue|RestoreBindingOrValue){{identifier_break}}
@@ -1533,6 +1547,17 @@ contexts:
             - include: else-pop
         - include: else-pop
 
+    - match: PointerHandler{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-pointerhandler
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
     - match: Rotation(?:Animation|Animator){{identifier_break}}
       scope: support.class.builtin.qml
       set:
@@ -1889,6 +1914,11 @@ contexts:
         # CapabilityFlag
         |Position|Area|Pressure|Velocity|MouseEmulation|Scroll|Hover|Rotation|XTilt|YTilt
         )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-pointerhandler:
+    - match: (?:TakeOverForbidden|CanTakeOverFrom(?:HandlersOf(?:SameType|DifferentType)|Anything)|ApprovesTakeOverBy(?:HandlersOf(?:SameType|DifferentType)|Items|Anything)|ApprovesCancellation){{identifier_break}}
       scope: support.constant.builtin.qml
       pop: true
 

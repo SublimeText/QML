@@ -700,6 +700,8 @@ Expressions {
 //      ^^^^^^^^^^^^^^ support.class.dom.js
     }
     function support_qtqml() {
+        Component.Ready
+//                ^^^^^ support.constant.builtin.qml
         Binding.RestoreBinding
 //              ^^^^^^^^^^^^^^ support.constant.builtin.qml
         Binding.RestoreBindingOr
@@ -794,6 +796,8 @@ Expressions {
 //            ^^^^^^^^^ support.constant.builtin.qml
         PointerDevice.Pen
 //                    ^^^ support.constant.builtin.qml
+        PointerHandler.ApprovesTakeOverByHandlersOfSameType
+//                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ support.constant.builtin.qml
         RotationAnimation.Shortest, RotationAnimator.Numerical
 //                        ^^^^^^^^ support.constant.builtin.qml
 //                                                   ^^^^^^^^^ support.constant.builtin.qml
