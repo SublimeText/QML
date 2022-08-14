@@ -1,4 +1,6 @@
-QML for SublimeText
+<img src="logo.svg" alt="logo" align="left" width="128px"/>
+
+QML for Sublime Text
 ===========
 
 [![Syntax Tests](https://github.com/SublimeText/QML/actions/workflows/syntax.yml/badge.svg?branch=master)](https://github.com/SublimeText/QML/actions/workflows/syntax.yml)
