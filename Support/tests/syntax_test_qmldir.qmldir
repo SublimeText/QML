@@ -42,6 +42,11 @@ plugin MyPluginLibrary bin/myplugin
 #      ^^^^^^^^^^^^^^^ meta.library-name.qmldir
 #                      ^^^^^^^^^^^^ meta.path.url.qmldir meta.string.qmldir string.unquoted.qmldir
 
+plugin a-b-c.01 d
+# ^^^^ keyword.other.qmldir
+#      ^^^^^^^^ meta.library-name.qmldir
+#               ^ meta.path.url.qmldir meta.string.qmldir string.unquoted.qmldir
+
 optional plugin helper
 # ^^^^^^ storage.modifier.qmldir
 #        ^^^^^^ keyword.other.qmldir

@@ -100,7 +100,7 @@ contexts:
     - include: eol-pop
 
   library-name:
-    - match: '{{identifier}}'
+    - match: '[^\s;]+'
       scope: meta.library-name.qmldir
       pop: 1
 
