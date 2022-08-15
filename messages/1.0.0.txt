@@ -1,0 +1,15 @@
+QML for Sublime Text 1.0 has been released!
+
+Enjoy the complete rewrite of a syntax highlighter which is now so featureful
+and robust that it's fully capable of parsing even the most bizarre snippets
+with lesser known QML constructs. Use the built-in GoTo Definition action to
+locate objects by their id, property declarations and inline components!
+
+Additionally,
+ - all built-in enum values from QtQml, QtQuick, QtQuick.Dialogs and
+   QtQuick.Controls, such as Text.AlignHCenter or StandardButton.Cancel are
+   highlighted with a special different color,
+ - signal handlers (including those defined as methods in Connections) are
+   parsed, stripped from 'on' prefix and 'Changed' suffix (if any) such that
+   some color schemes display the middle part (the actual property/signal
+   name) as underlined or as different color.
