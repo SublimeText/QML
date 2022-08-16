@@ -766,6 +766,9 @@ Expressions {
 //               ^^^^^^^^^^ support.constant.builtin.qml
         GraphicsInfo.Software
 //                   ^^^^^^^^ support.constant.builtin.qml
+        Grid.TopToBottom, Grid.AlignLeft
+//           ^^^^^^^^^^^ support.constant.builtin.qml
+//                             ^^^^^^^^^ support.constant.builtin.qml
         GridView.view.width, GridView.TopToBottom, GridView.NoSnap
 //               ^^^^ support.class.builtin.qml
 //                                    ^^^^^^^^^^^ support.constant.builtin.qml
@@ -870,6 +873,10 @@ Expressions {
 //               ^^^^^^^^^^^^ support.constant.builtin.qml
         TextField.SelectCharacters
 //                ^^^^^^^^^^^^^^^^ support.constant.builtin.qml
+    }
+    function support_qtquick_layouts() {
+        GridLayout.TopToBottom
+//                 ^^^^^^^^^^^ support.constant.builtin.qml
     }
     function support_qtquick_templates() {
         T.Button.TextBesideIcon

@@ -1022,6 +1022,7 @@ contexts:
     - include: support-variable-qtquick
     - include: support-variable-qtquick-controls
     - include: support-variable-qtquick-dialogs
+    - include: support-variable-qtquick-layouts
     - include: support-variable-qtquick-templates
     - include: support-variable-kde
 
@@ -1393,6 +1394,17 @@ contexts:
             - include: else-pop
         - include: else-pop
 
+    - match: Grid{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-grid
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
     - match: GridView{{identifier_break}}
       scope: support.class.builtin.qml
       set:
@@ -1695,6 +1707,11 @@ contexts:
       scope: support.constant.builtin.qml
       pop: true
 
+  support-property-qtquick-parts-grid-flow:
+    - match: (?:LeftToRight|TopToBottom){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
   support-property-qtquick-parts-status:
     - match: (?:Null|Ready|Loading|Error){{identifier_break}}
       scope: support.constant.builtin.qml
@@ -1811,6 +1828,12 @@ contexts:
         # RenderableType
         |SurfaceFormatUnspecified|SurfaceFormatOpenGL|SurfaceFormatOpenGLES
         )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtquick-grid:
+    - include: support-property-qtquick-parts-grid-flow
+    - match: (?:AlignLeft|AlignRight|AlignHCenter|AlignTop|AlignBottom|AlignVCenter){{identifier_break}}
       scope: support.constant.builtin.qml
       pop: true
 
@@ -2256,6 +2279,21 @@ contexts:
 
   support-property-qtquick-controls-tabbar:
     - include: support-property-qtquick-parts-position
+
+  support-variable-qtquick-layouts:
+    - match: GridLayout{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-layouts-gridlayout
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
+  support-property-qtquick-layouts-gridlayout:
+    - include: support-property-qtquick-parts-grid-flow
 
   support-variable-qtquick-templates:
     - match: (?:T|Controls|QtControls2?|QQC2?){{identifier_break}}
