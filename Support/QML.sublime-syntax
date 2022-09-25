@@ -268,7 +268,6 @@ contexts:
       pop: true
 
     # prefixed (easily recognilable)
-    - include: inline-component
     - include: qml-annotation
     - include: enum-declaration
     - include: regular-qml-method
@@ -421,6 +420,12 @@ contexts:
         - try-property-declaration
         - property-binding
 
+    - match: (?=component{{identifier_break}})
+      branch_point: not-component-declaration
+      branch:
+        - try-inline-component-declaration
+        - property-binding
+
     - match: (?=readonly{{identifier_break}})
       set:
         - property-binding-meta
@@ -438,12 +443,28 @@ contexts:
         - expect-binding
         - expect-property-declaration-name
         - expect-property-type-member-or-alias
-        - fail-on-semicolon
+        - fail-on-semicolon-property
         - expect-property-keyword
 
-  fail-on-semicolon:
+  try-inline-component-declaration:
+    - match: (?=component{{identifier_break}})
+      set:
+        - immediately-pop-2
+        - inline-component-meta
+        - expect-object-standalone
+        - inline-component-expect-colon-separator
+        - inline-component-expect-name
+        - fail-on-semicolon-component
+        - expect-component-keyword
+
+  fail-on-semicolon-property:
     - match: ':'
       fail: not-property-declaration
+    - include: else-pop
+
+  fail-on-semicolon-component:
+    - match: ':'
+      fail: not-component-declaration
     - include: else-pop
 
   property-keyword-readonly:
@@ -454,6 +475,12 @@ contexts:
   expect-property-keyword:
     - match: property{{identifier_break}}
       scope: keyword.declaration.qml
+      pop: true
+    - include: else-pop-at-eol
+
+  expect-component-keyword:
+    - match: component{{identifier_break}}
+      scope: keyword.declaration.component.qml
       pop: true
     - include: else-pop-at-eol
 
@@ -2351,15 +2378,6 @@ contexts:
   # END annotations
 
   # BEGIN component
-
-  inline-component:
-    - match: component{{identifier_break}}
-      scope: keyword.declaration.component.qml
-      set:
-        - inline-component-meta
-        - expect-object-standalone
-        - inline-component-expect-colon-separator
-        - inline-component-expect-name
 
   inline-component-meta:
     - meta_include_prototype: false

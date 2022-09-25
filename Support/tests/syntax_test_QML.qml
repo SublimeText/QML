@@ -450,6 +450,11 @@ Properties {
 //  ^^^^^^^^ meta.binding.name - variable.other.member
 //          ^ punctuation.separator.mapping.key-value
 //            ^^^^^^^ meta.string.qml
+    component: myDelegate
+//  ^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
+//  ^^^^^^^^^ meta.binding.name - keyword.declaration.component
+//           ^ punctuation.separator.mapping.key-value
+//             ^^^^^^^^^^ variable.other.readwrite.js
     implicitHeight: implicitContentHeight
 //  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^^^^^^^^ meta.binding.name - variable.other.member
