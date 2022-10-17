@@ -4,6 +4,9 @@ Rectangle {
     width: ${1:10}
     height: ${2:10}
     color: "${3:transparent}"
+    ${4:border.color: "${5:#000}"
+    border.width: ${6:1}
+    radius: ${7:5}}
 }
 ]]></content>
     <tabTrigger>rectangle</tabTrigger>
