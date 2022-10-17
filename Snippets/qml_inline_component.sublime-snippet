@@ -1,0 +1,10 @@
+<snippet>
+    <content><![CDATA[
+component ${1:MyItem} : ${2:Item} {
+    ${3:// body...}${4}
+}
+]]></content>
+    <tabTrigger>component</tabTrigger>
+    <scope>source.qml</scope>
+    <description>inline component</description>
+</snippet>

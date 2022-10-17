@@ -2,7 +2,7 @@
     <content><![CDATA[
 Component.onCompleted: ${1}
 ]]></content>
-    <tabTrigger>component</tabTrigger>
+    <tabTrigger>completed</tabTrigger>
     <scope>source.qml</scope>
     <description>Component.onCompleted:</description>
 </snippet>
