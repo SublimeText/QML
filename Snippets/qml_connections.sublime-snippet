@@ -2,8 +2,8 @@
     <content><![CDATA[
 Connections {
     target: ${1}
-    function on${2:Signal}(${3:argument}) {
-        ${3:// body...}
+    function on${2:Signal}${3:Changed}(${4:argument}) {
+        ${4:// body...}${5}
     }
 }
 ]]></content>
