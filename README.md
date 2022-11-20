@@ -20,11 +20,12 @@ If you are a KDE developer, check out [kdesrc-build plugin for Sublime Text](htt
 
 ## Installation
 
-The easiest way to install this plugin, is to use the [Package Control](https://packagecontrol.io/packages/QML) plugin.
+The easiest way is to install it from [Package Control](https://packagecontrol.io/packages/QML).
 
+ - Install [Package Control](https://packagecontrol.io/) itself, if you haven't done already
  - Open up the command palette: Ctrl+Shift+P (Linux, Windows) / Cmd+Shift+P (OS X)
- - Search for Package Control: Install Package
- - Search for QML
+ - Search for `Package Control: Install Package`
+ - Search for `QML`
  - Hit Enter
 
 ### Using Git
