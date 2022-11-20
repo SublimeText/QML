@@ -3,6 +3,6 @@
 anchors.margins: ${1:0}
 ]]></content>
     <tabTrigger>anchors.margins</tabTrigger>
-    <scope>source.qml</scope>
-    <description>margins</description>
+    <scope>source.qml meta.block.qml</scope>
+    <description>anchors.…</description>
 </snippet>

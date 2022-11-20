@@ -1,0 +1,8 @@
+<snippet>
+    <content><![CDATA[
+anchors.${1:anchor}: ${2:parent}.${1:AnchorLine}
+]]></content>
+    <tabTrigger>anchors</tabTrigger>
+    <scope>source.qml meta.block.qml</scope>
+    <description>anchors.…</description>
+</snippet>

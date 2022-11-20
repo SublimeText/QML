@@ -1,0 +1,10 @@
+<snippet>
+    <content><![CDATA[
+Item {
+    ${1}
+}
+]]></content>
+    <tabTrigger>item</tabTrigger>
+    <scope>source.qml</scope>
+    <description>Item {}</description>
+</snippet>

@@ -3,6 +3,6 @@
 Layout.fillHeight: ${1:true}
 ]]></content>
     <tabTrigger>layout.fillHeight</tabTrigger>
-    <scope>source.qml</scope>
+    <scope>source.qml meta.block.qml</scope>
     <description>height</description>
 </snippet>

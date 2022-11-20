@@ -1,0 +1,8 @@
+<snippet>
+    <content><![CDATA[
+required ${1:name}
+]]></content>
+    <tabTrigger>required name</tabTrigger>
+    <scope>source.qml meta.block.qml</scope>
+    <description>redeclare property</description>
+</snippet>

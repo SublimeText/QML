@@ -3,6 +3,6 @@
 Layout.fillWidth: ${1:true}
 ]]></content>
     <tabTrigger>layout.fillWidth</tabTrigger>
-    <scope>source.qml</scope>
+    <scope>source.qml meta.block.qml</scope>
     <description>width</description>
 </snippet>

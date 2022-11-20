@@ -3,6 +3,6 @@
 Component.onCompleted: ${1}
 ]]></content>
     <tabTrigger>completed</tabTrigger>
-    <scope>source.qml</scope>
+    <scope>source.qml meta.block.qml</scope>
     <description>Component.onCompleted:</description>
 </snippet>

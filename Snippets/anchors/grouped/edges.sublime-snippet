@@ -1,0 +1,11 @@
+<snippet>
+    <content><![CDATA[
+top: ${1:parent}.top
+left: ${1:parent}.left
+right: ${1:parent}.right
+bottom: ${1:parent}.bottom
+]]></content>
+    <tabTrigger>top,left,right,bottom</tabTrigger>
+    <scope>source.qml meta.block.qml meta.binding.property.qml</scope>
+    <description>anchors { … }</description>
+</snippet>

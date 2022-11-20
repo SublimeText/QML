@@ -3,6 +3,6 @@
 color: "#${1}"
 ]]></content>
     <tabTrigger>color</tabTrigger>
-    <scope>source.qml</scope>
+    <scope>source.qml meta.block.qml</scope>
     <description>#...</description>
 </snippet>

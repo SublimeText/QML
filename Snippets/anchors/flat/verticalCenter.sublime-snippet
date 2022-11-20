@@ -3,6 +3,6 @@
 anchors.verticalCenter: ${1:parent}.verticalCenter
 ]]></content>
     <tabTrigger>anchors.verticalCenter</tabTrigger>
-    <scope>source.qml</scope>
-    <description>vertical</description>
+    <scope>source.qml meta.block.qml</scope>
+    <description>anchors.…</description>
 </snippet>

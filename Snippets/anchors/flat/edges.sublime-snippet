@@ -5,7 +5,7 @@ anchors.left: ${1:parent}.left
 anchors.right: ${1:parent}.right
 anchors.bottom: ${1:parent}.bottom
 ]]></content>
-    <tabTrigger>anchors</tabTrigger>
-    <scope>source.qml</scope>
-    <description>(all sides)</description>
+    <tabTrigger>anchors.top,left,right,bottom</tabTrigger>
+    <scope>source.qml meta.block.qml</scope>
+    <description>anchors.…</description>
 </snippet>

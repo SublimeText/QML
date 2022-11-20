@@ -3,6 +3,6 @@
 readonly property ${1:var} ${2:name}: ${3}
 ]]></content>
     <tabTrigger>readonly property</tabTrigger>
-    <scope>source.qml</scope>
-    <description>QML readonly property</description>
+    <scope>source.qml meta.block.qml</scope>
+    <description>new property</description>
 </snippet>

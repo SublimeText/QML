@@ -1,0 +1,13 @@
+<snippet>
+    <content><![CDATA[
+import QtQuick 2.${1:15}
+import QtQuick.Controls 2.${1:15} as QQC2
+import QtQuick.Layouts 1.${1:15}
+import QtQuick.Window 2.${1:15}
+import QtQml 2.${1:15}
+
+]]></content>
+    <tabTrigger>imports</tabTrigger>
+    <scope>source.qml - meta.block.qml</scope>
+    <description>stdlib</description>
+</snippet>

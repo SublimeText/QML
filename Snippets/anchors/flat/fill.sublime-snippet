@@ -3,6 +3,6 @@
 anchors.fill: ${1:parent}
 ]]></content>
     <tabTrigger>anchors.fill</tabTrigger>
-    <scope>source.qml</scope>
-    <description>fill</description>
+    <scope>source.qml meta.block.qml</scope>
+    <description>anchors.…</description>
 </snippet>

@@ -3,6 +3,6 @@
 anchors.centerIn: ${1:parent}
 ]]></content>
     <tabTrigger>anchors.centerIn</tabTrigger>
-    <scope>source.qml</scope>
-    <description>centerIn</description>
+    <scope>source.qml meta.block.qml</scope>
+    <description>anchors.…</description>
 </snippet>

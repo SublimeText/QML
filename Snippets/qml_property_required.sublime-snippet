@@ -1,8 +1,8 @@
 <snippet>
     <content><![CDATA[
-property ${1:var} ${2:name}
+required property ${1:var} ${2:name}
 ]]></content>
-    <tabTrigger>property</tabTrigger>
+    <tabTrigger>required property</tabTrigger>
     <scope>source.qml meta.block.qml</scope>
     <description>new property</description>
 </snippet>

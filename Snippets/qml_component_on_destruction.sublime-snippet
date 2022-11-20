@@ -3,6 +3,6 @@
 Component.onDestruction: ${1}
 ]]></content>
     <tabTrigger>destruction</tabTrigger>
-    <scope>source.qml</scope>
+    <scope>source.qml meta.block.qml</scope>
     <description>Component.onDestruction:</description>
 </snippet>

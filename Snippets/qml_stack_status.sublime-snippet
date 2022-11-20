@@ -12,6 +12,6 @@ Stack.onStatusChanged: {
 }
 ]]></content>
     <tabTrigger>stack.onStatusChanged</tabTrigger>
-    <scope>source.qml</scope>
+    <scope>source.qml meta.block.qml</scope>
     <description>onStatusChanged:</description>
 </snippet>

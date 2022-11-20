@@ -1,10 +1,10 @@
 <snippet>
     <content><![CDATA[
 QtObject {
-    id: ${1:m}
+    ${1:id: ${2:someObject}}
 }
 ]]></content>
-    <tabTrigger>obj</tabTrigger>
+    <tabTrigger>qtobj</tabTrigger>
     <scope>source.qml</scope>
     <description>QtObject {}</description>
 </snippet>

@@ -1,0 +1,8 @@
+<snippet>
+    <content><![CDATA[
+verticalCenter: ${1:parent}.verticalCenter
+]]></content>
+    <tabTrigger>verticalCenter</tabTrigger>
+    <scope>source.qml meta.block.qml meta.binding.property.qml</scope>
+    <description>anchors { … }</description>
+</snippet>

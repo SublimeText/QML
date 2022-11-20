@@ -3,7 +3,7 @@
 Layout.fillWidth: ${1:true}
 Layout.fillHeight: ${2:true}
 ]]></content>
-    <tabTrigger>layout</tabTrigger>
-    <scope>source.qml</scope>
-    <description>(all)</description>
+    <tabTrigger>layout.fill</tabTrigger>
+    <scope>source.qml meta.block.qml</scope>
+    <description>width &amp; height</description>
 </snippet>
