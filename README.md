@@ -16,6 +16,8 @@ This package provides the following features:
  - GoTo indexing for `id`s, property declarations and inline components.
  - Snippets for commonly used properties and types.
 
+If you are a KDE developer, check out [kdesrc-build plugin for Sublime Text](https://github.com/ratijas/kdesrc-build-sublime) as well!
+
 ## Installation
 
 The easiest way to install this plugin, is to use the [Package Control](https://packagecontrol.io/packages/QML) plugin.
