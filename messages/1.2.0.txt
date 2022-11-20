@@ -1,0 +1,5 @@
+QML for Sublime Text 1.2.0 has been released!
+
+This minor version brings some improvements to existing snippets as well as adds few new ones.
+
+At the same time, kdesrc-build plugin for Sublime Text has been released too! If you are a KDE developer, make sure to check it out at https://github.com/ratijas/kdesrc-build-sublime
