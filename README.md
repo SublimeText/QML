@@ -18,7 +18,7 @@ This package provides the following features:
 
 ## Installation
 
-The easiest way to install this plugin, is to use the [Package Control](https://packagecontrol.io/) plugin.
+The easiest way to install this plugin, is to use the [Package Control](https://packagecontrol.io/packages/QML) plugin.
 
  - Open up the command palette: Ctrl+Shift+P (Linux, Windows) / Cmd+Shift+P (OS X)
  - Search for Package Control: Install Package
