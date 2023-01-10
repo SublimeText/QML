@@ -872,8 +872,9 @@ Expressions {
 //             ^^^^^^ support.constant.builtin.qml
         StackView.Activating
 //                ^^^^^^^^^^ support.constant.builtin.qml
-        TabBar.Header
+        TabBar.Header, ToolBar.Footer
 //             ^^^^^^ support.constant.builtin.qml
+//                             ^^^^^^ support.constant.builtin.qml
         TextArea.WrapAnywhere
 //               ^^^^^^^^^^^^ support.constant.builtin.qml
         TextField.SelectCharacters

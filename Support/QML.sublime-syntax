@@ -2221,6 +2221,17 @@ contexts:
             - include: else-pop
         - include: else-pop
 
+    - match: ToolBar{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-controls-toolbar
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
     - match: TextArea{{identifier_break}}
       scope: support.class.builtin.qml
       set:
@@ -2305,6 +2316,9 @@ contexts:
       pop: true
 
   support-property-qtquick-controls-tabbar:
+    - include: support-property-qtquick-parts-position
+
+  support-property-qtquick-controls-toolbar:
     - include: support-property-qtquick-parts-position
 
   support-variable-qtquick-layouts:
