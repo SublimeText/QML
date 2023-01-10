@@ -415,7 +415,7 @@ RegularProperties {
 //           ^^^^^ storage.type support.type
 //                 ^^^^^ meta.binding.name variable.other.member
         Qt.point(null, undefined, NaN)
-//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml meta.function-call.method.js
+//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml meta.function-call.method.js
 //      ^^ support.class.builtin.qml
 //        ^ punctuation.accessor.js
 //         ^^^^ support.function.builtin.qml
