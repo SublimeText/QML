@@ -2440,8 +2440,14 @@ contexts:
           pop: true
         - match: ','
           scope: punctuation.separator.comma.qml
+        - match: '='
+          scope: keyword.operator.assignment.qml
         - match: '{{identifier_title}}'
           scope: meta.constants.identifier.qml entity.name.constant.qml
+        - match: (?=\S)
+          push:
+            - include: literal-number
+            - include: else-pop
     - include: else-pop
 
   expect-enum-name:

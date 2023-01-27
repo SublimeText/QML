@@ -935,6 +935,24 @@ Enums {
     };
 //  ^ meta.enum.qml meta.block.qml meta.sequence.constants.qml punctuation.section.block.end.qml
 //   ^ - meta.enum.qml & invalid.illegal.unexpected-terminator.qml
+    enum Color {
+//  ^^^^^^^^^^^^ meta.enum.qml
+//       ^^^^^ meta.enum.identifier.qml entity.name.enum.qml
+//  ^^^^ keyword.declaration.enum.qml
+        White = 0x1234,
+//      ^^^^^ meta.constants.identifier.qml entity.name.constant.qml
+//            ^ keyword.operator.assignment.qml
+//              ^^^^^^ meta.number.integer
+//                    ^ punctuation.separator.comma.qml
+        Orange,
+//      ^^^^^^ meta.constants.identifier.qml entity.name.constant.qml
+//            ^ punctuation.separator.comma.qml
+        Green = ,
+//            ^ keyword.operator.assignment.qml
+//              ^ punctuation.separator.comma.qml
+        Red
+//      ^^^ meta.constants.identifier.qml entity.name.constant.qml
+    }
     enum Months
 //  ^^^^^^^^^^^^ meta.enum.qml
 //  ^^^^ keyword.declaration.enum.qml
