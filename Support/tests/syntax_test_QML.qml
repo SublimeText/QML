@@ -699,6 +699,19 @@ Expressions {
 //      ^^^^ support.class.builtin.js
 //          ^ punctuation.accessor.js
 //           ^^^ support.function.builtin.js
+        const y = k * (x + b);
+//      ^^^^^ keyword.declaration.js
+//            ^ meta.binding.name.js variable.other.readwrite.js
+//              ^ keyword.operator.assignment.js
+//                ^ variable.other.readwrite.js
+//                  ^ keyword.operator.arithmetic.js
+//                    ^^^^^^^ meta.group.js
+//                    ^ punctuation.section.group.begin.js
+//                     ^ variable.other.readwrite.js
+//                       ^ keyword.operator.arithmetic.js
+//                         ^ variable.other.readwrite.js
+//                          ^ punctuation.section.group.end.js
+//                           ^ punctuation.terminator.statement.js
         window
 //      ^^^^^^ - support.type
         XMLHttpRequest
