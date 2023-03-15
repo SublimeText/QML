@@ -66,6 +66,15 @@ contexts:
     - match: (?=\s*$)
       pop: true
 
+  immediately-pop:
+    - match: ''
+      pop: 1
+
+  immediately-pop-2:
+    - meta_include_prototype: false
+    - match: ''
+      pop: 2
+
   pragma-statement:
     - match: \b(pragma)\s+(Singleton)\b
       scope: meta.pragma.qml
