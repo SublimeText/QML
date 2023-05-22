@@ -2,8 +2,20 @@
 
 pragma Singleton
 // <-  meta.pragma keyword.control.pragma
-// ^^^ meta.pragma keyword.control.pragma
-//     ^^^^^^^^^ meta.pragma storage.modifier.singleton
+// ^^^^^^^^^^^^^ meta.pragma.qml
+//     ^^^^^^^^^ storage.modifier.pragma
+
+pragma Strict
+// <-  meta.pragma keyword.control.pragma
+// ^^^^^^^^^^ meta.pragma.qml
+//     ^^^^^^ storage.modifier.pragma
+
+pragma ComponentBehavior: Bound
+// <-  meta.pragma keyword.control.pragma
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.pragma.qml
+//     ^^^^^^^^^^^^^^^^^ storage.modifier.pragma
+//                      ^ punctuation.separator.mapping.key-value
+//                        ^^^^^ storage.modifier.pragma
 
 /* no version */
 import QtQml

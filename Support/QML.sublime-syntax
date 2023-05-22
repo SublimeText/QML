@@ -76,11 +76,32 @@ contexts:
       pop: 2
 
   pragma-statement:
-    - match: \b(pragma)\s+(Singleton)\b
-      scope: meta.pragma.qml
-      captures:
-        1: keyword.control.pragma.qml
-        2: storage.modifier.singleton.qml
+    - match: \bpragma\b
+      scope: keyword.control.pragma.qml
+      push:
+        - pragma-meta
+        - maybe-pragma-value
+        - pragma-name
+
+  pragma-meta:
+    - meta_include_prototype: false
+    - meta_scope: meta.pragma.qml
+    - include: immediately-pop
+
+  maybe-pragma-value:
+    - match: ':'
+      scope: punctuation.separator.mapping.key-value.qml
+      set:
+        - match: '{{identifier}}'
+          scope: storage.modifier.pragma.qml
+        - include: semicolon-or-eol-pop
+    - include: semicolon-or-eol-pop
+
+  pragma-name:
+    - match: '{{identifier}}'
+      scope: storage.modifier.pragma.qml
+      pop: 1
+    - include: semicolon-or-eol-pop
 
   import-statement:
     - match: import{{identifier_break}}
