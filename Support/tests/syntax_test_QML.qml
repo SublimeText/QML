@@ -729,6 +729,24 @@ Expressions {
         XMLHttpRequest
 //      ^^^^^^^^^^^^^^ support.class.dom.js
     }
+    property real foox: (foo as Item).x
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
+//                      ^ punctuation.section
+//                       ^^^ variable.other
+//                           ^^ keyword.operator.qml
+//                              ^^^^ support.class.builtin.qml
+//                                  ^ punctuation.section
+//                                   ^ punctuation.accessor.js
+    function support_qmljs() {
+        abc = def as X.Yz;
+//          ^ keyword.operator.assignment.js
+//            ^^^ variable.other.readwrite.js
+//                ^^ keyword.operator.qml
+//                   ^ support.class.js
+//                    ^ punctuation.accessor.js
+//                     ^^ meta.property.object.js
+//                       ^ punctuation.terminator.statement.js
+    }
     function support_qtqml() {
         Component.Ready
 //                ^^^^^ support.constant.builtin.qml

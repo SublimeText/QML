@@ -671,6 +671,20 @@ contexts:
 
     - include: else-pop-at-eol
 
+  # Copied from JavaScript syntax, added binary-operators-qml
+  expression-end:
+    - include: postfix-operators
+    - include: binary-operators
+    - include: binary-operators-qml
+    - include: ternary-operator
+
+    - include: left-expression-end
+
+  binary-operators-qml:
+    - match: as{{identifier_break}}
+      scope: keyword.operator.qml
+      push: expression-begin
+
   try-value-object:
     - match: (?={{identifier_title}})
       set:
