@@ -1998,7 +1998,7 @@ contexts:
       pop: true
 
   support-property-qtquick-pointerhandler:
-    - match: (?:TakeOverForbidden|CanTakeOverFrom(?:HandlersOf(?:SameType|DifferentType)|Anything)|ApprovesTakeOverBy(?:HandlersOf(?:SameType|DifferentType)|Items|Anything)|ApprovesCancellation){{identifier_break}}
+    - match: (?:TakeOverForbidden|CanTakeOverFrom(?:HandlersOf(?:SameType|DifferentType)|Items|Anything)|ApprovesTakeOverBy(?:HandlersOf(?:SameType|DifferentType)|Items|Anything)|ApprovesCancellation){{identifier_break}}
       scope: support.constant.builtin.qml
       pop: true
 

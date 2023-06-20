@@ -829,8 +829,9 @@ Expressions {
 //            ^^^^^^^^^ support.constant.builtin.qml
         PointerDevice.Pen
 //                    ^^^ support.constant.builtin.qml
-        PointerHandler.ApprovesTakeOverByHandlersOfSameType
+        PointerHandler.ApprovesTakeOverByHandlersOfSameType, PointerHandler.CanTakeOverFromItems
 //                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ support.constant.builtin.qml
+//                                                                          ^^^^^^^^^^^^^^^^^^^^ support.constant.builtin.qml
         RotationAnimation.Shortest, RotationAnimator.Numerical
 //                        ^^^^^^^^ support.constant.builtin.qml
 //                                                   ^^^^^^^^^ support.constant.builtin.qml
