@@ -738,6 +738,16 @@ Expressions {
 //              ^^^^^^^^^^^^^^^^ - support.constant.builtin.qml
         Binding.RestoreBindingOrValue
 //              ^^^^^^^^^^^^^^^^^^^^^ support.constant.builtin.qml
+        Locale.Monday
+//             ^^^^^^ support.constant.builtin.qml
+        Locale.MetricSystem
+//             ^^^^^^^^^^^^ support.constant.builtin.qml
+        Locale.ShortFormat
+//             ^^^^^^^^^^^ support.constant.builtin.qml
+        Locale.DefaultNumberOptions
+//             ^^^^^^^^^^^^^^^^^^^^ support.constant.builtin.qml
+        Locale.DataSizeSIFormat
+//             ^^^^^^^^^^^^^^^^ support.constant.builtin.qml
         print(); qsTr("abc"); QT_TR_NOOP();
 //      ^^^^^ support.function.qml
 //               ^^^^ support.function.qml

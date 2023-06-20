@@ -1111,6 +1111,17 @@ contexts:
             - include: else-pop
         - include: else-pop
 
+    - match: Locale{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtqml-locale
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
     # https://doc.qt.io/qt-5/qml-qtqml-qt.html
     - match: Qt{{identifier_break}}
       scope: support.class.builtin.qml
@@ -1133,6 +1144,26 @@ contexts:
 
   support-property-qtqml-binding:
     - match: (?:RestoreNone|RestoreBinding|RestoreValue|RestoreBindingOrValue){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
+  support-property-qtqml-locale:
+    # Definitely not including all the Language, Script and Country/Territory members
+    - match: |-
+        (?x:(?:
+        # DayOfWeek
+        Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday
+        # MeasurementSystem
+        |MetricSystem|ImperialUSSystem|ImperialUKSystem|ImperialSystem
+        # FormatType
+        |LongFormat|ShortFormat|NarrowFormat
+        # NumberOption
+        |DefaultNumberOptions|OmitGroupSeparator|RejectGroupSeparator|OmitLeadingZeroInExponent|RejectLeadingZeroInExponent|IncludeTrailingZeroesAfterDot|RejectTrailingZeroesAfterDot
+        # DataSizeFormat
+        |DataSizeBase1000|DataSizeSIQuantifiers|DataSizeIecFormat|DataSizeTraditionalFormat|DataSizeSIFormat
+        # LanguageCodeType
+        |ISO639Part1|ISO639Part2B|ISO639Part2T|ISO639Part3|LegacyLanguageCode|ISO639Part2|ISO639Alpha2|ISO639Alpha3|ISO639|AnyLanguageCode
+        )){{identifier_break}}
       scope: support.constant.builtin.qml
       pop: true
 
