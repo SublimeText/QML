@@ -792,34 +792,29 @@ contexts:
     - include: property-type-fallback
 
   property-type-simple:
-    - include: property-type-basic
+    - include: property-type-gadget
     - include: expect-object-type-name
 
-  expect-property-type-basic:
-    - include: property-type-basic
+  expect-property-type-gadget:
+    - include: property-type-gadget
 
     - include: property-type-fallback
 
-  property-type-basic:
-    - match: (?={{qml_builtin_type}})
-      set:
-        - property-type-basic-meta
-        - property-type-basic-content
-
-  property-type-basic-meta:
-    - meta_include_prototype: false
-    - meta_scope: storage.type.qml
-    - include: immediately-pop
-
-  property-type-basic-content:
+  property-type-gadget:
     - match: 'variant{{identifier_break}}'
-      scope: support.other.qml invalid.deprecated.variant.qml
+      scope: storage.type.qml meta.type.qml support.other.qml invalid.deprecated.variant.qml
       pop: true
     - match: 'var{{identifier_break}}'
-      scope: support.other.qml
+      scope: storage.type.qml meta.type.qml support.other.qml
+      pop: true
+    - match: 'void{{identifier_break}}'
+      scope: meta.type.js support.type.void.js
       pop: true
     - match: '{{qml_builtin_type}}'
-      scope: support.type.qml
+      scope: meta.type.qml support.type.qml
+      pop: true
+    - match: '{{identifier_untitle}}'
+      scope: meta.type.qml support.class.qml
       pop: true
 
   expect-property-type-alias:

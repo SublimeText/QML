@@ -269,7 +269,7 @@ RequiredProperties {
 //  ^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property
 //  ^^^^^^^^ keyword.other storage.modifier.required
 //           ^^^^^^^^ keyword.declaration
-//                    ^^^ storage.type support.type
+//                    ^^^ support.type
 //                        ^^^^ meta.binding.name variable.other.member
 //                            ^ punctuation.terminator.statement.qml
 //                             ^ invalid.illegal.unexpected-terminator.qml - meta.binding.property
@@ -282,9 +282,15 @@ RequiredProperties {
     required property list<url> eight
 //                    ^^^^ storage.type support.other
 //                        ^ punctuation.definition.generic.begin
-//                         ^^^ storage.type support.type
+//                         ^^^ support.type
 //                            ^ punctuation.definition.generic.end
 //                              ^^^^^ meta.binding.name variable.other.member
+    required property list<custom> gadgets
+//                    ^^^^ storage.type support.other
+//                        ^ punctuation.definition.generic.begin
+//                         ^^^^^^ meta.type.qml
+//                               ^ punctuation.definition.generic.end
+//                                 ^^^^^^^ meta.binding.name variable.other.member
     required property list<Item> seven
 //                    ^^^^ storage.type support.other
 //                        ^ punctuation.definition.generic.begin
@@ -327,7 +333,7 @@ RegularProperties {
     property color bright
 //  ^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^^ keyword.declaration
-//           ^^^^^ storage.type support.type
+//           ^^^^^ support.type
 //                 ^^^^^^ meta.binding.name variable.other.member
     property color bright;
 //  ^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
@@ -386,7 +392,7 @@ RegularProperties {
     property url icon: Qt.application.layoutDirection === Qt.RightToLeft
 //  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.block.qml meta.binding.property.qml
 //  ^^^^^^^^ keyword.declaration
-//           ^^^ storage.type support.type
+//           ^^^ support.type
 //               ^^^^ meta.binding.name variable.other.member
 //                   ^ punctuation.separator.mapping.key-value.qml
 //                     ^^ support.class.builtin.qml
@@ -407,7 +413,7 @@ RegularProperties {
     property int size: if (cond) { return 1; }
 //  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^^ keyword.declaration
-//           ^^^ storage.type support.type
+//           ^^^ support.type
 //               ^^^^ meta.binding.name variable.other.member
 //                   ^ punctuation.separator.mapping.key-value
 //                     ^^ meta.conditional.js keyword.control.conditional.if.js
@@ -424,7 +430,7 @@ RegularProperties {
     property point mouse:
 //  ^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //  ^^^^^^^^ keyword.declaration
-//           ^^^^^ storage.type support.type
+//           ^^^^^ support.type
 //                 ^^^^^ meta.binding.name variable.other.member
         Qt.point(null, undefined, NaN)
 //      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml meta.function-call.method.js
@@ -493,7 +499,7 @@ WithMethods {
     required property rect rect
 //  ^^^^^^^^ keyword.other storage.modifier.required
 //           ^^^^^^^^ keyword.declaration
-//                    ^^^^ storage.type support.type
+//                    ^^^^ support.type
 //                         ^^^^ meta.binding.name variable.other.member
     function def(arg2, arg3) {
         const i = 42;
@@ -505,7 +511,7 @@ WithMethods {
     function typed(arg4: string, arg5: Item, arg6: QtQuick.Item, { objectName }) {
 //                 ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                     ^ meta.function.parameters punctuation.separator.type
-//                       ^^^^^^ meta.function.parameters storage.type support.type
+//                       ^^^^^^ meta.function.parameters support.type
 //                             ^ meta.function.parameters punctuation.separator.parameter.function
 //                               ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                                   ^ meta.function.parameters punctuation.separator.type
@@ -523,7 +529,19 @@ WithMethods {
     }
     function returns(): string {let i;}
 //                    ^ meta.function.js punctuation.separator.type.qml
-//                      ^^^^^^ meta.function.js storage.type support.type
+//                      ^^^^^^ meta.function.js support.type
+//                             ^^^^^^^^ meta.block.qml meta.function.js meta.block.js
+//                              ^^^ keyword.declaration.js
+    function returns(): void   {let i;}
+//  ^^^^^^^^ keyword.declaration.function.js
+//                    ^ meta.function.js punctuation.separator.type.qml
+//                      ^^^^ meta.function.js support.type.void.js
+//                             ^^^^^^^^ meta.block.qml meta.function.js meta.block.js
+//                              ^^^ keyword.declaration.js
+    function returns(): other  {let i;}
+//  ^^^^^^^^ keyword.declaration.function.js
+//                    ^ meta.function.js punctuation.separator.type.qml
+//                      ^^^^ meta.function.js meta.type.qml
 //                             ^^^^^^^^ meta.block.qml meta.function.js meta.block.js
 //                              ^^^ keyword.declaration.js
 }
@@ -555,7 +573,7 @@ Signals {
 //                     ^ meta.function.parameters punctuation.separator.parameter.function
 //                       ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                           ^ meta.function.parameters punctuation.separator.type
-//                             ^^^^^^ meta.function.parameters storage.type support.type
+//                             ^^^^^^ meta.function.parameters support.type
 //                                   ^ meta.function.parameters punctuation.separator.parameter.function
 //                                     ^^^^ invalid.illegal.expected-type
 //                                         ^ meta.function.parameters punctuation.section.group.end
@@ -565,7 +583,7 @@ Signals {
 //                ^ meta.function.parameters punctuation.section.group.begin
 //                 ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                     ^ meta.function.parameters punctuation.separator.type
-//                       ^^^^ meta.function.parameters storage.type support.type
+//                       ^^^^ meta.function.parameters support.type
 //                           ^ meta.function.parameters punctuation.separator.parameter.function
 //                             ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                                 ^ meta.function.parameters punctuation.separator.type
@@ -577,10 +595,10 @@ Signals {
 //  ^^^^^^ meta.function keyword.declaration.function
 //         ^^^^^^^ meta.function entity.name.function
 //                ^ meta.function.parameters punctuation.section.group.begin
-//                 ^^^^^ meta.function.parameters storage.type support.type
+//                 ^^^^^ meta.function.parameters support.type
 //                       ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                           ^ meta.function.parameters punctuation.separator.parameter.function
-//                             ^^^^ meta.function.parameters storage.type support.type
+//                             ^^^^ meta.function.parameters support.type
 //                                  ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                                      ^ meta.function.parameters punctuation.section.group.end
     signal hovered(Item arg1, QQC2.Button arg2)
@@ -599,15 +617,15 @@ Signals {
 //  ^^^^^^ meta.function keyword.declaration.function
 //         ^^^^^ meta.function entity.name.function
 //              ^ meta.function.parameters punctuation.section.group.begin
-//               ^^^ meta.function.parameters storage.type support.type
+//               ^^^ meta.function.parameters support.type
 //                   ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                       ^ meta.function.parameters punctuation.separator.parameter.function
 //                         ^^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                             ^ meta.function.parameters punctuation.separator.type
-//                               ^^^^ meta.function.parameters storage.type support.type
+//                               ^^^^ meta.function.parameters support.type
 //                                   ^ meta.function.parameters punctuation.section.group.end
     signal multiline(url one,
-//                   ^^^ meta.function.parameters storage.type support.type
+//                   ^^^ meta.function.parameters support.type
 //                       ^^^ meta.function.parameters meta.binding.name variable.parameter.function
 //                          ^ meta.function.parameters punctuation.separator.parameter.function
         two   ,
@@ -616,9 +634,9 @@ Signals {
 //            ^ meta.function.parameters punctuation.separator.parameter.function
         string three url four,
 //      ^^^^^^^^^^^^^^^^^^^^^^ meta.function.parameters - invalid.illegal
-//      ^^^^^^ storage.type support.type
+//      ^^^^^^ support.type
 //             ^^^^^ meta.binding.name variable.parameter.function
-//                   ^^^ storage.type support.type
+//                   ^^^ support.type
 //                       ^^^^ meta.binding.name variable.parameter.function
 //                           ^ punctuation.separator.parameter.function
         five,
@@ -630,10 +648,10 @@ Signals {
 //      ^^^^^^^^^^^^^^^^^^^^^^ meta.function.parameters - invalid.illegal
 //      ^^^ meta.binding.name variable.parameter.function
 //             ^ punctuation.separator.type
-//                   ^^^ storage.type support.other
+//                   ^^^ support.other
 //                          ^ punctuation.separator.parameter.function
         string
-//      ^^^^^^ storage.type support.type
+//      ^^^^^^ support.type
 //      ^^^^^^^ meta.function.parameters - invalid.illegal
             seven,
 //          ^^^^^^^ meta.function.parameters - invalid.illegal
@@ -645,7 +663,7 @@ Signals {
 //           ^ punctuation.separator.type
             url,
 //          ^^^^^ meta.function.parameters - invalid.illegal
-//          ^^^ storage.type support.type
+//          ^^^ support.type
 //             ^ punctuation.separator.parameter.function
         nine/**/
 //      ^^^^^^^^^ meta.function.parameters - invalid.illegal
@@ -659,15 +677,15 @@ Signals {
             /**/url,
 //          ^^^^^^^^^ meta.function.parameters - invalid.illegal
 //          ^^^^ comment.block
-//              ^^^ storage.type support.type
+//              ^^^ support.type
 //                 ^ punctuation.separator.parameter.function
         url: url,
 //      ^^^ meta.binding.name variable.parameter.function
 //         ^ punctuation.separator.type
-//           ^^^ storage.type support.type
+//           ^^^ support.type
 //              ^ punctuation.separator.parameter.function
         url  url,
-//      ^^^ storage.type support.type
+//      ^^^ support.type
 //           ^^^ meta.binding.name variable.parameter.function
 //              ^ punctuation.separator.parameter.function
     )
