@@ -919,7 +919,7 @@ contexts:
   qml-method-declaration-expect-return-type:
     - match: ':'
       scope: punctuation.separator.type.qml
-      set: property-type-member
+      set: expect-property-type-member
     - include: else-pop
 
   # END methods

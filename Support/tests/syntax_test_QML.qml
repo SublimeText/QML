@@ -544,6 +544,11 @@ WithMethods {
 //                      ^^^^ meta.function.js meta.type.qml
 //                             ^^^^^^^^ meta.block.qml meta.function.js meta.block.js
 //                              ^^^ keyword.declaration.js
+    function returns():        {let i;}
+//  ^^^^^^^^ keyword.declaration.function.js
+//                    ^ meta.function.js punctuation.separator.type.qml
+//                             ^^^^^^^^ meta.block.qml meta.function.js meta.block.js
+//                              ^^^ keyword.declaration.js
 }
 
 Signals {
