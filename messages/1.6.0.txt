@@ -1,0 +1,18 @@
+QML for Sublime Text 1.6.0 has been released!
+
+This minor version brings some quality-of-life improvements:
+
+- more hardcoded enum names from the standard library,
+- new: support for explicit enum values (numeric literals),
+- new: support for type casting `as` operator, which is a QML Engine's
+  extension to JavaScript syntax.
+- new: support for the newer pragma syntax like this:
+
+    pragma ValueTypeBehavior: Copy, Addressable
+
+- allow `void` and arbitrary gadget names for properties and function
+  signatures.
+- keeping up with upstream changes to the JavaScript package.
+
+If you are a KDE developer, make sure to also check out kdesrc-build plugin
+for Sublime Text at https://github.com/ratijas/kdesrc-build-sublime
