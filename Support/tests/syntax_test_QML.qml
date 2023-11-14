@@ -433,7 +433,7 @@ RegularProperties {
 //           ^^^^^ support.type
 //                 ^^^^^ meta.binding.name variable.other.member
         Qt.point(null, undefined, NaN)
-//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml meta.function-call.method.js
+//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.binding.property.qml
 //      ^^ support.class.builtin.qml
 //        ^ punctuation.accessor.js
 //         ^^^^ support.function.builtin.qml
@@ -728,9 +728,8 @@ Expressions {
         ArrayWho();
 //      ^^^^^^^^ meta.function-call.js variable.function.js - support.class
         Array(42);
-//      ^^^^^ meta.function-call.js support.class.builtin.js
+//      ^^^^^ support.class.builtin.js
         Date.now();
-//      ^^^^^^^^^^ meta.function-call.method.js
 //      ^^^^ support.class.builtin.js
 //          ^ punctuation.accessor.js
 //           ^^^ support.function.builtin.js
@@ -794,7 +793,6 @@ Expressions {
 //               ^^^^ support.function.qml
 //                            ^^^^^^^^^^ support.function.qml
         Qt.quit();
-//      ^^^^^^^^^ meta.function-call.method.js
 //      ^^ support.class.builtin.qml
 //        ^ punctuation.accessor.js
 //         ^^^^ support.function.builtin.qml
@@ -1165,7 +1163,7 @@ AttachedProperties {
 //            ^^^^^^^^^^^ meta.binding.name support.function markup.italic
 //              ^^^^^^^^^ markup.underline
 //                       ^ punctuation.separator.mapping.key-value
-//                         ^^^^^ meta.function-call.js support.function
+//                         ^^^^^ support.function
 
 // It wouldn't work (at least didn't for me), but it's perfectly legit
     Window.window.onWidthChanged: 42;
