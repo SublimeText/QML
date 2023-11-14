@@ -80,7 +80,7 @@ contexts:
       scope: keyword.control.pragma.qml
       push:
         - pragma-meta
-        - maybe-pragma-value
+        - maybe-pragma-rhs
         - pragma-name
 
   pragma-meta:
@@ -88,13 +88,17 @@ contexts:
     - meta_scope: meta.pragma.qml
     - include: immediately-pop
 
-  maybe-pragma-value:
+  maybe-pragma-rhs:
     - match: ':'
       scope: punctuation.separator.mapping.key-value.qml
-      set:
-        - match: '{{identifier}}'
-          scope: storage.modifier.pragma.qml
-        - include: semicolon-or-eol-pop
+      set: pragma-value-list
+    - include: semicolon-or-eol-pop
+
+  pragma-value-list:
+    - match: '{{identifier}}'
+      scope: storage.modifier.pragma.qml
+    - match: ','
+      scope: punctuation.separator.comma.qml
     - include: semicolon-or-eol-pop
 
   pragma-name:

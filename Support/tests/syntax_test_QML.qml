@@ -10,12 +10,22 @@ pragma Strict
 // ^^^^^^^^^^ meta.pragma.qml
 //     ^^^^^^ storage.modifier.pragma
 
-pragma ComponentBehavior: Bound
+pragma ComponentBehavior: Bound;
 // <-  meta.pragma keyword.control.pragma
 // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.pragma.qml
 //     ^^^^^^^^^^^^^^^^^ storage.modifier.pragma
 //                      ^ punctuation.separator.mapping.key-value
 //                        ^^^^^ storage.modifier.pragma
+//                             ^ punctuation.terminator.statement.qml
+
+pragma ValueTypeBehavior: Copy, Addressable
+// <-  meta.pragma keyword.control.pragma
+// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.pragma.qml
+//     ^^^^^^^^^^^^^^^^^ storage.modifier.pragma
+//                      ^ punctuation.separator.mapping.key-value
+//                        ^^^^ storage.modifier.pragma
+//                            ^ punctuation.separator.comma
+//                              ^^^^^^^^^^^ storage.modifier.pragma
 
 /* no version */
 import QtQml
