@@ -4,6 +4,7 @@ version: 2
 name: QML
 file_extensions:
   - qml
+  - qbs
   - qmltypes
 scope: source.qml
 extends: Packages/JavaScript/JavaScript.sublime-syntax
