@@ -1529,6 +1529,17 @@ contexts:
             - include: else-pop
         - include: else-pop
 
+    - match: InputDevice{{identifier_break}}
+      scope: support.class.builtin.qml
+      set:
+        - match: '{{dot_accessor}}'
+          scope: punctuation.accessor.js
+          set:
+            - include: support-property-qtquick-inputdevice
+            - include: object-property
+            - include: else-pop
+        - include: else-pop
+
     - match: InputMethod{{identifier_break}}
       scope: support.class.builtin.qml
       set:
@@ -1872,13 +1883,8 @@ contexts:
       pop: true
 
   support-property-qtquick-eventpoint:
-    - match: |-
-        (?x:(?:
-        # State
-        Pressed|Updated|Stationary|Released
-        # GrabTransition
-        |GrabPassive|UngrabPassive|CancelGrabPassive|OverrideGrabPassive|GrabExclusive|UngrabExclusive|CancelGrabExclusive
-        )){{identifier_break}}
+    # State
+    - match: (?:Unknown|Stationary|Pressed|Updated|Released){{identifier_break}}
       scope: support.constant.builtin.qml
       pop: true
 
@@ -1958,6 +1964,17 @@ contexts:
       scope: support.constant.builtin.qml
       pop: true
 
+  support-property-qtquick-inputdevice:
+    - match: |-
+        (?x:(?:
+        # DeviceType
+        Unknown|Mouse|TouchScreen|TouchPad|Puck|Stylus|Airbrush|Keyboard|AllDevices
+        # Capability
+        |None|Position|Area|Pressure|Velocity|NormalizedPosition|MouseEmulation|PixelScroll|Scroll|Hover|Rotation|XTilt|YTilt|TangentialPressure|ZPosition|All
+        )){{identifier_break}}
+      scope: support.constant.builtin.qml
+      pop: true
+
   support-property-qtquick-inputmethod:
     - match: (?:Click|ContextMenu){{identifier_break}}
       scope: support.constant.builtin.qml
@@ -2032,12 +2049,10 @@ contexts:
   support-property-qtquick-pointerdevice:
     - match: |-
         (?x:(?:
-        # DeviceType
-        UnknownDevice|Mouse|TouchScreen|TouchPad|Puck|Stylus|Airbrush|AllDevices
         # PointerType
-        |GenericPointer|Finger|Pen|Eraser|Cursor|AllPointerTypes
-        # CapabilityFlag
-        |Position|Area|Pressure|Velocity|MouseEmulation|Scroll|Hover|Rotation|XTilt|YTilt
+        Unknown|Generic|Finger|Pen|Eraser|Cursor|AllPointerTypes
+        # GrabTransition
+        |GrabPassive|UngrabPassive|CancelGrabPassive|OverrideGrabPassive|GrabExclusive|UngrabExclusive|CancelGrabExclusive
         )){{identifier_break}}
       scope: support.constant.builtin.qml
       pop: true

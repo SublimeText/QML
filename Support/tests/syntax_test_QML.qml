@@ -843,8 +843,9 @@ Expressions {
         Easing.OutQuad
 //      ^^^^^^ support.class.builtin.qml
 //             ^^^^^^^ support.constant.builtin.qml
-        EventPoint.GrabPassive
-//                 ^^^^^^^^^^^ support.constant.builtin.qml
+        EventPoint.Unknown, EventPoint.Stationary
+//                 ^^^^^^^ support.constant.builtin.qml
+//                                     ^^^^^^^^^^ support.constant.builtin.qml
         Flickable.FollowBoundsBehavior, Flickable.VerticalFlick
 //                ^^^^^^^^^^^^^^^^^^^^ support.constant.builtin.qml
 //                                                ^^^^^^^^^^^^^ support.constant.builtin.qml
@@ -865,6 +866,11 @@ Expressions {
         Image.AlignRight, Image.Tile
 //            ^^^^^^^^^^ support.constant.builtin.qml
 //                              ^^^^ support.constant.builtin.qml
+        InputDevice.Unknown, InputDevice.Stylus, InputDevice.None, InputDevice.All
+//                  ^^^^^^^ support.constant.builtin.qml
+//                                       ^^^^^^ support.constant.builtin.qml
+//                                                           ^^^^ support.constant.builtin.qml
+//                                                                             ^^^ support.constant.builtin.qml
         InputMethod.ContextMenu
 //                  ^^^^^^^^^^^ support.constant.builtin.qml
         Item.BottomRight
