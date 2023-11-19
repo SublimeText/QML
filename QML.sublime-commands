@@ -1,0 +1,6 @@
+[
+    {
+        "caption": "QML: Convert Between Property And Signal Handler",
+        "command": "convert_between_property_and_signal_handler"
+    }
+]

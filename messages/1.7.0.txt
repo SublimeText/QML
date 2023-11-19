@@ -1,0 +1,23 @@
+QML for Sublime Text 1.7.0 has been released!
+
+A brand new command allows converting between property names and their change
+signal handlers! Try now, put a cursor on the words below, open command
+palette, and find "QML: Convert Between Property And Signal Handler" entry:
+
+    position:
+           <->
+    onPositionChanged:
+
+It comes without any shortcut by default, so you might want to edit your keymap:
+
+    {
+        "command": "convert_between_property_and_signal_handler",
+        "keys": ["ctrl+alt+shift+s"],
+        "context": [
+            {
+                "key": "selector",
+                "operator": "equal",
+                "operand": "source.qml"
+            }
+        ]
+    }

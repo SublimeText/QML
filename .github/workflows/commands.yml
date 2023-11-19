@@ -1,0 +1,26 @@
+name: Commands Tests
+
+on:
+  push:
+    paths:
+      - '.github/workflows/commands.yml'
+      - '**.py'
+  pull_request:
+    paths:
+      - '.github/workflows/commands.yml'
+      - '**.py'
+
+jobs:
+  run-tests:
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: SublimeText/UnitTesting/actions/setup@v1
+        with:
+          sublime-text-version: 4
+      - uses: SublimeText/UnitTesting/actions/run-tests@v1
+        with:
+          coverage: true
+      - uses: codecov/codecov-action@v3

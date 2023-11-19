@@ -1,2 +1,3 @@
 /.git* export-ignore
 /Support/tests export-ignore
+/unittesting.json export-ignore
