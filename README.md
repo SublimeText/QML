@@ -14,7 +14,7 @@ This package provides the following features:
 
  - Complete syntax highlighting for QML and qmldir files.
  - GoTo indexing for `id`s, property declarations and inline components.
- - Snippets for commonly used properties and types.
+ - Snippets for commonly used properties, types and pragmas.
  - Command to turn property names into their `onPropertyChanged` signal handlers and vice-versa.
 
 If you are a KDE developer, check out [kdesrc-build plugin for Sublime Text](https://github.com/ratijas/kdesrc-build-sublime) as well!

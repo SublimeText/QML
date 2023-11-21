@@ -1,5 +1,8 @@
 QML for Sublime Text 1.7.0 has been released!
 
+Added new snippets for common pragma names & values. Just start
+typing "pragma" outside of the top-level object declaration.
+
 A brand new command allows converting between property names and their change
 signal handlers! Try now, put a cursor on the words below, open command
 palette, and find "QML: Convert Between Property And Signal Handler" entry:

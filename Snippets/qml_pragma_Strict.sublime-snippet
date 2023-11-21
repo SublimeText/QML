@@ -1,0 +1,11 @@
+<snippet>
+    <!-- Note: The extra line break is intentional -->
+    <!-- See also: qtdeclarative/src/qmlcompiler/qqmljsimportvisitor.cpp -->
+    <content><![CDATA[
+pragma Strict
+
+]]></content>
+    <tabTrigger>pragma Strict</tabTrigger>
+    <scope>source.qml - meta.block.qml</scope>
+    <description>pragma</description>
+</snippet>

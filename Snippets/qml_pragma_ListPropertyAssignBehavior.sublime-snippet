@@ -1,0 +1,11 @@
+<snippet>
+    <!-- Note: The extra line break is intentional -->
+    <!-- See also: qtdeclarative/src/qmlcompiler/qqmljsimportvisitor.cpp -->
+    <content><![CDATA[
+pragma ListPropertyAssignBehavior:${1: Append}${2: Replace}${3: ReplaceIfNotDefault}
+
+]]></content>
+    <tabTrigger>pragma ListPropertyAssignBehavior:</tabTrigger>
+    <scope>source.qml - meta.block.qml</scope>
+    <description>pragma</description>
+</snippet>

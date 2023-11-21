@@ -1,0 +1,11 @@
+<snippet>
+    <!-- Note: The extra line break is intentional -->
+    <!-- See also: qtdeclarative/src/qmlcompiler/qqmljsimportvisitor.cpp -->
+    <content><![CDATA[
+pragma ValueTypeBehavior: ${1:Copy}${2:, Reference}${3:, Addressable}${4:, Inaddressable}
+
+]]></content>
+    <tabTrigger>pragma ValueTypeBehavior:</tabTrigger>
+    <scope>source.qml - meta.block.qml</scope>
+    <description>pragma</description>
+</snippet>
