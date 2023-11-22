@@ -1,0 +1,11 @@
+<snippet>
+    <!-- Note: The extra line break is intentional -->
+    <content><![CDATA[
+required property int index
+required property ${1:var} model${2:Data}
+
+]]></content>
+    <tabTrigger>imd</tabTrigger>
+    <scope>source.qml meta.block.qml</scope>
+    <description>required property index, modelData</description>
+</snippet>
